@@ -1,5 +1,7 @@
 # NBA Game Predictor 🏀
 
+**[🔗 Live site: today's picks and track record](https://pushtishah11.github.io/nba-game-predictor/)**
+
 Predicts the winner of NBA games from team strength, recent form, and rest.
 It's trained on about 15,000 games from 2014-15 to today and tested **walk-forward**:
 to score a season, the model trains only on the seasons before it.
@@ -97,6 +99,26 @@ Sat Nov 14, 2026
              Chicago Bulls @ Minnesota Timberwolves    pick: Minnesota Timberwolves (90%)
 ```
 
+## Website
+
+The [live site](https://pushtishah11.github.io/nba-game-predictor/) is a static page
+([`docs/index.html`](docs/index.html)) hosted free on GitHub Pages. A GitHub Action
+([`.github/workflows/update.yml`](.github/workflows/update.yml)) runs every morning. It:
+
+1. scrapes the latest scores and schedule
+2. runs [`src/export.py`](src/export.py), which predicts the next week of games and writes `docs/data.json`
+3. commits the update, which redeploys the site
+
+Every prediction is also saved to `data/prediction_log.csv` before tip-off and frozen once the
+game starts, so the site's **live track record** only counts picks made in advance.
+
+To preview the site locally:
+
+```bash
+python src/export.py
+python -m http.server --directory docs 8000   # then open http://localhost:8000
+```
+
 ## Project structure
 
 ```
@@ -105,8 +127,9 @@ Sat Nov 14, 2026
 │   ├── games.csv     # all games combined
 │   └── features.csv  # model-ready features
 ├── models/model.joblib
+├── docs/             # the website (index.html + data.json)
 ├── results/          # metrics and charts
-└── src/              # scrape → features → train → predict
+└── src/              # scrape → features → train → predict / export
 ```
 
 ## Ideas for next steps

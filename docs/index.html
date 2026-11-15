@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA Game Predictor</title>
+<meta name="description" content="Daily NBA game predictions from an Elo + recent-form model, with a live track record.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
+<style>
+  :root {
+    --bg: #f6f5f2; --card: #ffffff; --ink: #1a1a1a; --muted: #6b6b6b; --line: #e4e2dc;
+    --accent: #e8590c; --accent-soft: #fff0e6; --good: #2b8a3e; --bad: #c92a2a; --bar: #e9e7e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121212; --card: #1c1c1c; --ink: #ededed; --muted: #9a9a9a; --line: #2c2c2c;
+      --accent: #ff8a3d; --accent-soft: #33210f; --good: #51cf66; --bad: #ff6b6b; --bar: #2c2c2c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+  header h1 { margin: 0; font-size: 30px; letter-spacing: -0.5px; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 8px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .stat .v { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .stat .l { color: var(--muted); font-size: 13px; }
+  nav { display: flex; gap: 6px; margin: 26px 0 14px; border-bottom: 1px solid var(--line); }
+  nav button { background: none; border: 0; padding: 10px 12px; font: inherit; color: var(--muted);
+               cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  nav button.on { color: var(--ink); border-color: var(--accent); font-weight: 600; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 22px 0 10px; }
+  .game { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .team { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  .team.right { align-items: flex-end; text-align: right; }
+  .name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .short { display: none; }
+  .meta { color: var(--muted); font-size: 12.5px; }
+  .pick .name { color: var(--accent); }
+  .mid { color: var(--muted); font-size: 12.5px; text-align: center; flex: 0 0 auto; }
+  .bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 12px 0 6px; background: var(--bar); }
+  .bar div { height: 100%; }
+  .bar .a { background: var(--muted); opacity: .45; }
+  .bar .h { background: var(--muted); opacity: .45; }
+  .bar .win { background: var(--accent); opacity: 1; }
+  .pcts { display: flex; justify-content: space-between; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .pcts b { color: var(--accent); }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--accent-soft);
+           color: var(--accent); margin-left: 4px; vertical-align: 1px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  th { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  tr:last-child td { border-bottom: 0; }
+  td.num, th.num { text-align: right; }
+  .ok { color: var(--good); font-weight: 700; } .no { color: var(--bad); font-weight: 700; }
+  .empty { background: var(--card); border: 1px dashed var(--line); border-radius: 12px; padding: 22px; color: var(--muted); text-align: center; }
+  .about { color: var(--muted); font-size: 14px; }
+  .about a, footer a { color: var(--accent); }
+  footer { margin-top: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 560px) {
+    .full { display: none; } .short { display: inline; }
+    .stat { padding: 12px; } .stat .v { font-size: 21px; } .stat .l { font-size: 12px; }
+    header h1 { font-size: 25px; }
+    .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏀 NBA Game Predictor</h1>
+    <p>Daily win probabilities from an Elo + recent-form model. Picks are logged before tip-off.</p>
+  </header>
+
+  <section class="stats" id="stats"></section>
+
+  <nav>
+    <button class="on" data-tab="upcoming">Upcoming</button>
+    <button data-tab="results">Results</button>
+    <button data-tab="rankings">Power rankings</button>
+    <button data-tab="about">How it works</button>
+  </nav>
+
+  <section id="upcoming"></section>
+  <section id="results" hidden></section>
+  <section id="rankings" hidden></section>
+  <section id="about" class="about" hidden>
+    <h2>How it works</h2>
+    <p>Every morning a scheduled job downloads the latest scores from
+      <a href="https://www.basketball-reference.com/">Basketball-Reference</a>, rebuilds each team's features,
+      and predicts the next week of games. The features are:</p>
+    <ul>
+      <li><b>Elo rating:</b> one number per team that goes up with wins (more for big wins over good teams) and down with losses</li>
+      <li><b>Season form:</b> win % and average point margin</li>
+      <li><b>Recent form:</b> win % and margin over the last 10 games</li>
+      <li><b>Rest:</b> days off, and whether a team is on the second night of a back-to-back</li>
+      <li><b>Home court</b> (except at neutral sites)</li>
+    </ul>
+    <p>A logistic regression turns those into a probability. It was tested <b>walk-forward</b>: to score each season,
+      it trained only on earlier seasons. Across <span id="bt-games"></span> games it picked
+      <b id="bt-acc"></b> of winners correctly, vs <span id="bt-home"></span> for always picking the home team.</p>
+    <p>The <b>live track record</b> only counts picks the site published before the game started.</p>
+    <p>Code, data, and full write-up are on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>.</p>
+  </section>
+
+  <footer>
+    <span id="updated"></span> · <a href="https://github.com/pushtishah11/nba-game-predictor">Source on GitHub</a><br>
+    A student project for fun and learning. Not betting advice, and not affiliated with the NBA.
+  </footer>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const pct = (x, d = 0) => (x * 100).toFixed(d) + "%";
+const dayLabel = (iso) => {
+  const d = new Date(iso + "T12:00:00");
+  const today = new Date(); today.setHours(12, 0, 0, 0);
+  const diff = Math.round((d - today) / 86400000);
+  const base = d.toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" });
+  return diff === 0 ? `Today · ${base}` : diff === 1 ? `Tomorrow · ${base}` : diff === -1 ? `Yesterday · ${base}` : base;
+};
+const groupBy = (arr, key) => arr.reduce((m, x) => ((m[x[key]] ??= []).push(x), m), {});
+const nameHtml = (full, abbr) => `<span class="full">${esc(full)}</span><span class="short">${esc(abbr)}</span>`;
+
+function teamHtml(t, isPick, right) {
+  const meta = [t.record, t.last10 != null ? `${t.last10}-${10 - t.last10} L10` : null].filter(Boolean).join(" · ");
+  return `<div class="team ${right ? "right" : ""} ${isPick ? "pick" : ""}">
+    <span class="name">${nameHtml(t.name, t.abbr)}${t.b2b ? '<span class="badge" title="Second night of a back-to-back">B2B</span>' : ""}</span>
+    <span class="meta">${esc(meta)} <span class="hide-sm">· Elo ${t.elo}</span></span>
+  </div>`;
+}
+
+function renderUpcoming(games) {
+  if (!games.length) return `<div class="empty">No upcoming games in the next week.</div>`;
+  return Object.entries(groupBy(games, "date")).map(([date, gs]) => `
+    <h2>${esc(dayLabel(date))}</h2>
+    ${gs.map((g) => {
+      const pa = 1 - g.p_home, homePick = g.p_home >= 0.5;
+      const tag = [g.time ? `${g.time.replace("p", " PM").replace("a", " AM")} ET` : "", g.neutral ? "Neutral site" : "", g.notes || ""].filter(Boolean).join(" · ");
+      return `<div class="game">
+        <div class="row">
+          ${teamHtml(g.away, !homePick, false)}
+          <div class="mid">@<br>${esc(tag)}</div>
+          ${teamHtml(g.home, homePick, true)}
+        </div>
+        <div class="bar"><div class="a ${!homePick ? "win" : ""}" style="width:${pa * 100}%"></div><div class="h ${homePick ? "win" : ""}" style="width:${g.p_home * 100}%"></div></div>
+        <div class="pcts">${!homePick ? `<b>${pct(pa)}</b>` : `<span>${pct(pa)}</span>`}${homePick ? `<b>${pct(g.p_home)}</b>` : `<span>${pct(g.p_home)}</span>`}</div>
+      </div>`;
+    }).join("")}`).join("");
+}
+
+function renderResults(rs, tr) {
+  if (!rs.length) {
+    return `<div class="empty">No graded picks yet. Results show up here the morning after each game,
+      with a ✓ or ✗ next to every pick.</div>`;
+  }
+  return Object.entries(groupBy(rs, "date")).map(([date, gs]) => `
+    <h2>${esc(dayLabel(date))}</h2>
+    <table><thead><tr><th>Game</th><th class="num">Score</th><th class="num">Our pick</th><th class="num"></th></tr></thead><tbody>
+    ${gs.map((r) => {
+      const homePick = r.p_home >= 0.5;
+      const pickAbbr = homePick ? r.home_abbr : r.away_abbr, p = homePick ? r.p_home : 1 - r.p_home;
+      return `<tr><td>${nameHtml(r.away, r.away_abbr)} @ ${nameHtml(r.home, r.home_abbr)}</td>
+        <td class="num">${r.away_pts}–${r.home_pts}</td>
+        <td class="num">${esc(pickAbbr)} ${pct(p)}</td>
+        <td class="num ${r.correct ? "ok" : "no"}">${r.correct ? "✓" : "✗"}</td></tr>`;
+    }).join("")}
+    </tbody></table>`).join("");
+}
+
+function renderRankings(rk) {
+  return `<h2>Ranked by Elo rating</h2>
+  <table><thead><tr><th class="num">#</th><th>Team</th><th class="num">Record</th><th class="num">Elo</th></tr></thead><tbody>
+  ${rk.map((t) => `<tr><td class="num">${t.rank}</td><td>${nameHtml(t.name, t.abbr)}</td><td class="num">${esc(t.record)}</td><td class="num">${t.elo}</td></tr>`).join("")}
+  </tbody></table>
+  <p class="meta">Elo carries over between seasons (pulled 25% back toward average each summer), so early in the season it can disagree with the standings.</p>`;
+}
+
+function renderStats(d) {
+  const tr = d.track_record, bt = d.backtest;
+  const live = tr.games ? `${pct(tr.correct / tr.games, 1)}` : "—";
+  const liveLabel = tr.games ? `Live record: ${tr.correct}-${tr.games - tr.correct} since ${new Date(tr.since + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : "Live record (starts tonight)";
+  return `
+    <div class="stat"><div class="v">${pct(bt.accuracy, 1)}</div><div class="l">Backtest accuracy, ${bt.games.toLocaleString()} games since ${esc(bt.first_season)}</div></div>
+    <div class="stat"><div class="v">${live}</div><div class="l">${esc(liveLabel)}</div></div>
+    <div class="stat"><div class="v">${d.upcoming.length}</div><div class="l">Games predicted this week</div></div>`;
+}
+
+document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll("nav button").forEach((x) => x.classList.toggle("on", x === b));
+  ["upcoming", "results", "rankings", "about"].forEach((id) => ($("#" + id).hidden = id !== b.dataset.tab));
+}));
+
+fetch("data.json", { cache: "no-store" }).then((r) => r.json()).then((d) => {
+  $("#stats").innerHTML = renderStats(d);
+  $("#upcoming").innerHTML = renderUpcoming(d.upcoming);
+  $("#results").innerHTML = renderResults(d.recent_results, d.track_record);
+  $("#rankings").innerHTML = renderRankings(d.rankings);
+  $("#bt-games").textContent = d.backtest.games.toLocaleString();
+  $("#bt-acc").textContent = pct(d.backtest.accuracy, 1);
+  $("#bt-home").textContent = pct(d.backtest.home_baseline, 1);
+  $("#updated").textContent = "Updated " + new Date(d.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+}).catch(() => {
+  $("#upcoming").innerHTML = `<div class="empty">Couldn't load predictions. Try refreshing.</div>`;
+});
+</script>
+</body>
+</html>
