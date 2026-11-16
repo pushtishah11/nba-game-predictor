@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-15T23:28:49Z",
+ "generated_at": "2026-11-16T00:53:04Z",
  "model_trained_through": "2026-11-13",
  "backtest": {
   "games": 11726,
@@ -13,78 +13,6 @@
   "since": "2026-11-15"
  },
  "upcoming": [
-  {
-   "date": "2026-11-15",
-   "time": "7:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": null,
-   "p_home": 0.202,
-   "home": {
-    "name": "Washington Wizards",
-    "abbr": "WAS",
-    "record": "4-9",
-    "last10": 2,
-    "elo": 1315,
-    "b2b": false
-   },
-   "away": {
-    "name": "Houston Rockets",
-    "abbr": "HOU",
-    "record": "10-3",
-    "last10": 7,
-    "elo": 1623,
-    "b2b": false
-   }
-  },
-  {
-   "date": "2026-11-15",
-   "time": "8:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": null,
-   "p_home": 0.2838,
-   "home": {
-    "name": "Milwaukee Bucks",
-    "abbr": "MIL",
-    "record": "1-12",
-    "last10": 1,
-    "elo": 1314,
-    "b2b": false
-   },
-   "away": {
-    "name": "Atlanta Hawks",
-    "abbr": "ATL",
-    "record": "7-6",
-    "last10": 5,
-    "elo": 1530,
-    "b2b": false
-   }
-  },
-  {
-   "date": "2026-11-15",
-   "time": "9:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": null,
-   "p_home": 0.1782,
-   "home": {
-    "name": "Sacramento Kings",
-    "abbr": "SAC",
-    "record": "1-11",
-    "last10": 1,
-    "elo": 1319,
-    "b2b": false
-   },
-   "away": {
-    "name": "Oklahoma City Thunder",
-    "abbr": "OKC",
-    "record": "8-5",
-    "last10": 5,
-    "elo": 1657,
-    "b2b": false
-   }
-  },
   {
    "date": "2026-11-16",
    "time": "7:00p",
@@ -1138,6 +1066,174 @@
     "record": "4-10",
     "last10": 4,
     "elo": 1334,
+    "b2b": true
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "3:30p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.4103,
+   "home": {
+    "name": "Atlanta Hawks",
+    "abbr": "ATL",
+    "record": "7-6",
+    "last10": 5,
+    "elo": 1530,
+    "b2b": false
+   },
+   "away": {
+    "name": "Detroit Pistons",
+    "abbr": "DET",
+    "record": "8-4",
+    "last10": 6,
+    "elo": 1633,
+    "b2b": false
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "6:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.394,
+   "home": {
+    "name": "Miami Heat",
+    "abbr": "MIA",
+    "record": "7-6",
+    "last10": 7,
+    "elo": 1529,
+    "b2b": false
+   },
+   "away": {
+    "name": "Oklahoma City Thunder",
+    "abbr": "OKC",
+    "record": "8-5",
+    "last10": 5,
+    "elo": 1657,
+    "b2b": false
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "7:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.3142,
+   "home": {
+    "name": "Chicago Bulls",
+    "abbr": "CHI",
+    "record": "3-9",
+    "last10": 2,
+    "elo": 1391,
+    "b2b": false
+   },
+   "away": {
+    "name": "Denver Nuggets",
+    "abbr": "DEN",
+    "record": "7-4",
+    "last10": 7,
+    "elo": 1587,
+    "b2b": false
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "7:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.4416,
+   "home": {
+    "name": "Utah Jazz",
+    "abbr": "UTA",
+    "record": "1-12",
+    "last10": 0,
+    "elo": 1276,
+    "b2b": false
+   },
+   "away": {
+    "name": "Dallas Mavericks",
+    "abbr": "DAL",
+    "record": "7-6",
+    "last10": 6,
+    "elo": 1432,
+    "b2b": true
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "7:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.3503,
+   "home": {
+    "name": "Washington Wizards",
+    "abbr": "WAS",
+    "record": "4-9",
+    "last10": 2,
+    "elo": 1315,
+    "b2b": false
+   },
+   "away": {
+    "name": "Orlando Magic",
+    "abbr": "ORL",
+    "record": "5-7",
+    "last10": 5,
+    "elo": 1509,
+    "b2b": false
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "8:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.8336,
+   "home": {
+    "name": "New York Knicks",
+    "abbr": "NYK",
+    "record": "6-6",
+    "last10": 6,
+    "elo": 1682,
+    "b2b": true
+   },
+   "away": {
+    "name": "Indiana Pacers",
+    "abbr": "IND",
+    "record": "5-8",
+    "last10": 3,
+    "elo": 1369,
+    "b2b": false
+   }
+  },
+  {
+   "date": "2026-11-22",
+   "time": "8:30p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.436,
+   "home": {
+    "name": "Golden State Warriors",
+    "abbr": "GSW",
+    "record": "8-5",
+    "last10": 8,
+    "elo": 1524,
+    "b2b": false
+   },
+   "away": {
+    "name": "Boston Celtics",
+    "abbr": "BOS",
+    "record": "10-2",
+    "last10": 9,
+    "elo": 1677,
     "b2b": true
    }
   }
