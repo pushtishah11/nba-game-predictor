@@ -20,6 +20,7 @@ from pathlib import Path
 import joblib
 import pandas as pd
 
+from explain import explain
 from features import build
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -129,11 +130,17 @@ def main() -> None:
         cur[cur["played"]].assign(team=cur["away"], w=1 - cur["home_win"]),
     ]).groupby("team")["w"].agg(["sum", "count"])
 
-    def team_info(r, side: str) -> dict:
-        return {"name": getattr(r, side), "abbr": ABBR.get(getattr(r, side), getattr(r, side)[:3].upper()),
-                "record": record(getattr(r, f"{side}_win_pct"), getattr(r, f"{side}_games")),
-                "last10": round(getattr(r, f"{side}_last10_win") * 10) if getattr(r, f"{side}_games") else None,
-                "elo": round(getattr(r, f"{side}_elo")), "b2b": bool(getattr(r, f"{side}_b2b"))}
+    def team_info(r: pd.Series, side: str) -> dict:
+        games = int(r[f"{side}_games"])
+        n = min(10, games)
+        wins = round(r[f"{side}_last10_win"] * n)
+        return {"name": r[side], "abbr": ABBR.get(r[side], r[side][:3].upper()),
+                "record": record(r[f"{side}_win_pct"], games),
+                "last_n": n, "last_record": f"{wins}-{n - wins}" if n else None,
+                "last_margin": round(float(r[f"{side}_last10_margin"]), 1),
+                "avg_margin": round(float(r[f"{side}_avg_margin"]), 1),
+                "rest": int(r[f"{side}_rest"]),
+                "elo": round(r[f"{side}_elo"]), "b2b": bool(r[f"{side}_b2b"])}
 
     data = {
         "generated_at": now,
@@ -142,10 +149,12 @@ def main() -> None:
         "track_record": {"games": int(len(scored)), "correct": int(scored["correct"].sum()),
                          "since": str(log["date"].min().date()) if len(log) else None},
         "upcoming": [
-            {"date": str(r.date.date()), "time": r.start_et if isinstance(r.start_et, str) else None,
-             "neutral": bool(r.neutral), "playoffs": bool(r.playoffs), "notes": r.notes if isinstance(r.notes, str) else None,
-             "p_home": round(float(r.p_home), 4), "home": team_info(r, "home"), "away": team_info(r, "away")}
-            for r in upcoming.itertuples()
+            {"date": str(r["date"].date()), "time": r["start_et"] if isinstance(r["start_et"], str) else None,
+             "neutral": bool(r["neutral"]), "playoffs": bool(r["playoffs"]),
+             "notes": r["notes"] if isinstance(r["notes"], str) else None,
+             "p_home": round(float(r["p_home"]), 4), "home": team_info(r, "home"), "away": team_info(r, "away"),
+             "explain": explain(r, bundle["model"], bundle["features"])}
+            for _, r in upcoming.iterrows()
         ],
         "recent_results": [
             {"date": str(r.date.date()), "away": r.away, "home": r.home,

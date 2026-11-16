@@ -61,6 +61,24 @@
   .about a, footer a { color: var(--accent); }
   footer { margin-top: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
   [hidden] { display: none !important; }
+  .game.clickable { cursor: pointer; transition: border-color .15s; }
+  .game.clickable:hover, .game.clickable:focus-visible { border-color: var(--accent); outline: none; }
+  .hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .hint .chev { display: inline-block; transition: transform .2s; }
+  .game.open .hint .chev { transform: rotate(180deg); }
+  .why { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 4px; cursor: default; }
+  .why h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 14px 0 8px; }
+  .why ul { margin: 0; padding-left: 18px; } .why li { margin: 4px 0; }
+  .wf { display: grid; grid-template-columns: minmax(110px, 1.2fr) 2fr 72px; gap: 6px 10px; align-items: center; font-size: 13px; }
+  .wf .track { position: relative; height: 14px; }
+  .wf .track::before { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line); }
+  .wf .seg { position: absolute; top: 2px; height: 10px; border-radius: 3px; background: var(--muted); opacity: .5; }
+  .wf .seg.pick { background: var(--accent); opacity: 1; }
+  .wf .val { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .wf .total { font-weight: 700; border-top: 1px solid var(--line); padding-top: 6px; }
+  .wf .axis { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+  .cmp { font-size: 13px; } .cmp td, .cmp th { padding: 6px 10px; } .cmp .best { color: var(--accent); font-weight: 700; }
+  .note { font-size: 12px; color: var(--muted); margin: 10px 0 2px; }
   @media (max-width: 560px) {
     .full { display: none; } .short { display: inline; }
     .stat { padding: 12px; } .stat .v { font-size: 21px; } .stat .l { font-size: 12px; }
@@ -128,11 +146,64 @@ const groupBy = (arr, key) => arr.reduce((m, x) => ((m[x[key]] ??= []).push(x), 
 const nameHtml = (full, abbr) => `<span class="full">${esc(full)}</span><span class="short">${esc(abbr)}</span>`;
 
 function teamHtml(t, isPick, right) {
-  const meta = [t.record, t.last10 != null ? `${t.last10}-${10 - t.last10} L10` : null].filter(Boolean).join(" · ");
+  const meta = [t.record, t.last_record ? `${t.last_record} L${t.last_n}` : null].filter(Boolean).join(" · ");
   return `<div class="team ${right ? "right" : ""} ${isPick ? "pick" : ""}">
     <span class="name">${nameHtml(t.name, t.abbr)}${t.b2b ? '<span class="badge" title="Second night of a back-to-back">B2B</span>' : ""}</span>
     <span class="meta">${esc(meta)} <span class="hide-sm">· Elo ${t.elo}</span></span>
   </div>`;
+}
+
+function whyHtml(g) {
+  const e = g.explain, A = g.away, H = g.home, homePick = g.p_home >= 0.5;
+  const pickAbbr = homePick ? H.abbr : A.abbr;
+  const scale = Math.max(0.2, ...e.steps.map((s) => Math.abs(s.delta)), Math.abs(e.base - 0.5));
+  const row = (label, delta, cls = "") => {
+    const w = (Math.abs(delta) / scale) * 50, toHome = delta >= 0;
+    const favors = toHome ? H.abbr : A.abbr, isPick = (toHome === homePick);
+    const pp = Math.abs(delta * 100);
+    const val = pp < 0.5 ? "≈ 0" : `+${pp.toFixed(0)} ${favors}`;
+    return `<div class="${cls}">${esc(label)}</div>
+      <div class="track ${cls}"><div class="seg ${isPick ? "pick" : ""}" style="${toHome ? "left:50%" : `left:${50 - w}%`};width:${w}%"></div></div>
+      <div class="val ${cls}">${esc(val)}</div>`;
+  };
+  const homeRow = g.neutral ? row("Neutral site", 0) : row("Home court", e.base - 0.5);
+  const fmt = (x) => (x > 0 ? "+" : "") + x.toFixed(1);
+  const stats = [
+    ["Elo rating", A.elo, H.elo, (x) => x, 1],
+    ["Record", A.record, H.record, (x) => x, null],
+    ["Avg point margin", A.avg_margin, H.avg_margin, fmt, 1],
+    [`Last ${Math.min(A.last_n, H.last_n) || 10}`, A.last_record ?? "—", H.last_record ?? "—", (x) => x, null],
+    ["Recent point margin", A.last_margin, H.last_margin, fmt, 1],
+    ["Days of rest", A.b2b ? "0 (B2B)" : A.rest >= 7 ? "7+" : A.rest, H.b2b ? "0 (B2B)" : H.rest >= 7 ? "7+" : H.rest, (x) => x, null],
+  ];
+  const cell = (v, other, f, dir) => {
+    const best = dir && typeof v === "number" && v !== other && (v > other) === (dir > 0);
+    return `<td class="num ${best ? "best" : ""}">${esc(f(v))}</td>`;
+  };
+  return `
+    <h3>Why ${esc(pickAbbr)}?</h3>
+    <ul>${e.summary.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>
+    <h3>How the model got to ${pct(homePick ? g.p_home : 1 - g.p_home)}</h3>
+    <div class="wf">
+      <div></div><div class="axis"><span>← ${esc(A.abbr)}</span><span>${esc(H.abbr)} →</span></div><div></div>
+      ${homeRow}
+      ${e.steps.map((s) => row(s.label, s.delta)).join("")}
+      <div class="total">Prediction</div><div class="total"></div><div class="val total">${esc(pickAbbr)} ${pct(homePick ? g.p_home : 1 - g.p_home)}</div>
+    </div>
+    <p class="note">Starts at 50/50, then each factor shifts the odds. Numbers are percentage points of win probability.</p>
+    <h3>By the numbers</h3>
+    <table class="cmp"><thead><tr><th></th><th class="num">${esc(A.abbr)}</th><th class="num">${esc(H.abbr)}</th></tr></thead><tbody>
+      ${stats.map(([l, a, h, f, dir]) => `<tr><td>${esc(l)}</td>${cell(a, h, f, dir)}${cell(h, a, f, dir)}</tr>`).join("")}
+    </tbody></table>`;
+}
+
+function toggleCard(card) {
+  const why = card.querySelector(".why");
+  if (!why || !why.innerHTML.trim()) return;
+  const open = why.hidden;
+  why.hidden = !open;
+  card.classList.toggle("open", open);
+  card.setAttribute("aria-expanded", String(open));
 }
 
 function renderUpcoming(games) {
@@ -142,7 +213,7 @@ function renderUpcoming(games) {
     ${gs.map((g) => {
       const pa = 1 - g.p_home, homePick = g.p_home >= 0.5;
       const tag = [g.time ? `${g.time.replace("p", " PM").replace("a", " AM")} ET` : "", g.neutral ? "Neutral site" : "", g.notes || ""].filter(Boolean).join(" · ");
-      return `<div class="game">
+      return `<div class="game clickable" role="button" tabindex="0" aria-expanded="false">
         <div class="row">
           ${teamHtml(g.away, !homePick, false)}
           <div class="mid">@<br>${esc(tag)}</div>
@@ -150,6 +221,8 @@ function renderUpcoming(games) {
         </div>
         <div class="bar"><div class="a ${!homePick ? "win" : ""}" style="width:${pa * 100}%"></div><div class="h ${homePick ? "win" : ""}" style="width:${g.p_home * 100}%"></div></div>
         <div class="pcts">${!homePick ? `<b>${pct(pa)}</b>` : `<span>${pct(pa)}</span>`}${homePick ? `<b>${pct(g.p_home)}</b>` : `<span>${pct(g.p_home)}</span>`}</div>
+        <div class="hint">Why this pick? <span class="chev">▾</span></div>
+        <div class="why" hidden>${g.explain ? whyHtml(g) : ""}</div>
       </div>`;
     }).join("")}`).join("");
 }
@@ -195,6 +268,18 @@ document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click
   document.querySelectorAll("nav button").forEach((x) => x.classList.toggle("on", x === b));
   ["upcoming", "results", "rankings", "about"].forEach((id) => ($("#" + id).hidden = id !== b.dataset.tab));
 }));
+
+$("#upcoming").addEventListener("click", (ev) => {
+  if (ev.target.closest(".why")) return;  // clicks inside the panel don't close it
+  const card = ev.target.closest(".game.clickable");
+  if (card) toggleCard(card);
+});
+$("#upcoming").addEventListener("keydown", (ev) => {
+  if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches(".game.clickable")) {
+    ev.preventDefault();
+    toggleCard(ev.target);
+  }
+});
 
 fetch("data.json", { cache: "no-store" }).then((r) => r.json()).then((d) => {
   $("#stats").innerHTML = renderStats(d);
