@@ -28,14 +28,21 @@
   .stat .v { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
   .stat .l { color: var(--muted); font-size: 13px; }
   nav { display: flex; gap: 6px; margin: 26px 0 14px; border-bottom: 1px solid var(--line); }
-  nav button { background: none; border: 0; padding: 10px 12px; font: inherit; color: var(--muted);
+  nav { overflow-x: auto; scrollbar-width: none; }
+  nav button { white-space: nowrap; background: none; border: 0; padding: 10px 12px; font: inherit; color: var(--muted);
                cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
   nav button.on { color: var(--ink); border-color: var(--accent); font-weight: 600; }
   h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 22px 0 10px; }
   .game { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
   .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .team { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-  .team.right { align-items: flex-end; text-align: right; }
+  html { scrollbar-gutter: stable; }
+  .team { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+  .team.right { flex-direction: row-reverse; text-align: right; }
+  .tt { display: flex; flex-direction: column; min-width: 0; }
+  .team.right .tt { align-items: flex-end; }
+  .logo { flex: 0 0 auto; display: inline-flex; }
+  .logo img { width: 100%; height: 100%; object-fit: contain; }
+  .tl { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; }
   .name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
   .short { display: none; }
   .meta { color: var(--muted); font-size: 12.5px; }
@@ -65,8 +72,24 @@
   .game.clickable:hover, .game.clickable:focus-visible { border-color: var(--accent); outline: none; }
   .hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
   .hint .chev { display: inline-block; transition: transform .2s; }
-  .game.open .hint .chev { transform: rotate(180deg); }
-  .why { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 4px; cursor: default; }
+  #backdrop { position: fixed; inset: 0; z-index: 10; background: rgba(0, 0, 0, .45); opacity: 0; transition: opacity .3s; }
+  #backdrop.on { opacity: 1; }
+  #sheet { position: fixed; z-index: 11; background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+           box-shadow: 0 24px 70px rgba(0, 0, 0, .35); overflow: hidden; cursor: zoom-out; outline: none;
+           transition: top .38s cubic-bezier(.2, .8, .2, 1), left .38s cubic-bezier(.2, .8, .2, 1),
+                       width .38s cubic-bezier(.2, .8, .2, 1), height .38s cubic-bezier(.2, .8, .2, 1); }
+  #sheet .sheet-body { height: 100%; overflow-y: auto; padding: 20px 20px 24px; opacity: 0; transition: opacity .15s; }
+  #sheet.on .sheet-body { opacity: 1; transition: opacity .25s .12s; }
+  #sheet .close { position: absolute; top: 10px; right: 12px; z-index: 1; border: 0; background: var(--bar); color: var(--ink);
+                  width: 30px; height: 30px; border-radius: 50%; font-size: 18px; line-height: 30px; cursor: pointer; }
+  .sh-head { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 8px; text-align: center; margin-top: 6px; }
+  .sh-team { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+  .sh-team .name { white-space: normal; }
+  .sh-team .big { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .sh-team.pick .big, .sh-team.pick .name { color: var(--accent); }
+  .sh-head .mid { padding-top: 22px; }
+  @media (prefers-reduced-motion: reduce) { #sheet, #backdrop, #sheet .sheet-body { transition: none !important; } }
+  .why { border-top: 1px solid var(--line); margin-top: 14px; padding-top: 4px; }
   .why h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 14px 0 8px; }
   .why ul { margin: 0; padding-left: 18px; } .why li { margin: 4px 0; }
   .wf { display: grid; grid-template-columns: minmax(110px, 1.2fr) 2fr 72px; gap: 6px 10px; align-items: center; font-size: 13px; }
@@ -84,6 +107,9 @@
     .stat { padding: 12px; } .stat .v { font-size: 21px; } .stat .l { font-size: 12px; }
     header h1 { font-size: 25px; }
     .hide-sm { display: none; }
+    .team, .team.right { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .team.right { align-items: flex-end; }
+    nav button { padding: 10px 8px; }
   }
 </style>
 </head>
@@ -125,6 +151,12 @@
     <p>Code, data, and full write-up are on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>.</p>
   </section>
 
+  <div id="backdrop" hidden></div>
+  <div id="sheet" role="dialog" aria-modal="true" aria-label="Prediction breakdown" tabindex="-1" hidden>
+    <button class="close" aria-label="Close">×</button>
+    <div class="sheet-body"></div>
+  </div>
+
   <footer>
     <span id="updated"></span> · <a href="https://github.com/pushtishah11/nba-game-predictor">Source on GitHub</a><br>
     A student project for fun and learning. Not betting advice, and not affiliated with the NBA.
@@ -143,13 +175,32 @@ const dayLabel = (iso) => {
   return diff === 0 ? `Today · ${base}` : diff === 1 ? `Tomorrow · ${base}` : diff === -1 ? `Yesterday · ${base}` : base;
 };
 const groupBy = (arr, key) => arr.reduce((m, x) => ((m[x[key]] ??= []).push(x), m), {});
+// Official NBA logo images (linked, not copied). Dark-mode variants where available.
+const NBA_IDS = { ATL: 1610612737, BOS: 1610612738, CLE: 1610612739, NOP: 1610612740, CHI: 1610612741,
+  DAL: 1610612742, DEN: 1610612743, GSW: 1610612744, HOU: 1610612745, LAC: 1610612746, LAL: 1610612747,
+  MIA: 1610612748, MIL: 1610612749, MIN: 1610612750, BKN: 1610612751, NYK: 1610612752, ORL: 1610612753,
+  IND: 1610612754, PHI: 1610612755, PHX: 1610612756, POR: 1610612757, SAC: 1610612758, SAS: 1610612759,
+  OKC: 1610612760, TOR: 1610612761, UTA: 1610612762, MEM: 1610612763, WAS: 1610612764, DET: 1610612765,
+  CHA: 1610612766 };
+function logo(abbr, size = 28) {
+  const id = NBA_IDS[abbr];
+  if (!id) return "";
+  const u = (v) => `https://cdn.nba.com/logos/nba/${id}/global/${v}/logo.svg`;
+  return `<picture class="logo" style="width:${size}px;height:${size}px">` +
+    `<source media="(prefers-color-scheme: dark)" srcset="${u("D")}">` +
+    `<img src="${u("L")}" alt="" width="${size}" height="${size}" loading="lazy" onerror="this.parentNode.remove()"></picture>`;
+}
+const teamLabel = (full, abbr, size = 22) => `<span class="tl">${logo(abbr, size)}${nameHtml(full, abbr)}</span>`;
 const nameHtml = (full, abbr) => `<span class="full">${esc(full)}</span><span class="short">${esc(abbr)}</span>`;
 
 function teamHtml(t, isPick, right) {
-  const meta = [t.record, t.last_record ? `${t.last_record} L${t.last_n}` : null].filter(Boolean).join(" · ");
+  const extra = [t.last_record ? `${t.last_record} L${t.last_n}` : null, `Elo ${t.elo}`].filter(Boolean).join(" · ");
   return `<div class="team ${right ? "right" : ""} ${isPick ? "pick" : ""}">
-    <span class="name">${nameHtml(t.name, t.abbr)}${t.b2b ? '<span class="badge" title="Second night of a back-to-back">B2B</span>' : ""}</span>
-    <span class="meta">${esc(meta)} <span class="hide-sm">· Elo ${t.elo}</span></span>
+    ${logo(t.abbr, 36)}
+    <div class="tt">
+      <span class="name">${nameHtml(t.name, t.abbr)}${t.b2b ? '<span class="badge" title="Second night of a back-to-back">B2B</span>' : ""}</span>
+      <span class="meta">${esc(t.record)}<span class="hide-sm"> · ${esc(extra)}</span></span>
+    </div>
   </div>`;
 }
 
@@ -197,13 +248,80 @@ function whyHtml(g) {
     </tbody></table>`;
 }
 
-function toggleCard(card) {
-  const why = card.querySelector(".why");
-  if (!why || !why.innerHTML.trim()) return;
-  const open = why.hidden;
-  why.hidden = !open;
-  card.classList.toggle("open", open);
-  card.setAttribute("aria-expanded", String(open));
+let GAMES = [], openCard = null, closeTimer = null;
+const sheet = $("#sheet"), backdrop = $("#backdrop"), sheetBody = $("#sheet .sheet-body");
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+const tipTag = (g) => [g.time ? `${g.time.replace("p", " PM").replace("a", " AM")} ET` : "", g.neutral ? "Neutral site" : "", g.notes || ""].filter(Boolean).join(" · ");
+
+function sheetHtml(g) {
+  const A = g.away, H = g.home, pa = 1 - g.p_home, homePick = g.p_home >= 0.5;
+  const side = (t, p, isPick) => `<div class="sh-team ${isPick ? "pick" : ""}">
+      ${logo(t.abbr, 64)}
+      <span class="name">${esc(t.name)}${t.b2b ? '<span class="badge">B2B</span>' : ""}</span>
+      <span class="meta">${esc(t.record)}</span>
+      <span class="big">${pct(p)}</span>
+    </div>`;
+  return `<div class="sh-head">${side(A, pa, !homePick)}<div class="mid">@<br>${esc(tipTag(g))}<br>${esc(dayLabel(g.date))}</div>${side(H, g.p_home, homePick)}</div>
+    <div class="bar"><div class="a ${!homePick ? "win" : ""}" style="width:${pa * 100}%"></div><div class="h ${homePick ? "win" : ""}" style="width:${g.p_home * 100}%"></div></div>
+    <div class="why">${whyHtml(g)}</div>`;
+}
+
+function setRect(r) {
+  sheet.style.top = r.top + "px"; sheet.style.left = r.left + "px";
+  sheet.style.width = r.width + "px"; sheet.style.height = r.height + "px";
+}
+
+function targetRect() {
+  // Measure the popup's natural height at its final width, without animating.
+  const w = Math.min(600, innerWidth - 24);
+  sheet.style.transition = "none";
+  sheet.style.width = w + "px";
+  sheet.style.height = "auto";
+  const h = Math.min(sheet.offsetHeight, innerHeight - 24);
+  return { top: (innerHeight - h) / 2, left: (innerWidth - w) / 2, width: w, height: h };
+}
+
+function openSheet(card) {
+  const g = GAMES[+card.dataset.i];
+  if (!g || !g.explain || openCard) return;
+  clearTimeout(closeTimer);
+  sheetBody.innerHTML = sheetHtml(g);
+  sheet.hidden = false;
+  sheet.style.visibility = "hidden";
+  const target = targetRect();
+  setRect(card.getBoundingClientRect());   // start exactly over the card...
+  sheet.style.visibility = "";
+  sheet.offsetWidth;                       // (apply the start position before animating)
+  sheet.style.transition = "";
+  sheetBody.scrollTop = 0;
+  backdrop.hidden = false;
+  document.body.style.overflow = "hidden";
+  card.style.visibility = "hidden";
+  card.setAttribute("aria-expanded", "true");
+  openCard = card;
+  requestAnimationFrame(() => {            // ...then grow into the centered popup
+    setRect(target);
+    sheet.classList.add("on");
+    backdrop.classList.add("on");
+  });
+  sheet.focus({ preventScroll: true });
+}
+
+function closeSheet() {
+  if (!openCard) return;
+  const card = openCard;
+  openCard = null;
+  sheet.classList.remove("on");
+  backdrop.classList.remove("on");
+  setRect(card.getBoundingClientRect());   // shrink back into the card's spot
+  closeTimer = setTimeout(() => {
+    sheet.hidden = true;
+    backdrop.hidden = true;
+    card.style.visibility = "";
+    card.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    card.focus({ preventScroll: true });
+  }, reduceMotion() ? 0 : 380);
 }
 
 function renderUpcoming(games) {
@@ -212,8 +330,8 @@ function renderUpcoming(games) {
     <h2>${esc(dayLabel(date))}</h2>
     ${gs.map((g) => {
       const pa = 1 - g.p_home, homePick = g.p_home >= 0.5;
-      const tag = [g.time ? `${g.time.replace("p", " PM").replace("a", " AM")} ET` : "", g.neutral ? "Neutral site" : "", g.notes || ""].filter(Boolean).join(" · ");
-      return `<div class="game clickable" role="button" tabindex="0" aria-expanded="false">
+      const tag = tipTag(g);
+      return `<div class="game clickable" role="button" tabindex="0" aria-expanded="false" aria-haspopup="dialog" data-i="${GAMES.indexOf(g)}">
         <div class="row">
           ${teamHtml(g.away, !homePick, false)}
           <div class="mid">@<br>${esc(tag)}</div>
@@ -221,8 +339,7 @@ function renderUpcoming(games) {
         </div>
         <div class="bar"><div class="a ${!homePick ? "win" : ""}" style="width:${pa * 100}%"></div><div class="h ${homePick ? "win" : ""}" style="width:${g.p_home * 100}%"></div></div>
         <div class="pcts">${!homePick ? `<b>${pct(pa)}</b>` : `<span>${pct(pa)}</span>`}${homePick ? `<b>${pct(g.p_home)}</b>` : `<span>${pct(g.p_home)}</span>`}</div>
-        <div class="hint">Why this pick? <span class="chev">▾</span></div>
-        <div class="why" hidden>${g.explain ? whyHtml(g) : ""}</div>
+        ${g.explain ? '<div class="hint">Tap to see why ⤢</div>' : ""}
       </div>`;
     }).join("")}`).join("");
 }
@@ -238,7 +355,7 @@ function renderResults(rs, tr) {
     ${gs.map((r) => {
       const homePick = r.p_home >= 0.5;
       const pickAbbr = homePick ? r.home_abbr : r.away_abbr, p = homePick ? r.p_home : 1 - r.p_home;
-      return `<tr><td>${nameHtml(r.away, r.away_abbr)} @ ${nameHtml(r.home, r.home_abbr)}</td>
+      return `<tr><td>${teamLabel(r.away, r.away_abbr, 20)} @ ${teamLabel(r.home, r.home_abbr, 20)}</td>
         <td class="num">${r.away_pts}–${r.home_pts}</td>
         <td class="num">${esc(pickAbbr)} ${pct(p)}</td>
         <td class="num ${r.correct ? "ok" : "no"}">${r.correct ? "✓" : "✗"}</td></tr>`;
@@ -249,7 +366,7 @@ function renderResults(rs, tr) {
 function renderRankings(rk) {
   return `<h2>Ranked by Elo rating</h2>
   <table><thead><tr><th class="num">#</th><th>Team</th><th class="num">Record</th><th class="num">Elo</th></tr></thead><tbody>
-  ${rk.map((t) => `<tr><td class="num">${t.rank}</td><td>${nameHtml(t.name, t.abbr)}</td><td class="num">${esc(t.record)}</td><td class="num">${t.elo}</td></tr>`).join("")}
+  ${rk.map((t) => `<tr><td class="num">${t.rank}</td><td>${teamLabel(t.name, t.abbr, 24)}</td><td class="num">${esc(t.record)}</td><td class="num">${t.elo}</td></tr>`).join("")}
   </tbody></table>
   <p class="meta">Elo carries over between seasons (pulled 25% back toward average each summer), so early in the season it can disagree with the standings.</p>`;
 }
@@ -270,18 +387,22 @@ document.querySelectorAll("nav button").forEach((b) => b.addEventListener("click
 }));
 
 $("#upcoming").addEventListener("click", (ev) => {
-  if (ev.target.closest(".why")) return;  // clicks inside the panel don't close it
   const card = ev.target.closest(".game.clickable");
-  if (card) toggleCard(card);
+  if (card) openSheet(card);
 });
 $("#upcoming").addEventListener("keydown", (ev) => {
   if ((ev.key === "Enter" || ev.key === " ") && ev.target.matches(".game.clickable")) {
     ev.preventDefault();
-    toggleCard(ev.target);
+    openSheet(ev.target);
   }
 });
+sheet.addEventListener("click", closeSheet);      // click the big card to shrink it back
+backdrop.addEventListener("click", closeSheet);
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeSheet(); });
+addEventListener("resize", () => { if (openCard) { setRect(targetRect()); sheet.style.transition = ""; } });
 
 fetch("data.json", { cache: "no-store" }).then((r) => r.json()).then((d) => {
+  GAMES = d.upcoming;
   $("#stats").innerHTML = renderStats(d);
   $("#upcoming").innerHTML = renderUpcoming(d.upcoming);
   $("#results").innerHTML = renderResults(d.recent_results, d.track_record);
