@@ -91,7 +91,8 @@ def main() -> None:
     ap.add_argument("--today", type=date.fromisoformat, default=None)
     args = ap.parse_args()
 
-    today = pd.Timestamp(args.today or date.today())
+    # NBA schedules are in US Eastern time; servers usually run on UTC.
+    today = pd.Timestamp(args.today or pd.Timestamp.now(tz="America/New_York").date())
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     bundle = joblib.load(MODEL_FILE)
     df = build()
