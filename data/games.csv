@@ -15675,14 +15675,14 @@ season,date,start_et,away,away_pts,home,home_pts,ot,notes,playoffs
 2027,2026-11-15,7:00p,Houston Rockets,147.0,Washington Wizards,119.0,,,False
 2027,2026-11-15,8:00p,Atlanta Hawks,113.0,Milwaukee Bucks,106.0,,,False
 2027,2026-11-15,9:00p,Oklahoma City Thunder,125.0,Sacramento Kings,103.0,,,False
-2027,2026-11-16,7:00p,Orlando Magic,,Boston Celtics,,,,False
-2027,2026-11-16,7:00p,Chicago Bulls,,Cleveland Cavaliers,,,,False
-2027,2026-11-16,7:00p,Memphis Grizzlies,,Washington Wizards,,,,False
-2027,2026-11-16,7:30p,Philadelphia 76ers,,Brooklyn Nets,,,,False
-2027,2026-11-16,7:30p,Houston Rockets,,Miami Heat,,,,False
-2027,2026-11-16,8:00p,Portland Trail Blazers,,Minnesota Timberwolves,,,,False
-2027,2026-11-16,8:00p,Golden State Warriors,,New Orleans Pelicans,,,,False
-2027,2026-11-16,9:00p,Phoenix Suns,,Denver Nuggets,,,,False
+2027,2026-11-16,7:00p,Orlando Magic,115.0,Boston Celtics,105.0,,,False
+2027,2026-11-16,7:00p,Chicago Bulls,115.0,Cleveland Cavaliers,126.0,,,False
+2027,2026-11-16,7:00p,Memphis Grizzlies,136.0,Washington Wizards,120.0,,,False
+2027,2026-11-16,7:30p,Philadelphia 76ers,135.0,Brooklyn Nets,123.0,,,False
+2027,2026-11-16,7:30p,Houston Rockets,110.0,Miami Heat,128.0,,,False
+2027,2026-11-16,8:00p,Portland Trail Blazers,98.0,Minnesota Timberwolves,106.0,,,False
+2027,2026-11-16,8:00p,Golden State Warriors,94.0,New Orleans Pelicans,115.0,,,False
+2027,2026-11-16,9:00p,Phoenix Suns,117.0,Denver Nuggets,105.0,,,False
 2027,2026-11-17,10:30p,Utah Jazz,,Los Angeles Clippers,,,,False
 2027,2026-11-17,11:00p,Charlotte Hornets,,Los Angeles Lakers,,,,False
 2027,2026-11-17,7:30p,New York Knicks,,Toronto Raptors,,,,False
