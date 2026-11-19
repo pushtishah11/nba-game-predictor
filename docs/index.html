@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NBA Game Predictor</title>
-<meta name="description" content="Daily NBA game predictions from an Elo + recent-form model, with a live track record.">
+<meta name="description" content="Daily NBA game predictions from an Elo, recent-form and injury model, with a live track record.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
 <style>
   :root {
@@ -23,6 +23,7 @@
   .wrap { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
   header h1 { margin: 0; font-size: 30px; letter-spacing: -0.5px; }
   header p { margin: 4px 0 0; color: var(--muted); }
+  header p a { color: var(--accent); text-decoration: none; white-space: nowrap; }
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 8px; }
   .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
   .stat .v { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
@@ -100,6 +101,7 @@
   .wf .val { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .wf .total { font-weight: 700; border-top: 1px solid var(--line); padding-top: 6px; }
   .wf .axis { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+  .inj .out { color: var(--bad, #c0392b); } .inj .q { color: var(--muted); }
   .cmp { font-size: 13px; } .cmp td, .cmp th { padding: 6px 10px; } .cmp .best { color: var(--accent); font-weight: 700; }
   .note { font-size: 12px; color: var(--muted); margin: 10px 0 2px; }
   @media (max-width: 560px) {
@@ -117,7 +119,8 @@
 <div class="wrap">
   <header>
     <h1>🏀 NBA Game Predictor</h1>
-    <p>Daily win probabilities from an Elo + recent-form model. Picks are logged before tip-off.</p>
+    <p>Daily win probabilities from an Elo, recent-form and injury model. Picks are logged before tip-off.
+      <a href="writeup.html">Read what I learned →</a></p>
   </header>
 
   <section class="stats" id="stats"></section>
@@ -135,20 +138,24 @@
   <section id="about" class="about" hidden>
     <h2>How it works</h2>
     <p>Every morning a scheduled job downloads the latest scores from
-      <a href="https://www.basketball-reference.com/">Basketball-Reference</a>, rebuilds each team's features,
+      <a href="https://www.basketball-reference.com/">Basketball-Reference</a>, player box scores and the injury
+      report from ESPN, rebuilds each team's features,
       and predicts the next week of games. The features are:</p>
     <ul>
       <li><b>Elo rating:</b> one number per team that goes up with wins (more for big wins over good teams) and down with losses</li>
       <li><b>Season form:</b> win % and average point margin</li>
       <li><b>Recent form:</b> win % and margin over the last 10 games</li>
       <li><b>Rest:</b> days off, and whether a team is on the second night of a back-to-back</li>
+      <li><b>Lineups:</b> every player is rated from his recent box scores. The model compares the talent each
+        team is expected to have tonight (after injuries) with its usual lineup</li>
       <li><b>Home court</b> (except at neutral sites)</li>
     </ul>
     <p>A logistic regression turns those into a probability. It was tested <b>walk-forward</b>: to score each season,
       it trained only on earlier seasons. Across <span id="bt-games"></span> games it picked
       <b id="bt-acc"></b> of winners correctly, vs <span id="bt-home"></span> for always picking the home team.</p>
     <p>The <b>live track record</b> only counts picks the site published before the game started.</p>
-    <p>Code, data, and full write-up are on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>.</p>
+    <p>What the model learned (injuries, home court, back-to-backs) is in the <a href="writeup.html">write-up</a>.
+      Code and data are on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>.</p>
   </section>
 
   <div id="backdrop" hidden></div>
@@ -225,15 +232,24 @@ function whyHtml(g) {
     ["Avg point margin", A.avg_margin, H.avg_margin, fmt, 1],
     [`Last ${Math.min(A.last_n, H.last_n) || 10}`, A.last_record ?? "—", H.last_record ?? "—", (x) => x, null],
     ["Recent point margin", A.last_margin, H.last_margin, fmt, 1],
+    ["Lineup vs usual", A.lineup_change ?? 0, H.lineup_change ?? 0, fmt, 1],
     ["Days of rest", A.b2b ? "0 (B2B)" : A.rest >= 7 ? "7+" : A.rest, H.b2b ? "0 (B2B)" : H.rest >= 7 ? "7+" : H.rest, (x) => x, null],
   ];
   const cell = (v, other, f, dir) => {
     const best = dir && typeof v === "number" && v !== other && (v > other) === (dir > 0);
     return `<td class="num ${best ? "best" : ""}">${esc(f(v))}</td>`;
   };
+  const injured = [A, H].filter((t) => t.missing && t.missing.length);
+  const injuries = injured.length ? `
+    <h3>Injury report</h3>
+    <table class="cmp inj"><tbody>${injured.map((t) => t.missing.map((m, i) => `<tr>
+      <td>${i ? "" : esc(t.abbr)}</td><td>${esc(m.player)}</td>
+      <td class="${m.status === "Questionable" ? "q" : "out"}">${esc(m.status)}${m.injury ? ` · ${esc(m.injury)}` : ""}${m.new ? "" : ' <span class="q">· out for a while</span>'}</td></tr>`).join("")).join("")}
+    </tbody></table>
+    <p class="note">Players out for a while are already reflected in the team's recent results, so they move the pick very little.</p>` : "";
   return `
     <h3>Why ${esc(pickAbbr)}?</h3>
-    <ul>${e.summary.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>
+    <ul>${e.summary.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>${injuries}
     <h3>How the model got to ${pct(homePick ? g.p_home : 1 - g.p_home)}</h3>
     <div class="wf">
       <div></div><div class="axis"><span>← ${esc(A.abbr)}</span><span>${esc(H.abbr)} →</span></div><div></div>
@@ -241,7 +257,7 @@ function whyHtml(g) {
       ${e.steps.map((s) => row(s.label, s.delta)).join("")}
       <div class="total">Prediction</div><div class="total"></div><div class="val total">${esc(pickAbbr)} ${pct(homePick ? g.p_home : 1 - g.p_home)}</div>
     </div>
-    <p class="note">Starts at 50/50, then each factor shifts the odds. Numbers are percentage points of win probability.</p>
+    <p class="note">Starts at 50/50, then each factor shifts the odds. Numbers are percentage points of win probability. "Lineup vs usual" compares tonight's expected players with the team's last 10 games, in Game Score points.</p>
     <h3>By the numbers</h3>
     <table class="cmp"><thead><tr><th></th><th class="num">${esc(A.abbr)}</th><th class="num">${esc(H.abbr)}</th></tr></thead><tbody>
       ${stats.map(([l, a, h, f, dir]) => `<tr><td>${esc(l)}</td>${cell(a, h, f, dir)}${cell(h, a, f, dir)}</tr>`).join("")}
