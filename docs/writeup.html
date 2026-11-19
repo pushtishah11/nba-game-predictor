@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What predicts an NBA game?</title>
+<meta name="description" content="What I learned building an NBA game predictor: Elo does most of the work, injuries are the biggest missing piece, and home court isn't what it used to be.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏀</text></svg>">
+<style>
+  :root {
+    --bg: #f6f5f2; --card: #ffffff; --ink: #1a1a1a; --muted: #6b6b6b; --line: #e4e2dc;
+    --accent: #e8590c; --accent-soft: #fff0e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121212; --card: #1c1c1c; --ink: #ededed; --muted: #9a9a9a; --line: #2c2c2c;
+            --accent: #ff8a3d; --accent-soft: #33210f; }
+    figure img { background: #fff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 700px; margin: 0 auto; padding: 32px 16px 80px; }
+  a { color: var(--accent); }
+  .back { font-size: 14px; text-decoration: none; }
+  h1 { font-size: 34px; line-height: 1.2; letter-spacing: -0.5px; margin: 18px 0 8px; }
+  .dek { color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  h2 { font-size: 22px; margin: 40px 0 8px; letter-spacing: -0.2px; }
+  figure { margin: 22px 0; }
+  figure img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .tldr { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+          border-radius: 10px; padding: 14px 18px; }
+  .tldr ul { margin: 6px 0 0; padding-left: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; background: var(--card);
+          border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--line); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: 0; }
+  tr.hl td { font-weight: 700; color: var(--accent); }
+  .scroll { overflow-x: auto; }
+  code { font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+  footer { color: var(--muted); font-size: 14px; margin-top: 48px; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./">← Back to today's picks</a>
+  <h1>What predicts an NBA game?</h1>
+  <p class="dek">I built a model that picks NBA winners and tested it on about 11,750 games it had never seen.
+    Here's what mattered, what didn't, and where it still falls short.</p>
+
+  <div class="tldr"><b>Short version</b>
+    <ul>
+      <li>One rating per team (Elo) gets you most of the way: <b>64.6%</b> correct.</li>
+      <li>Adding who is actually playing was the biggest single upgrade: <b>65.3% → 66.3%</b>.</li>
+      <li>Home court is worth less than it used to be: home teams won 58% of games before 2020 and 55% since.</li>
+      <li>Back-to-backs are real: playing the second night costs a team about 5-6 points of win %.</li>
+    </ul>
+  </div>
+
+  <h2>The setup</h2>
+  <p>The data is every game since 2014-15: final scores and the schedule from Basketball-Reference, plus
+    player box scores from ESPN. For each game the model only gets information from <i>before</i> tip-off.
+    That includes team ratings, records, recent form, rest, and which players are available. It outputs the
+    probability that the home team wins.</p>
+  <p>To score it honestly I used <b>walk-forward testing</b>. To predict the 2021-22 season, the model trains on
+    2015-16 through 2020-21 and nothing later. Then it moves forward a season and repeats. A lot of sports models
+    quietly train on the future, for example by using full-season averages, and their accuracy looks great until
+    they have to predict tomorrow.</p>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Model</th><th class="num">Accuracy</th><th class="num">Log loss</th></tr></thead>
+    <tbody>
+      <tr><td>Always pick the home team</td><td class="num">56.0%</td><td class="num">0.686</td></tr>
+      <tr><td>Elo rating only</td><td class="num">64.6%</td><td class="num">0.634</td></tr>
+      <tr><td>Logistic regression, team stats only</td><td class="num">65.3%</td><td class="num">0.622</td></tr>
+      <tr><td>Gradient boosting, with lineups</td><td class="num">65.6%</td><td class="num">0.618</td></tr>
+      <tr class="hl"><td>Logistic regression, with lineups</td><td class="num">66.3%</td><td class="num">0.613</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:14px;color:var(--muted)">Walk-forward results, 2017-18 through November 2026 (11,753 games).
+    Log loss scores the probabilities, not just the picks; lower is better.</p>
+
+  <h2>1. Elo does most of the work</h2>
+  <p>Elo, the rating system from chess, gives every team one number. Beat a good team and your number goes up a lot;
+    lose to a bad one and it drops. With a home-court bonus, a boost for blowout wins, and some regression toward
+    average each summer, that one number picks <b>64.6%</b> of games correctly.</p>
+  <p>Everything else I added (season record, last-10 form, rest) only bought another 0.7 points. That says
+    something about basketball: a team's level is fairly stable, and most of what's left is noise. Even the best
+    public models top out at roughly 68-70%.</p>
+
+  <h2>2. Injuries were the biggest missing piece</h2>
+  <p>A model that only sees scores has no idea when a star sits out. So I rated every player by his average
+    <a href="https://www.basketball-reference.com/about/glossary.html#gmsc">Game Score</a> over his last 20 games
+    and added up each team's best eight available players. The key feature compares <b>tonight's lineup with the
+    team's usual lineup</b> over its last 10 games. Losing your best player is a big negative, getting him back
+    is a big positive, and a player out for a month stops counting as news.</p>
+
+  <figure>
+    <img src="img/injuries.png" alt="Bar chart: home win rate rises from 48% when the home team is much more shorthanded than usual to 63% when the away team is, while the results-only model predicts about 57% throughout.">
+    <figcaption>Games grouped by how much more (or less) depleted the home team is than the away team, relative to normal.
+      The results-only model barely moves; reality swings by 15 points.</figcaption>
+  </figure>
+
+  <p>The chart shows why this matters. When the home team is missing a lot more talent than usual, it wins only
+    48% of the time, yet the model without lineups still expects about 58%. When the visitors are the depleted
+    ones, home teams win 63%. Adding lineups raised accuracy from <b>65.3% to 66.3%</b> and improved log loss
+    nearly as much as all the other team stats on top of Elo combined.</p>
+
+  <figure>
+    <img src="img/accuracy.png" alt="Line chart of accuracy by season for four models; the lineup model is on top in most seasons.">
+    <figcaption>The gain is biggest from 2020-21 to 2024-25 (+1.4 to +2.0 points per season), the peak of "load management".</figcaption>
+  </figure>
+
+  <p><b>One honest caveat.</b> For past games I know who actually played, but the live site only knows the injury
+    report a few hours before tip-off. Late scratches and game-time decisions probably make the real-world gain
+    a bit smaller than the backtest shows. To handle that, "questionable" players count as half available on the live site.</p>
+
+  <h2>3. Home court isn't what it used to be</h2>
+  <figure>
+    <img src="img/home_court.png" alt="Bar chart of home win percentage by season, about 58-59% before 2019-20 and about 55% since.">
+    <figcaption>Regular-season games at the home team's arena (neutral-site games excluded).</figcaption>
+  </figure>
+  <p>Home teams won <b>58.4%</b> of games in the five seasons before 2019-20 and <b>55.1%</b> since 2020-21. The 2020
+    bubble, with no crowds and no travel, made home court basically disappear. It never fully came back.
+    Possible reasons include less travel fatigue, better sleep and recovery science, and the three-point era
+    making games more random. My data can't tell those apart, but the drop is clear. It also means a model
+    trained on older seasons slightly overrates home teams today, which is one reason the home-only baseline
+    looks worse in recent years.</p>
+
+  <h2>4. Back-to-backs matter</h2>
+  <figure>
+    <img src="img/rest.png" alt="Bar chart: home teams win 56% when both teams are rested, 61% when the road team is on a back-to-back, and 50% when the home team is.">
+    <figcaption>Home win % by who is playing the second night of a back-to-back (2014-15 to now).</figcaption>
+  </figure>
+  <p>When both teams are rested, the home team wins 56% of the time. Put the visitors on the second night of a
+    back-to-back and that rises to 61%. If the home team is the tired one, it drops to 50%, a coin flip. That's one of the
+    cleanest effects in the data, and the model gives it real weight.</p>
+
+  <h2>What didn't help</h2>
+  <ul>
+    <li><b>A fancier model.</b> Gradient boosting (65.6%) did slightly worse than plain logistic regression (66.3%).
+      With about 16 features that are mostly linear, there isn't much non-linear signal to find, and the simpler
+      model can explain every pick exactly.</li>
+    <li><b>Reading too much into single features.</b> Elo, win %, and point margin all measure the same thing, so
+      the model splits credit between them in odd ways. Last-10 record even gets a negative weight once
+      everything else is included. The site's explanations group related features together for that reason.</li>
+  </ul>
+
+  <h2>Where it falls short</h2>
+  <ul>
+    <li><b>Betting markets are better.</b> Vegas favorites win roughly 68-70% of the time because they react to
+      news within minutes. I haven't compared against them yet, and that's the obvious next step.</li>
+    <li><b>Game Score is a crude player rating.</b> It rewards scoring and ignores most defense. A plus-minus based
+      rating would probably value role players better.</li>
+    <li><b>Small live sample.</b> The site has been logging picks before tip-off since mid-November 2026. A few dozen
+      games say very little; it needs a full season.</li>
+  </ul>
+
+  <h2>Try it</h2>
+  <p>The <a href="./">live site</a> posts a pick for every game each morning, with a breakdown of why, including
+    who's injured. All the code is on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>, and
+    one command rebuilds every number in this post.</p>
+
+  <footer>By Pushti Shah · November 2026 · Data: Basketball-Reference and ESPN.
+    Not affiliated with the NBA. Not betting advice.</footer>
+</div>
+</body>
+</html>
