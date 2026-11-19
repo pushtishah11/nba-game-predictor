@@ -27,7 +27,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 
-from features import FEATURES, OUT_FILE as FEATURES_FILE
+from features import BASE_FEATURES, FEATURES, OUT_FILE as FEATURES_FILE
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -44,11 +44,17 @@ FIRST_TRAIN_SEASON = 2016  # 2015 is only used to warm up the Elo ratings
 FIRST_TEST_SEASON = 2018   # always at least two seasons of training data
 
 
+def logistic():
+    return make_pipeline(StandardScaler(), LogisticRegression(C=1.0, max_iter=1000))
+
+
 def make_models() -> dict:
+    """name -> (model, features). The "no lineups" model shows what player availability adds."""
     return {
-        "Logistic regression": make_pipeline(StandardScaler(), LogisticRegression(C=1.0, max_iter=1000)),
-        "Gradient boosting": HistGradientBoostingClassifier(max_iter=300, max_depth=3, learning_rate=0.03,
-                                                            l2_regularization=1.0, random_state=0),
+        "Logistic regression": (logistic(), FEATURES),
+        "Logistic regression (no lineups)": (logistic(), BASE_FEATURES),
+        "Gradient boosting": (HistGradientBoostingClassifier(max_iter=300, max_depth=3, learning_rate=0.03,
+                                                             l2_regularization=1.0, random_state=0), FEATURES),
     }
 
 
@@ -71,13 +77,13 @@ def walk_forward(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
             "Always pick home team": np.full(len(test), train["home_win"].mean()),
             "Elo only": test["elo_prob"].to_numpy(),
         }
-        for name, model in make_models().items():
-            model.fit(train[FEATURES], train["home_win"])
-            probs[name] = model.predict_proba(test[FEATURES])[:, 1]
+        for name, (model, cols) in make_models().items():
+            model.fit(train[cols], train["home_win"])
+            probs[name] = model.predict_proba(test[cols])[:, 1]
 
         for name, p in probs.items():
             rows.append({"season": season, "model": name, "games": len(test), **score(y, p)})
-        preds.append(test[["season", "home_win"]].assign(**{n: p for n, p in probs.items()}))
+        preds.append(test[["game_id", "season", "home_win"]].assign(**{n: p for n, p in probs.items()}))
     return pd.DataFrame(rows), pd.concat(preds)
 
 
@@ -156,14 +162,18 @@ def main() -> None:
     RESULTS.mkdir(exist_ok=True)
     metrics.to_csv(RESULTS / "metrics.csv", index=False)
     write_markdown(overall, metrics)
+    # Out-of-sample predictions, used by analysis.py for the write-up
+    preds[["game_id", "Logistic regression", "Logistic regression (no lineups)"]].set_axis(
+        ["game_id", "p_lineups", "p_no_lineups"], axis=1).to_csv(
+        RESULTS / "predictions.csv", index=False, float_format="%.4f")
     plot_accuracy(metrics)
 
     print("Walk-forward results (all test seasons combined):")
     print(overall.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
 
     # Final model: logistic regression on every completed game. It matches
-    # XGBoost closely, is better calibrated, and is easy to explain.
-    final = make_models()["Logistic regression"]
+    # gradient boosting closely, is better calibrated, and is easy to explain.
+    final = logistic()
     train = df[df["season"] >= FIRST_TRAIN_SEASON]
     final.fit(train[FEATURES], train["home_win"])
     plot_calibration(preds, "Logistic regression")
