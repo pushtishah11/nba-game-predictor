@@ -27,42 +27,42 @@ key,date,away,home,p_home,predicted_at
 2026-11-18|Phoenix Suns|Sacramento Kings,2026-11-18,Phoenix Suns,Sacramento Kings,0.3026,2026-11-18T21:45:26Z
 2026-11-18|Utah Jazz|Los Angeles Lakers,2026-11-18,Utah Jazz,Los Angeles Lakers,0.8735,2026-11-18T21:45:26Z
 2026-11-18|Washington Wizards|Toronto Raptors,2026-11-18,Washington Wizards,Toronto Raptors,0.7619,2026-11-18T21:45:26Z
-2026-11-19|Golden State Warriors|Memphis Grizzlies,2026-11-19,Golden State Warriors,Memphis Grizzlies,0.6053,2026-11-18T21:45:26Z
-2026-11-19|Los Angeles Clippers|San Antonio Spurs,2026-11-19,Los Angeles Clippers,San Antonio Spurs,0.8592,2026-11-18T21:45:26Z
-2026-11-19|New York Knicks|Minnesota Timberwolves,2026-11-19,New York Knicks,Minnesota Timberwolves,0.4725,2026-11-18T21:45:26Z
-2026-11-19|Portland Trail Blazers|Milwaukee Bucks,2026-11-19,Portland Trail Blazers,Milwaukee Bucks,0.1809,2026-11-18T21:45:26Z
-2026-11-20|Charlotte Hornets|Atlanta Hawks,2026-11-20,Charlotte Hornets,Atlanta Hawks,0.6508,2026-11-18T21:45:26Z
-2026-11-20|Houston Rockets|Denver Nuggets,2026-11-20,Houston Rockets,Denver Nuggets,0.4902,2026-11-18T21:45:26Z
-2026-11-20|Indiana Pacers|Cleveland Cavaliers,2026-11-20,Indiana Pacers,Cleveland Cavaliers,0.7912,2026-11-18T21:45:26Z
-2026-11-20|New Orleans Pelicans|Oklahoma City Thunder,2026-11-20,New Orleans Pelicans,Oklahoma City Thunder,0.8835,2026-11-18T21:45:26Z
-2026-11-20|Orlando Magic|Brooklyn Nets,2026-11-20,Orlando Magic,Brooklyn Nets,0.3389,2026-11-18T21:45:26Z
-2026-11-20|Phoenix Suns|Utah Jazz,2026-11-20,Phoenix Suns,Utah Jazz,0.3223,2026-11-18T21:45:26Z
-2026-11-20|Sacramento Kings|Los Angeles Lakers,2026-11-20,Sacramento Kings,Los Angeles Lakers,0.8753,2026-11-18T21:45:26Z
-2026-11-20|Toronto Raptors|Detroit Pistons,2026-11-20,Toronto Raptors,Detroit Pistons,0.7484,2026-11-18T21:45:26Z
-2026-11-20|Washington Wizards|Chicago Bulls,2026-11-20,Washington Wizards,Chicago Bulls,0.6759,2026-11-18T21:45:26Z
-2026-11-21|Boston Celtics|Sacramento Kings,2026-11-21,Boston Celtics,Sacramento Kings,0.1234,2026-11-18T21:45:26Z
-2026-11-21|Los Angeles Clippers|Dallas Mavericks,2026-11-21,Los Angeles Clippers,Dallas Mavericks,0.5788,2026-11-18T21:45:26Z
-2026-11-21|Memphis Grizzlies|Minnesota Timberwolves,2026-11-21,Memphis Grizzlies,Minnesota Timberwolves,0.6919,2026-11-18T21:45:26Z
-2026-11-21|Milwaukee Bucks|Philadelphia 76ers,2026-11-21,Milwaukee Bucks,Philadelphia 76ers,0.8445,2026-11-18T21:45:26Z
-2026-11-21|New Orleans Pelicans|San Antonio Spurs,2026-11-21,New Orleans Pelicans,San Antonio Spurs,0.9306,2026-11-18T21:45:26Z
-2026-11-21|Portland Trail Blazers|New York Knicks,2026-11-21,Portland Trail Blazers,New York Knicks,0.6982,2026-11-18T21:45:26Z
-2026-11-22|Boston Celtics|Golden State Warriors,2026-11-22,Boston Celtics,Golden State Warriors,0.4165,2026-11-18T21:45:26Z
-2026-11-22|Dallas Mavericks|Utah Jazz,2026-11-22,Dallas Mavericks,Utah Jazz,0.5067,2026-11-18T21:45:26Z
-2026-11-22|Denver Nuggets|Chicago Bulls,2026-11-22,Denver Nuggets,Chicago Bulls,0.3262,2026-11-18T21:45:26Z
-2026-11-22|Detroit Pistons|Atlanta Hawks,2026-11-22,Detroit Pistons,Atlanta Hawks,0.3870,2026-11-18T21:45:26Z
-2026-11-22|Indiana Pacers|New York Knicks,2026-11-22,Indiana Pacers,New York Knicks,0.8380,2026-11-18T21:45:26Z
-2026-11-22|Oklahoma City Thunder|Miami Heat,2026-11-22,Oklahoma City Thunder,Miami Heat,0.3951,2026-11-18T21:45:26Z
-2026-11-22|Orlando Magic|Washington Wizards,2026-11-22,Orlando Magic,Washington Wizards,0.2827,2026-11-18T21:45:26Z
-2026-11-23|Brooklyn Nets|Minnesota Timberwolves,2026-11-23,Brooklyn Nets,Minnesota Timberwolves,0.8469,2026-11-18T21:45:26Z
-2026-11-23|Cleveland Cavaliers|Chicago Bulls,2026-11-23,Cleveland Cavaliers,Chicago Bulls,0.2592,2026-11-18T21:45:26Z
-2026-11-23|Los Angeles Clippers|Houston Rockets,2026-11-23,Los Angeles Clippers,Houston Rockets,0.7952,2026-11-18T21:45:26Z
-2026-11-23|Memphis Grizzlies|Charlotte Hornets,2026-11-23,Memphis Grizzlies,Charlotte Hornets,0.4905,2026-11-18T21:45:26Z
-2026-11-23|Milwaukee Bucks|Toronto Raptors,2026-11-23,Milwaukee Bucks,Toronto Raptors,0.8035,2026-11-18T21:45:26Z
-2026-11-23|Oklahoma City Thunder|Indiana Pacers,2026-11-23,Oklahoma City Thunder,Indiana Pacers,0.2401,2026-11-18T21:45:26Z
-2026-11-23|Phoenix Suns|New Orleans Pelicans,2026-11-23,Phoenix Suns,New Orleans Pelicans,0.3329,2026-11-18T21:45:26Z
-2026-11-23|Portland Trail Blazers|Philadelphia 76ers,2026-11-23,Portland Trail Blazers,Philadelphia 76ers,0.5395,2026-11-18T21:45:26Z
-2026-11-23|San Antonio Spurs|Sacramento Kings,2026-11-23,San Antonio Spurs,Sacramento Kings,0.1294,2026-11-18T21:45:26Z
-2026-11-23|Utah Jazz|Los Angeles Lakers,2026-11-23,Utah Jazz,Los Angeles Lakers,0.8979,2026-11-18T21:45:26Z
-2026-11-24|Boston Celtics|Washington Wizards,2026-11-24,Boston Celtics,Washington Wizards,0.1442,2026-11-18T21:45:26Z
-2026-11-24|Dallas Mavericks|Denver Nuggets,2026-11-24,Dallas Mavericks,Denver Nuggets,0.7322,2026-11-18T21:45:26Z
-2026-11-24|Detroit Pistons|Orlando Magic,2026-11-24,Detroit Pistons,Orlando Magic,0.3871,2026-11-18T21:45:26Z
+2026-11-19|Golden State Warriors|Memphis Grizzlies,2026-11-19,Golden State Warriors,Memphis Grizzlies,0.6942,2026-11-19T03:49:26Z
+2026-11-19|Los Angeles Clippers|San Antonio Spurs,2026-11-19,Los Angeles Clippers,San Antonio Spurs,0.8180,2026-11-19T03:49:26Z
+2026-11-19|New York Knicks|Minnesota Timberwolves,2026-11-19,New York Knicks,Minnesota Timberwolves,0.4646,2026-11-19T03:49:26Z
+2026-11-19|Portland Trail Blazers|Milwaukee Bucks,2026-11-19,Portland Trail Blazers,Milwaukee Bucks,0.2388,2026-11-19T03:49:26Z
+2026-11-20|Charlotte Hornets|Atlanta Hawks,2026-11-20,Charlotte Hornets,Atlanta Hawks,0.6733,2026-11-19T03:49:26Z
+2026-11-20|Houston Rockets|Denver Nuggets,2026-11-20,Houston Rockets,Denver Nuggets,0.4644,2026-11-19T03:49:26Z
+2026-11-20|Indiana Pacers|Cleveland Cavaliers,2026-11-20,Indiana Pacers,Cleveland Cavaliers,0.7336,2026-11-19T03:49:26Z
+2026-11-20|New Orleans Pelicans|Oklahoma City Thunder,2026-11-20,New Orleans Pelicans,Oklahoma City Thunder,0.8002,2026-11-19T03:49:26Z
+2026-11-20|Orlando Magic|Brooklyn Nets,2026-11-20,Orlando Magic,Brooklyn Nets,0.3716,2026-11-19T03:49:26Z
+2026-11-20|Phoenix Suns|Utah Jazz,2026-11-20,Phoenix Suns,Utah Jazz,0.3705,2026-11-19T03:49:26Z
+2026-11-20|Sacramento Kings|Los Angeles Lakers,2026-11-20,Sacramento Kings,Los Angeles Lakers,0.8742,2026-11-19T03:49:26Z
+2026-11-20|Toronto Raptors|Detroit Pistons,2026-11-20,Toronto Raptors,Detroit Pistons,0.6855,2026-11-19T03:49:26Z
+2026-11-20|Washington Wizards|Chicago Bulls,2026-11-20,Washington Wizards,Chicago Bulls,0.6367,2026-11-19T03:49:26Z
+2026-11-21|Boston Celtics|Sacramento Kings,2026-11-21,Boston Celtics,Sacramento Kings,0.1684,2026-11-19T03:49:26Z
+2026-11-21|Los Angeles Clippers|Dallas Mavericks,2026-11-21,Los Angeles Clippers,Dallas Mavericks,0.6313,2026-11-19T03:49:26Z
+2026-11-21|Memphis Grizzlies|Minnesota Timberwolves,2026-11-21,Memphis Grizzlies,Minnesota Timberwolves,0.6026,2026-11-19T03:49:26Z
+2026-11-21|Milwaukee Bucks|Philadelphia 76ers,2026-11-21,Milwaukee Bucks,Philadelphia 76ers,0.8524,2026-11-19T03:49:26Z
+2026-11-21|New Orleans Pelicans|San Antonio Spurs,2026-11-21,New Orleans Pelicans,San Antonio Spurs,0.8820,2026-11-19T03:49:26Z
+2026-11-21|Portland Trail Blazers|New York Knicks,2026-11-21,Portland Trail Blazers,New York Knicks,0.6708,2026-11-19T03:49:26Z
+2026-11-22|Boston Celtics|Golden State Warriors,2026-11-22,Boston Celtics,Golden State Warriors,0.3901,2026-11-19T03:49:26Z
+2026-11-22|Dallas Mavericks|Utah Jazz,2026-11-22,Dallas Mavericks,Utah Jazz,0.4674,2026-11-19T03:49:26Z
+2026-11-22|Denver Nuggets|Chicago Bulls,2026-11-22,Denver Nuggets,Chicago Bulls,0.2886,2026-11-19T03:49:26Z
+2026-11-22|Detroit Pistons|Atlanta Hawks,2026-11-22,Detroit Pistons,Atlanta Hawks,0.3948,2026-11-19T03:49:26Z
+2026-11-22|Indiana Pacers|New York Knicks,2026-11-22,Indiana Pacers,New York Knicks,0.7840,2026-11-19T03:49:26Z
+2026-11-22|Oklahoma City Thunder|Miami Heat,2026-11-22,Oklahoma City Thunder,Miami Heat,0.4867,2026-11-19T03:49:26Z
+2026-11-22|Orlando Magic|Washington Wizards,2026-11-22,Orlando Magic,Washington Wizards,0.3302,2026-11-19T03:49:26Z
+2026-11-23|Brooklyn Nets|Minnesota Timberwolves,2026-11-23,Brooklyn Nets,Minnesota Timberwolves,0.8231,2026-11-19T03:49:26Z
+2026-11-23|Cleveland Cavaliers|Chicago Bulls,2026-11-23,Cleveland Cavaliers,Chicago Bulls,0.3061,2026-11-19T03:49:26Z
+2026-11-23|Los Angeles Clippers|Houston Rockets,2026-11-23,Los Angeles Clippers,Houston Rockets,0.8403,2026-11-19T03:49:26Z
+2026-11-23|Memphis Grizzlies|Charlotte Hornets,2026-11-23,Memphis Grizzlies,Charlotte Hornets,0.3847,2026-11-19T03:49:26Z
+2026-11-23|Milwaukee Bucks|Toronto Raptors,2026-11-23,Milwaukee Bucks,Toronto Raptors,0.7942,2026-11-19T03:49:26Z
+2026-11-23|Oklahoma City Thunder|Indiana Pacers,2026-11-23,Oklahoma City Thunder,Indiana Pacers,0.3051,2026-11-19T03:49:26Z
+2026-11-23|Phoenix Suns|New Orleans Pelicans,2026-11-23,Phoenix Suns,New Orleans Pelicans,0.4569,2026-11-19T03:49:26Z
+2026-11-23|Portland Trail Blazers|Philadelphia 76ers,2026-11-23,Portland Trail Blazers,Philadelphia 76ers,0.6125,2026-11-19T03:49:26Z
+2026-11-23|San Antonio Spurs|Sacramento Kings,2026-11-23,San Antonio Spurs,Sacramento Kings,0.1587,2026-11-19T03:49:26Z
+2026-11-23|Utah Jazz|Los Angeles Lakers,2026-11-23,Utah Jazz,Los Angeles Lakers,0.8946,2026-11-19T03:49:26Z
+2026-11-24|Boston Celtics|Washington Wizards,2026-11-24,Boston Celtics,Washington Wizards,0.2038,2026-11-19T03:49:26Z
+2026-11-24|Dallas Mavericks|Denver Nuggets,2026-11-24,Dallas Mavericks,Denver Nuggets,0.7287,2026-11-19T03:49:26Z
+2026-11-24|Detroit Pistons|Orlando Magic,2026-11-24,Detroit Pistons,Orlando Magic,0.4048,2026-11-19T03:49:26Z
