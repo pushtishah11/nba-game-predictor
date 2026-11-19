@@ -1,27 +1,29 @@
 # NBA Game Predictor 🏀
 
-**[🔗 Live site: today's picks and track record](https://pushtishah11.github.io/nba-game-predictor/)**
+**[🔗 Live site: today's picks and track record](https://pushtishah11.github.io/nba-game-predictor/)** ·
+**[📝 Write-up: what predicts an NBA game?](https://pushtishah11.github.io/nba-game-predictor/writeup.html)**
 
-Predicts the winner of NBA games from team strength, recent form, and rest.
-It's trained on about 15,000 games from 2014-15 to today and tested **walk-forward**:
-to score a season, the model trains only on the seasons before it.
+Predicts the winner of NBA games from team strength, recent form, rest, and **who's
+actually playing**. It's trained on about 15,700 games from 2014-15 to today and tested
+**walk-forward**: to score a season, the model trains only on the seasons before it.
 
-**Result:** **65.3%** of games picked correctly on seasons the model never saw,
-up from 56.1% for always picking the home team, using nothing but final scores
-and the schedule.
+**Result:** **66.3%** of games picked correctly on seasons the model never saw,
+up from 56.0% for always picking the home team. Adding player availability was the
+biggest single improvement (65.3% → 66.3%).
 
 ![Accuracy by season](results/accuracy_by_season.png)
 
 ## Results
 
-Walk-forward evaluation over 2017-18 through the current season (11,726 games):
+Walk-forward evaluation over 2017-18 through the current season (11,753 games):
 
 | Model | Accuracy | Log loss | Brier |
 |---|---|---|---|
-| **Logistic regression** | **65.3%** | **0.6220** | **0.2165** |
-| Gradient boosting | 64.9% | 0.6270 | 0.2185 |
+| **Logistic regression** | **66.3%** | **0.6127** | **0.2123** |
+| Gradient boosting | 65.6% | 0.6183 | 0.2145 |
+| Logistic regression, no lineup features | 65.3% | 0.6221 | 0.2165 |
 | Elo rating only | 64.6% | 0.6337 | 0.2212 |
-| Always pick home team | 56.1% | 0.6862 | 0.2465 |
+| Always pick home team | 56.0% | 0.6863 | 0.2466 |
 
 Lower is better for log loss and Brier score. Both measure whether the
 *probabilities* are good, not just the picks. Per-season numbers are in
@@ -29,14 +31,21 @@ Lower is better for log loss and Brier score. Both measure whether the
 
 **Takeaways**
 - **Elo does most of the work.** One rating per team, updated after every game,
-  gets within a point of the full model.
-- **Recent form and rest add a little on top.** Back-to-backs matter: a tired
-  road team is easier to beat.
-- **Gradient boosting doesn't beat logistic regression** here. With about 14 mostly
+  gets within two points of the full model.
+- **Injuries are the biggest missing signal in score-only models.** When the home team
+  is missing much more talent than usual it wins 48% of the time, yet a results-only
+  model still expects about 58%. Lineup features fix most of that.
+- **Back-to-backs matter.** Home teams win 56% when both teams are rested, 61% when
+  the visitors are on a back-to-back, and 50% when the home team is.
+- **Gradient boosting doesn't beat logistic regression** here. With about 16 mostly
   linear features there's little non-linear signal to find, so the simpler
   model wins and is easier to explain.
-- **Home-court advantage has shrunk.** Home teams won about 59% of games before 2020 and
-  about 55% since. The 2020 bubble had no crowds at all, and that's visible in the data.
+- **Home-court advantage has shrunk.** Home teams won 58.4% of games before 2019-20 and
+  55.1% since 2020-21.
+
+More in the [write-up](https://pushtishah11.github.io/nba-game-predictor/writeup.html).
+
+![When a team is missing players, results-only models miss it](docs/img/injuries.png)
 
 <p float="left">
   <img src="results/calibration.png" width="40%" />
@@ -51,9 +60,9 @@ so the model is really using the difference between them.*
 
 ## How it works
 
-1. **Scrape** ([`src/scrape.py`](src/scrape.py)): downloads every game's final score
-   and the upcoming schedule from Basketball-Reference, with polite rate limiting
-   and a per-season cache.
+1. **Scrape** ([`src/scrape.py`](src/scrape.py), [`src/boxscores.py`](src/boxscores.py)):
+   downloads every game's final score and the upcoming schedule from Basketball-Reference,
+   and every player's box score from ESPN's public API. Both cache past seasons.
 2. **Features** ([`src/features.py`](src/features.py)): for every game, using only
    games played *before* it:
    - **Elo ratings** with home-court advantage, a margin-of-victory multiplier, and
@@ -62,6 +71,14 @@ so the model is really using the difference between them.*
    - Last-10-game win % and margin (recent form)
    - Days of rest and back-to-back flags
    - Neutral-site games (Paris, Mexico City, ...) and playoff flag
+   - **Lineups** ([`src/availability.py`](src/availability.py)): each player is rated by
+     his average Game Score over his last 20 games. A team's lineup value is the sum of
+     its best 8 available players. The model sees the lineup gap between the teams and
+     how each team's lineup compares with its usual one (last 10 games).
+
+   For past games, "available" means the player actually played, which is slightly
+   optimistic. For upcoming games, [`src/injuries.py`](src/injuries.py) uses ESPN's live
+   rosters and injury report instead ("Out" = missing, "Day-To-Day" = 50%).
 3. **Train** ([`src/train.py`](src/train.py)): walk-forward evaluation of the
    baselines and models above, then fits the final model on every completed game.
 4. **Predict** ([`src/predict.py`](src/predict.py)): win probabilities for upcoming
@@ -81,9 +98,11 @@ The repo includes the data and a trained model, so that works right away. To ref
 with the latest results and retrain:
 
 ```bash
-python src/scrape.py     # ~1 min (past seasons are cached)
+python src/scrape.py      # ~1 min (past seasons are cached)
+python src/boxscores.py   # first run ~25 min, then seconds
 python src/features.py
 python src/train.py
+python src/analysis.py    # charts for the write-up
 ```
 
 Example output:
@@ -105,8 +124,9 @@ The [live site](https://pushtishah11.github.io/nba-game-predictor/) is a static 
 ([`docs/index.html`](docs/index.html)) hosted free on GitHub Pages. A GitHub Action
 ([`.github/workflows/update.yml`](.github/workflows/update.yml)) runs every morning. It:
 
-1. scrapes the latest scores and schedule
-2. runs [`src/export.py`](src/export.py), which predicts the next week of games and writes `docs/data.json`
+1. scrapes the latest scores, schedule, and box scores
+2. runs [`src/export.py`](src/export.py), which pulls the injury report, predicts the next week
+   of games, and writes `docs/data.json`
 3. commits the update, which redeploys the site
 
 Every prediction is also saved to `data/prediction_log.csv` before tip-off and frozen once the
@@ -124,22 +144,24 @@ python -m http.server --directory docs 8000   # then open http://localhost:8000
 ```
 ├── data/
 │   ├── raw/          # one CSV per season, straight from the scraper
+│   │   └── box/      # player box scores, one gzipped CSV per season
 │   ├── games.csv     # all games combined
 │   └── features.csv  # model-ready features
 ├── models/model.joblib
-├── docs/             # the website (index.html + data.json)
+├── docs/             # the website (index.html, writeup.html, data.json, img/)
 ├── results/          # metrics and charts
 └── src/              # scrape → features → train → predict / export
 ```
 
 ## Ideas for next steps
 
-- Add player availability (injuries and rest days are the biggest missing signal)
+- Compare against betting market lines (the honest benchmark)
+- A better player rating than Game Score, e.g. one based on plus-minus
 - Use box-score stats like offensive/defensive rating instead of just points
 - Predict point spreads, not just winners
-- Compare against betting market lines
 
 ## Data
 
-Game results are from [Basketball-Reference](https://www.basketball-reference.com/).
+Game results are from [Basketball-Reference](https://www.basketball-reference.com/). Box scores,
+rosters, and injury reports are from ESPN's public site API.
 This is a personal, educational project and is not affiliated with the NBA.
