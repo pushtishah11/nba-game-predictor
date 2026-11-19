@@ -129,6 +129,8 @@ def scrape_season(season: int, games: pd.DataFrame) -> pd.DataFrame:
         print(f"{season}: fetching {len(events)} box scores from {len(days)} days")
         rows = [r for game in pool.map(box_score, events) for r in game]
 
+    if not rows:
+        return old  # nothing new (e.g. games ESPN has no box score for); leave the file alone
     new = pd.DataFrame(rows, columns=[c for c in COLS if c != "season"]).assign(season=season)
     keep = old[~old["date"].isin(days)]
     out = (pd.concat([keep, new], ignore_index=True) if len(keep) else new)[COLS]
