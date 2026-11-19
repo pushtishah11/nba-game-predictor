@@ -14,6 +14,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from availability import add_availability
+
 ROOT = Path(__file__).resolve().parents[1]
 GAMES_FILE = ROOT / "data" / "games.csv"
 OUT_FILE = ROOT / "data" / "features.csv"
@@ -27,7 +29,7 @@ ELO_CARRY = 0.75     # fraction of rating kept between seasons
 
 ROLL = 10            # window for "recent form" features
 
-FEATURES = [
+BASE_FEATURES = [
     "elo_diff", "elo_prob",
     "win_pct_diff", "margin_diff",
     "last10_win_diff", "last10_margin_diff",
@@ -35,6 +37,9 @@ FEATURES = [
     "home_games", "away_games",
     "neutral", "playoffs",
 ]
+# Player availability (see availability.py)
+LINEUP_FEATURES = ["lineup_diff", "lineup_change_diff"]
+FEATURES = BASE_FEATURES + LINEUP_FEATURES
 
 
 def load_games(path: Path = GAMES_FILE) -> pd.DataFrame:
@@ -148,6 +153,7 @@ def build() -> pd.DataFrame:
     g = load_games()
     g = add_elo(g)
     g = add_form(g)
+    g = add_availability(g)
     return g
 
 
