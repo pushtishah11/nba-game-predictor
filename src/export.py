@@ -20,6 +20,8 @@ from pathlib import Path
 import joblib
 import pandas as pd
 
+import injuries
+from availability import current_values, load_box, player_values
 from explain import explain
 from features import build
 
@@ -78,6 +80,32 @@ def update_log(upcoming: pd.DataFrame, played_keys: set[str], now: str) -> pd.Da
     return log
 
 
+def apply_injuries(upcoming: pd.DataFrame, today: pd.Timestamp) -> dict:
+    """Replace the assumed "usual" lineups with ones from ESPN's injury report.
+
+    Returns {(row index, side): [missing players]}. If ESPN can't be reached,
+    the usual lineups stay and the picks just ignore injuries for the day.
+    """
+    try:
+        rosters, report = injuries.fetch_rosters(), injuries.fetch_injuries()
+    except Exception as e:  # noqa: BLE001
+        print(f"Injury report unavailable ({e}); assuming usual lineups")
+        return {}
+    players = player_values(load_box())
+    values, cutoffs = current_values(players), injuries.recent_cutoffs(players)
+    missing = {}
+    for i, r in upcoming.iterrows():
+        for side in ("home", "away"):
+            value, out = injuries.lineup(r[side], r["date"], today, rosters, report, values, cutoffs)
+            upcoming.loc[i, f"{side}_lineup"] = value
+            missing[(i, side)] = out
+    upcoming["lineup_diff"] = upcoming["home_lineup"] - upcoming["away_lineup"]
+    upcoming["lineup_change_diff"] = ((upcoming["home_lineup"] - upcoming["home_lineup_usual"])
+                                      - (upcoming["away_lineup"] - upcoming["away_lineup_usual"]))
+    print(f"Injury report: {len(report)} players listed")
+    return missing
+
+
 def backtest_summary() -> dict:
     m = pd.read_csv(METRICS_FILE)
     lr = m[m["model"] == "Logistic regression"]
@@ -105,6 +133,7 @@ def main() -> None:
     # last prediction made before tip-off (already in the log).
     if args.today is None:
         upcoming = upcoming[tipoff_utc(upcoming) > pd.Timestamp.now(tz="UTC")]
+    missing = apply_injuries(upcoming, today) if args.today is None else {}
     upcoming["p_home"] = bundle["model"].predict_proba(upcoming[bundle["features"]])[:, 1]
     played = df[df["played"]]
     log = update_log(upcoming, set(played["key"]), now)
@@ -130,7 +159,7 @@ def main() -> None:
         cur[cur["played"]].assign(team=cur["away"], w=1 - cur["home_win"]),
     ]).groupby("team")["w"].agg(["sum", "count"])
 
-    def team_info(r: pd.Series, side: str) -> dict:
+    def team_info(i, r: pd.Series, side: str) -> dict:
         games = int(r[f"{side}_games"])
         n = min(10, games)
         wins = round(r[f"{side}_last10_win"] * n)
@@ -140,7 +169,9 @@ def main() -> None:
                 "last_margin": round(float(r[f"{side}_last10_margin"]), 1),
                 "avg_margin": round(float(r[f"{side}_avg_margin"]), 1),
                 "rest": int(r[f"{side}_rest"]),
-                "elo": round(r[f"{side}_elo"]), "b2b": bool(r[f"{side}_b2b"])}
+                "elo": round(r[f"{side}_elo"]), "b2b": bool(r[f"{side}_b2b"]),
+                "lineup_change": round(float(r[f"{side}_lineup"] - r[f"{side}_lineup_usual"]), 1),
+                "missing": missing.get((i, side), [])}
 
     data = {
         "generated_at": now,
@@ -152,9 +183,10 @@ def main() -> None:
             {"date": str(r["date"].date()), "time": r["start_et"] if isinstance(r["start_et"], str) else None,
              "neutral": bool(r["neutral"]), "playoffs": bool(r["playoffs"]),
              "notes": r["notes"] if isinstance(r["notes"], str) else None,
-             "p_home": round(float(r["p_home"]), 4), "home": team_info(r, "home"), "away": team_info(r, "away"),
-             "explain": explain(r, bundle["model"], bundle["features"])}
-            for _, r in upcoming.iterrows()
+             "p_home": round(float(r["p_home"]), 4), "home": team_info(i, r, "home"), "away": team_info(i, r, "away"),
+             "explain": explain(r, bundle["model"], bundle["features"],
+                                {s: missing.get((i, s), []) for s in ("home", "away")})}
+            for i, r in upcoming.iterrows()
         ],
         "recent_results": [
             {"date": str(r.date.date()), "away": r.away, "home": r.home,
