@@ -29,6 +29,9 @@ jobs:
       - name: Download latest scores and schedule
         run: python src/scrape.py
 
+      - name: Download new box scores
+        run: python src/boxscores.py
+
       - name: Predict upcoming games
         run: python src/export.py
 
