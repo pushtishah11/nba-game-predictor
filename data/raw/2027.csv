@@ -209,18 +209,18 @@ season,date,start_et,away,away_pts,home,home_pts,ot,notes,playoffs
 2027,2026-11-17,8:00p,Detroit Pistons,105.0,San Antonio Spurs,93.0,,,False
 2027,2026-11-17,10:30p,Utah Jazz,132.0,Los Angeles Clippers,107.0,,,False
 2027,2026-11-17,11:00p,Charlotte Hornets,114.0,Los Angeles Lakers,118.0,OT,,False
-2027,2026-11-18,7:00p,Memphis Grizzlies,,Cleveland Cavaliers,,,,False
-2027,2026-11-18,7:00p,Houston Rockets,,Indiana Pacers,,,,False
-2027,2026-11-18,7:00p,Milwaukee Bucks,,Miami Heat,,,,False
-2027,2026-11-18,7:00p,Philadelphia 76ers,,Orlando Magic,,,,False
-2027,2026-11-18,7:30p,Chicago Bulls,,Brooklyn Nets,,,,False
-2027,2026-11-18,7:30p,Washington Wizards,,Toronto Raptors,,,,False
-2027,2026-11-18,8:00p,Golden State Warriors,,Dallas Mavericks,,,,False
-2027,2026-11-18,8:00p,Detroit Pistons,,New Orleans Pelicans,,,,False
-2027,2026-11-18,8:00p,Atlanta Hawks,,Oklahoma City Thunder,,,,False
-2027,2026-11-18,9:30p,Boston Celtics,,Denver Nuggets,,,,False
-2027,2026-11-18,10:00p,Utah Jazz,,Los Angeles Lakers,,,,False
-2027,2026-11-18,10:00p,Phoenix Suns,,Sacramento Kings,,,,False
+2027,2026-11-18,7:00p,Memphis Grizzlies,124.0,Cleveland Cavaliers,121.0,,,False
+2027,2026-11-18,7:00p,Houston Rockets,119.0,Indiana Pacers,104.0,,,False
+2027,2026-11-18,7:00p,Milwaukee Bucks,130.0,Miami Heat,137.0,,,False
+2027,2026-11-18,7:00p,Philadelphia 76ers,121.0,Orlando Magic,116.0,,,False
+2027,2026-11-18,7:30p,Chicago Bulls,137.0,Brooklyn Nets,107.0,,,False
+2027,2026-11-18,7:30p,Washington Wizards,103.0,Toronto Raptors,99.0,,,False
+2027,2026-11-18,8:00p,Golden State Warriors,94.0,Dallas Mavericks,116.0,,,False
+2027,2026-11-18,8:00p,Detroit Pistons,122.0,New Orleans Pelicans,109.0,,,False
+2027,2026-11-18,8:00p,Atlanta Hawks,117.0,Oklahoma City Thunder,112.0,,,False
+2027,2026-11-18,9:30p,Boston Celtics,101.0,Denver Nuggets,105.0,,,False
+2027,2026-11-18,10:00p,Utah Jazz,109.0,Los Angeles Lakers,97.0,,,False
+2027,2026-11-18,10:00p,Phoenix Suns,128.0,Sacramento Kings,107.0,,,False
 2027,2026-11-19,8:00p,Golden State Warriors,,Memphis Grizzlies,,,,False
 2027,2026-11-19,8:00p,Portland Trail Blazers,,Milwaukee Bucks,,,,False
 2027,2026-11-19,8:00p,New York Knicks,,Minnesota Timberwolves,,,,False
