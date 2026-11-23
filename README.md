@@ -9,7 +9,8 @@ actually playing**. It's trained on about 15,700 games from 2014-15 to today and
 
 **Result:** **66.3%** of games picked correctly on seasons the model never saw,
 up from 56.0% for always picking the home team. Adding player availability was the
-biggest single improvement (65.3% → 66.3%).
+biggest single improvement (65.3% → 66.3%). The betting market is still better
+(67.8% on the same games), and the [comparison](results/market.md) is included.
 
 ![Accuracy by season](results/accuracy_by_season.png)
 
@@ -24,6 +25,7 @@ Walk-forward evaluation over 2017-18 through the current season (11,753 games):
 | Logistic regression, no lineup features | 65.3% | 0.6221 | 0.2165 |
 | Elo rating only | 64.6% | 0.6337 | 0.2212 |
 | Always pick home team | 56.0% | 0.6863 | 0.2466 |
+| *Betting market (11,741 of the same games)* | *67.8%* | *0.5983* | *0.2060* |
 
 Lower is better for log loss and Brier score. Both measure whether the
 *probabilities* are good, not just the picks. Per-season numbers are in
@@ -42,6 +44,10 @@ Lower is better for log loss and Brier score. Both measure whether the
   model wins and is easier to explain.
 - **Home-court advantage has shrunk.** Home teams won 58.4% of games before 2019-20 and
   55.1% since 2020-21.
+- **Vegas is still better.** When the model and the market disagree (about 1 game in 9),
+  the market is right 57% of the time. Blending the two doesn't help, and betting on the
+  model's edges would have lost about 6.5%. Lineups did close about 40% of the log-loss
+  gap to the market.
 
 More in the [write-up](https://pushtishah11.github.io/nba-game-predictor/writeup.html).
 
@@ -81,7 +87,11 @@ so the model is really using the difference between them.*
    rosters and injury report instead ("Out" = missing, "Day-To-Day" = 50%).
 3. **Train** ([`src/train.py`](src/train.py)): walk-forward evaluation of the
    baselines and models above, then fits the final model on every completed game.
-4. **Predict** ([`src/predict.py`](src/predict.py)): win probabilities for upcoming
+4. **Compare with Vegas** ([`src/odds.py`](src/odds.py), [`src/compare.py`](src/compare.py)):
+   downloads every sportsbook's final pre-game moneyline from ESPN, converts it to a no-vig
+   probability (median across books), and compares it with the model's walk-forward
+   predictions, including a market + model blend and a betting simulation.
+5. **Predict** ([`src/predict.py`](src/predict.py)): win probabilities for upcoming
    games.
 
 ## Quick start
@@ -102,6 +112,8 @@ python src/scrape.py      # ~1 min (past seasons are cached)
 python src/boxscores.py   # first run ~25 min, then seconds
 python src/features.py
 python src/train.py
+python src/odds.py        # betting lines, first run ~8 min
+python src/compare.py     # model vs market -> results/market.md
 python src/analysis.py    # charts for the write-up
 ```
 
@@ -155,7 +167,7 @@ python -m http.server --directory docs 8000   # then open http://localhost:8000
 
 ## Ideas for next steps
 
-- Compare against betting market lines (the honest benchmark)
+- Find what the market knows that the model doesn't (minutes limits? late news? matchups?)
 - A better player rating than Game Score, e.g. one based on plus-minus
 - Use box-score stats like offensive/defensive rating instead of just points
 - Predict point spreads, not just winners
@@ -163,5 +175,5 @@ python -m http.server --directory docs 8000   # then open http://localhost:8000
 ## Data
 
 Game results are from [Basketball-Reference](https://www.basketball-reference.com/). Box scores,
-rosters, and injury reports are from ESPN's public site API.
+rosters, injury reports, and betting lines are from ESPN's public site API.
 This is a personal, educational project and is not affiliated with the NBA.
