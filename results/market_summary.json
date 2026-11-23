@@ -1,0 +1,8 @@
+{
+ "games": 11741,
+ "market_accuracy": 0.6784,
+ "model_accuracy": 0.6631,
+ "disagree": 1250,
+ "model_right_when_disagree": 0.4336,
+ "bet_roi": -0.0654
+}
