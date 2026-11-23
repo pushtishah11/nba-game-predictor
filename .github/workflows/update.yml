@@ -32,6 +32,9 @@ jobs:
       - name: Download new box scores
         run: python src/boxscores.py
 
+      - name: Download betting lines for finished games
+        run: python src/odds.py
+
       - name: Predict upcoming games
         run: python src/export.py
 

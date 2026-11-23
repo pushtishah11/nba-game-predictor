@@ -24,6 +24,7 @@ import injuries
 from availability import current_values, load_box, player_values
 from explain import explain
 from features import build
+from odds import load_odds, upcoming_odds
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_FILE = ROOT / "models" / "model.joblib"
@@ -46,7 +47,7 @@ ABBR = {
     "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS",
     "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS",
 }
-LOG_COLS = ["key", "date", "away", "home", "p_home", "predicted_at"]
+LOG_COLS = ["key", "date", "away", "home", "p_home", "p_market", "predicted_at"]
 
 
 def game_key(df: pd.DataFrame) -> pd.Series:
@@ -70,7 +71,10 @@ def update_log(upcoming: pd.DataFrame, played_keys: set[str], now: str) -> pd.Da
     # Never touch a prediction once its game has a final score.
     new = new[~new["key"].isin(played_keys)]
     if LOG_FILE.exists():
-        log = pd.read_csv(LOG_FILE, parse_dates=["date"])
+        log = pd.read_csv(LOG_FILE, parse_dates=["date"]).reindex(columns=LOG_COLS)  # older logs lack p_market
+        # Lines get posted about a day before tip-off; keep one once we've seen it.
+        seen = log.dropna(subset=["p_market"]).set_index("key")["p_market"]
+        new["p_market"] = new["p_market"].fillna(new["key"].map(seen))
         log = pd.concat([log[~log["key"].isin(new["key"])], new], ignore_index=True)
     else:
         log = new.copy()
@@ -106,6 +110,26 @@ def apply_injuries(upcoming: pd.DataFrame, today: pd.Timestamp) -> dict:
     return missing
 
 
+def market_backtest() -> dict | None:
+    """Headline numbers from compare.py's walk-forward comparison, if it has been run."""
+    f = ROOT / "results" / "market_summary.json"
+    return json.loads(f.read_text()) if f.exists() else None
+
+
+def market_lines(upcoming: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
+    """The betting market's no-vig home win probability and spread for each upcoming game."""
+    try:
+        lines = upcoming_odds(sorted(upcoming["date"].unique()))
+    except Exception as e:  # noqa: BLE001
+        print(f"Betting lines unavailable ({e})")
+        lines = {}
+    keys = list(zip(upcoming["date"], upcoming["home"]))
+    p = pd.Series([lines.get(k, {}).get("p_market") for k in keys], index=upcoming.index, dtype=float)
+    spread = pd.Series([lines.get(k, {}).get("spread") for k in keys], index=upcoming.index, dtype=float)
+    print(f"Betting lines: {p.notna().sum()} of {len(p)} games")
+    return p, spread
+
+
 def backtest_summary() -> dict:
     m = pd.read_csv(METRICS_FILE)
     lr = m[m["model"] == "Logistic regression"]
@@ -134,14 +158,23 @@ def main() -> None:
     if args.today is None:
         upcoming = upcoming[tipoff_utc(upcoming) > pd.Timestamp.now(tz="UTC")]
     missing = apply_injuries(upcoming, today) if args.today is None else {}
+    upcoming["p_market"], upcoming["spread"] = market_lines(upcoming) if args.today is None else (float("nan"),) * 2
     upcoming["p_home"] = bundle["model"].predict_proba(upcoming[bundle["features"]])[:, 1]
     played = df[df["played"]]
     log = update_log(upcoming, set(played["key"]), now)
 
     # Score logged predictions against final results
-    scored = log.merge(played[["key", "home_pts", "away_pts"]], on="key")
+    scored = log.merge(played[["key", "game_id", "home_pts", "away_pts"]], on="key")
+    # Grade the market on its final pre-game line (from odds.py), falling back to the logged one.
+    try:
+        closing = load_odds().set_index("game_id")["p_market"]
+        scored["p_market"] = scored["game_id"].map(closing).fillna(scored["p_market"])
+    except (FileNotFoundError, ValueError):
+        pass
     scored["home_won"] = scored["home_pts"] > scored["away_pts"]
     scored["correct"] = (scored["p_home"] >= 0.5) == scored["home_won"]
+    scored["market_correct"] = (scored["p_market"] >= 0.5) == scored["home_won"]
+    with_market = scored[scored["p_market"].notna()]
     recent = scored[scored["date"] >= today - timedelta(days=RECENT_DAYS)].sort_values("date", ascending=False)
 
     # Current Elo for each team = pre-game rating of its next game (or last game)
@@ -178,12 +211,21 @@ def main() -> None:
         "model_trained_through": bundle["trained_through"],
         "backtest": backtest_summary(),
         "track_record": {"games": int(len(scored)), "correct": int(scored["correct"].sum()),
-                         "since": str(log["date"].min().date()) if len(log) else None},
+                         "since": str(log["date"].min().date()) if len(log) else None,
+                         # Head to head with the market, on games where both made a pick
+                         "vs_market": {"games": int(len(with_market)),
+                                       "model_correct": int(with_market["correct"].sum()),
+                                       "market_correct": int(with_market["market_correct"].sum())}},
+        "market_backtest": market_backtest(),
         "upcoming": [
             {"date": str(r["date"].date()), "time": r["start_et"] if isinstance(r["start_et"], str) else None,
              "neutral": bool(r["neutral"]), "playoffs": bool(r["playoffs"]),
              "notes": r["notes"] if isinstance(r["notes"], str) else None,
-             "p_home": round(float(r["p_home"]), 4), "home": team_info(i, r, "home"), "away": team_info(i, r, "away"),
+             "p_home": round(float(r["p_home"]), 4),
+             "market": ({"p_home": round(float(r["p_market"]), 4),
+                         "spread": None if pd.isna(r["spread"]) else float(r["spread"])}
+                        if pd.notna(r["p_market"]) else None),
+             "home": team_info(i, r, "home"), "away": team_info(i, r, "away"),
              "explain": explain(r, bundle["model"], bundle["features"],
                                 {s: missing.get((i, s), []) for s in ("home", "away")})}
             for i, r in upcoming.iterrows()
@@ -192,7 +234,8 @@ def main() -> None:
             {"date": str(r.date.date()), "away": r.away, "home": r.home,
              "away_abbr": ABBR.get(r.away), "home_abbr": ABBR.get(r.home),
              "away_pts": int(r.away_pts), "home_pts": int(r.home_pts),
-             "p_home": round(float(r.p_home), 4), "correct": bool(r.correct)}
+             "p_home": round(float(r.p_home), 4), "correct": bool(r.correct),
+             "p_market": None if pd.isna(r.p_market) else round(float(r.p_market), 4)}
             for r in recent.itertuples()
         ],
         "rankings": [
