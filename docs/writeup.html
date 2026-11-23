@@ -55,6 +55,7 @@
       <li>Adding who is actually playing was the biggest single upgrade: <b>65.3% → 66.3%</b>.</li>
       <li>Home court is worth less than it used to be: home teams won 58% of games before 2020 and 55% since.</li>
       <li>Back-to-backs are real: playing the second night costs a team about 5-6 points of win %.</li>
+      <li>Vegas still wins: the betting market picked <b>67.8%</b>, and betting on my model would have lost money.</li>
     </ul>
   </div>
 
@@ -77,11 +78,13 @@
       <tr><td>Logistic regression, team stats only</td><td class="num">65.3%</td><td class="num">0.622</td></tr>
       <tr><td>Gradient boosting, with lineups</td><td class="num">65.6%</td><td class="num">0.618</td></tr>
       <tr class="hl"><td>Logistic regression, with lineups</td><td class="num">66.3%</td><td class="num">0.613</td></tr>
+      <tr><td>Betting market (for comparison)</td><td class="num">67.8%</td><td class="num">0.598</td></tr>
     </tbody>
   </table>
   </div>
   <p style="font-size:14px;color:var(--muted)">Walk-forward results, 2017-18 through November 2026 (11,753 games).
-    Log loss scores the probabilities, not just the picks; lower is better.</p>
+    Log loss scores the probabilities, not just the picks; lower is better. The betting market row covers
+    the 11,741 of those games with a betting line.</p>
 
   <h2>1. Elo does most of the work</h2>
   <p>Elo, the rating system from chess, gives every team one number. Beat a good team and your number goes up a lot;
@@ -139,6 +142,30 @@
     back-to-back and that rises to 61%. If the home team is the tired one, it drops to 50%, a coin flip. That's one of the
     cleanest effects in the data, and the model gives it real weight.</p>
 
+  <h2>5. Vegas is still better</h2>
+  <p>The real benchmark for a sports model isn't "always pick the home team". It's the betting market. I pulled
+    every sportsbook's final pre-game moneyline from ESPN for each game, removed the bookmaker's cut, and took
+    the median. That gives the market's probability that the home team wins.</p>
+  <figure>
+    <img src="img/market.png" alt="Line chart of accuracy by season: the betting market is above my model in 9 of 10 seasons.">
+    <figcaption>Same games, same seasons. My model's numbers are walk-forward, so it never saw the season it's predicting.</figcaption>
+  </figure>
+  <p>The market picked <b>67.8%</b> of winners against my <b>66.3%</b>, and its probabilities are better too (log loss
+    0.598 vs 0.613). My model and the market pick different winners in about 1 game in 9, and in those games
+    the market is right <b>57%</b> of the time. I also tried blending the two, training on earlier seasons
+    to find the best mix. It put essentially no weight on my model, which means the market already knows
+    everything my model knows.</p>
+  <p>The silver lining is that adding lineups closed about <b>40% of the gap</b> between my original model and the
+    market (log loss 0.622 → 0.613, vs the market's 0.598). The market's remaining edge probably comes from what
+    a box-score model can't see: exact minutes restrictions, matchups, and news that breaks an hour before tip-off.</p>
+  <p><b>A bug worth admitting.</b> My first betting simulation said the model made a 5% profit. A model that adds nothing
+    to the market can't beat it, so I went looking. The culprit was how I averaged odds across sportsbooks. I
+    took the median of American odds directly, but that scale jumps from +100 to −100, so a game listed at
+    −116 by some books and +100 by others "averaged" to −1, which pays out 101 to 1. After fixing it (averaging
+    in probability space), betting on my model's edges <b>loses about 6.5%</b>. It also loses more the bigger the
+    supposed edge, the classic sign that when you disagree strongly with the market, you're usually the one
+    who's wrong.</p>
+
   <h2>What didn't help</h2>
   <ul>
     <li><b>A fancier model.</b> Gradient boosting (65.6%) did slightly worse than plain logistic regression (66.3%).
@@ -151,8 +178,7 @@
 
   <h2>Where it falls short</h2>
   <ul>
-    <li><b>Betting markets are better.</b> Vegas favorites win roughly 68-70% of the time because they react to
-      news within minutes. I haven't compared against them yet, and that's the obvious next step.</li>
+    <li><b>It doesn't beat the market</b>, as shown above. It's a tool for understanding games, not for betting.</li>
     <li><b>Game Score is a crude player rating.</b> It rewards scoring and ignores most defense. A plus-minus based
       rating would probably value role players better.</li>
     <li><b>Small live sample.</b> The site has been logging picks before tip-off since mid-November 2026. A few dozen
@@ -161,7 +187,7 @@
 
   <h2>Try it</h2>
   <p>The <a href="./">live site</a> posts a pick for every game each morning, with a breakdown of why, including
-    who's injured. All the code is on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>, and
+    who's injured and what Vegas thinks. Its live record is tracked against the market's on the same games. All the code is on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>, and
     one command rebuilds every number in this post.</p>
 
   <footer>By Pushti Shah · November 2026 · Data: Basketball-Reference and ESPN.
