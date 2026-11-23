@@ -56,6 +56,8 @@
   .bar .win { background: var(--accent); opacity: 1; }
   .pcts { display: flex; justify-content: space-between; font-size: 13px; font-variant-numeric: tabular-nums; }
   .pcts b { color: var(--accent); }
+  .mkt.dis { color: var(--ink); font-weight: 600; }
+  #results td.num { white-space: nowrap; }
   .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--accent-soft);
            color: var(--accent); margin-left: 4px; vertical-align: 1px; font-weight: 600; }
   table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
@@ -105,6 +107,8 @@
   .cmp { font-size: 13px; } .cmp td, .cmp th { padding: 6px 10px; } .cmp .best { color: var(--accent); font-weight: 700; }
   .note { font-size: 12px; color: var(--muted); margin: 10px 0 2px; }
   @media (max-width: 560px) {
+    #results th, #results td { padding-left: 6px; padding-right: 6px; }
+    #results th.num { font-size: 11px; }
     .full { display: none; } .short { display: inline; }
     .stat { padding: 12px; } .stat .v { font-size: 21px; } .stat .l { font-size: 12px; }
     header h1 { font-size: 25px; }
@@ -154,6 +158,9 @@
       it trained only on earlier seasons. Across <span id="bt-games"></span> games it picked
       <b id="bt-acc"></b> of winners correctly, vs <span id="bt-home"></span> for always picking the home team.</p>
     <p>The <b>live track record</b> only counts picks the site published before the game started.</p>
+    <p><b>Versus Vegas:</b> on <span id="mk-games"></span> past games the betting market picked
+      <b id="mk-acc"></b> of winners, vs <span id="mk-model"></span> for this model. The model is useful for
+      understanding games, but it doesn't beat the market and isn't meant for betting.</p>
     <p>What the model learned (injuries, home court, back-to-backs) is in the <a href="writeup.html">write-up</a>.
       Code and data are on <a href="https://github.com/pushtishah11/nba-game-predictor">GitHub</a>.</p>
   </section>
@@ -211,6 +218,17 @@ function teamHtml(t, isPick, right) {
   </div>`;
 }
 
+function marketNote(g) {
+  if (!g.market) return "";
+  const m = g.market, agree = (m.p_home >= 0.5) === (g.p_home >= 0.5);
+  const fav = m.spread == null ? "" : m.spread < 0 ? ` (${g.home.abbr} ${m.spread})` : m.spread > 0 ? ` (${g.away.abbr} -${m.spread})` : " (pick'em)";
+  const gap = Math.abs(m.p_home - g.p_home) * 100;
+  const verdict = agree ? (gap < 5 ? "The model and the market see it about the same."
+      : `Same winner, but the model is ${(g.p_home >= 0.5) === (g.p_home > m.p_home) ? "more" : "less"} confident by ${gap.toFixed(0)} points.`)
+    : "The model and the market disagree. Historically the market wins those about 57% of the time.";
+  return `<p class="note"><b>Betting market:</b> ${esc(marketPick(m.p_home, g.home.abbr, g.away.abbr))}${esc(fav)}. ${esc(verdict)}</p>`;
+}
+
 function whyHtml(g) {
   const e = g.explain, A = g.away, H = g.home, homePick = g.p_home >= 0.5;
   const pickAbbr = homePick ? H.abbr : A.abbr;
@@ -227,6 +245,7 @@ function whyHtml(g) {
   const homeRow = g.neutral ? row("Neutral site", 0) : row("Home court", e.base - 0.5);
   const fmt = (x) => (x > 0 ? "+" : "") + x.toFixed(1);
   const stats = [
+    ...(g.market ? [["Betting market", pct(1 - g.market.p_home), pct(g.market.p_home), (x) => x, null]] : []),
     ["Elo rating", A.elo, H.elo, (x) => x, 1],
     ["Record", A.record, H.record, (x) => x, null],
     ["Avg point margin", A.avg_margin, H.avg_margin, fmt, 1],
@@ -258,6 +277,7 @@ function whyHtml(g) {
       <div class="total">Prediction</div><div class="total"></div><div class="val total">${esc(pickAbbr)} ${pct(homePick ? g.p_home : 1 - g.p_home)}</div>
     </div>
     <p class="note">Starts at 50/50, then each factor shifts the odds. Numbers are percentage points of win probability. "Lineup vs usual" compares tonight's expected players with the team's last 10 games, in Game Score points.</p>
+    ${marketNote(g)}
     <h3>By the numbers</h3>
     <table class="cmp"><thead><tr><th></th><th class="num">${esc(A.abbr)}</th><th class="num">${esc(H.abbr)}</th></tr></thead><tbody>
       ${stats.map(([l, a, h, f, dir]) => `<tr><td>${esc(l)}</td>${cell(a, h, f, dir)}${cell(h, a, f, dir)}</tr>`).join("")}
@@ -340,6 +360,15 @@ function closeSheet() {
   }, reduceMotion() ? 0 : 380);
 }
 
+function marketPick(p, homeAbbr, awayAbbr) {
+  return p >= 0.5 ? `${homeAbbr} ${pct(p)}` : `${awayAbbr} ${pct(1 - p)}`;
+}
+function marketTag(g) {
+  if (!g.market) return "";
+  const agree = (g.market.p_home >= 0.5) === (g.p_home >= 0.5);
+  return `<span class="mkt ${agree ? "" : "dis"}">Vegas: ${esc(marketPick(g.market.p_home, g.home.abbr, g.away.abbr))}${agree ? "" : " (disagrees)"}</span> · `;
+}
+
 function renderUpcoming(games) {
   if (!games.length) return `<div class="empty">No upcoming games in the next week.</div>`;
   return Object.entries(groupBy(games, "date")).map(([date, gs]) => `
@@ -355,7 +384,7 @@ function renderUpcoming(games) {
         </div>
         <div class="bar"><div class="a ${!homePick ? "win" : ""}" style="width:${pa * 100}%"></div><div class="h ${homePick ? "win" : ""}" style="width:${g.p_home * 100}%"></div></div>
         <div class="pcts">${!homePick ? `<b>${pct(pa)}</b>` : `<span>${pct(pa)}</span>`}${homePick ? `<b>${pct(g.p_home)}</b>` : `<span>${pct(g.p_home)}</span>`}</div>
-        ${g.explain ? '<div class="hint">Tap to see why ⤢</div>' : ""}
+        <div class="hint">${marketTag(g)}${g.explain ? "Tap to see why ⤢" : ""}</div>
       </div>`;
     }).join("")}`).join("");
 }
@@ -367,14 +396,15 @@ function renderResults(rs, tr) {
   }
   return Object.entries(groupBy(rs, "date")).map(([date, gs]) => `
     <h2>${esc(dayLabel(date))}</h2>
-    <table><thead><tr><th>Game</th><th class="num">Score</th><th class="num">Our pick</th><th class="num"></th></tr></thead><tbody>
+    <table><thead><tr><th>Game</th><th class="num">Score</th><th class="num">Our pick</th><th class="num"></th><th class="num mcol">Vegas</th></tr></thead><tbody>
     ${gs.map((r) => {
       const homePick = r.p_home >= 0.5;
       const pickAbbr = homePick ? r.home_abbr : r.away_abbr, p = homePick ? r.p_home : 1 - r.p_home;
       return `<tr><td>${teamLabel(r.away, r.away_abbr, 20)} @ ${teamLabel(r.home, r.home_abbr, 20)}</td>
         <td class="num">${r.away_pts}–${r.home_pts}</td>
         <td class="num">${esc(pickAbbr)} ${pct(p)}</td>
-        <td class="num ${r.correct ? "ok" : "no"}">${r.correct ? "✓" : "✗"}</td></tr>`;
+        <td class="num ${r.correct ? "ok" : "no"}">${r.correct ? "✓" : "✗"}</td>
+        <td class="num mcol">${r.p_market == null ? "—" : `<span class="${(r.p_market >= 0.5) === (r.home_pts > r.away_pts) ? "ok" : "no"}">${esc(r.p_market >= 0.5 ? r.home_abbr : r.away_abbr)}</span>`}</td></tr>`;
     }).join("")}
     </tbody></table>`).join("");
 }
@@ -390,7 +420,9 @@ function renderRankings(rk) {
 function renderStats(d) {
   const tr = d.track_record, bt = d.backtest;
   const live = tr.games ? `${pct(tr.correct / tr.games, 1)}` : "—";
-  const liveLabel = tr.games ? `Live record: ${tr.correct}-${tr.games - tr.correct} since ${new Date(tr.since + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : "Live record (starts tonight)";
+  const vm = tr.vs_market;
+  const liveLabel = tr.games ? `Live record: ${tr.correct}-${tr.games - tr.correct} since ${new Date(tr.since + "T12:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}`
+    + (vm && vm.games ? ` (Vegas: ${vm.market_correct}-${vm.games - vm.market_correct})` : "") : "Live record (starts tonight)";
   return `
     <div class="stat"><div class="v">${pct(bt.accuracy, 1)}</div><div class="l">Backtest accuracy, ${bt.games.toLocaleString()} games since ${esc(bt.first_season)}</div></div>
     <div class="stat"><div class="v">${live}</div><div class="l">${esc(liveLabel)}</div></div>
@@ -426,6 +458,11 @@ fetch("data.json", { cache: "no-store" }).then((r) => r.json()).then((d) => {
   $("#bt-games").textContent = d.backtest.games.toLocaleString();
   $("#bt-acc").textContent = pct(d.backtest.accuracy, 1);
   $("#bt-home").textContent = pct(d.backtest.home_baseline, 1);
+  if (d.market_backtest) {
+    $("#mk-games").textContent = d.market_backtest.games.toLocaleString();
+    $("#mk-acc").textContent = pct(d.market_backtest.market_accuracy, 1);
+    $("#mk-model").textContent = pct(d.market_backtest.model_accuracy, 1);
+  }
   $("#updated").textContent = "Updated " + new Date(d.generated_at).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 }).catch(() => {
   $("#upcoming").innerHTML = `<div class="empty">Couldn't load predictions. Try refreshing.</div>`;
