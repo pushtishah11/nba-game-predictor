@@ -15736,9 +15736,9 @@ season,date,start_et,away,away_pts,home,home_pts,ot,notes,playoffs
 2027,2026-11-23,8:00p,Cleveland Cavaliers,108.0,Chicago Bulls,122.0,,,False
 2027,2026-11-23,8:00p,Phoenix Suns,123.0,New Orleans Pelicans,119.0,OT,,False
 2027,2026-11-23,8:30p,Los Angeles Clippers,104.0,Houston Rockets,116.0,,,False
-2027,2026-11-24,10:00p,Dallas Mavericks,,Denver Nuggets,,,NBA Cup,False
-2027,2026-11-24,7:00p,Detroit Pistons,,Orlando Magic,,,NBA Cup,False
-2027,2026-11-24,8:00p,Boston Celtics,,Washington Wizards,,,NBA Cup,False
+2027,2026-11-24,10:00p,Dallas Mavericks,120.0,Denver Nuggets,101.0,,NBA Cup,False
+2027,2026-11-24,7:00p,Detroit Pistons,104.0,Orlando Magic,86.0,,NBA Cup,False
+2027,2026-11-24,8:00p,Boston Celtics,131.0,Washington Wizards,116.0,,NBA Cup,False
 2027,2026-11-25,10:00p,Sacramento Kings,,Golden State Warriors,,,NBA Cup,False
 2027,2026-11-25,10:00p,San Antonio Spurs,,Portland Trail Blazers,,,NBA Cup,False
 2027,2026-11-25,5:00p,Miami Heat,,Philadelphia 76ers,,,NBA Cup,False

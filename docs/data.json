@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T23:26:44Z",
+ "generated_at": "2026-11-25T22:59:52Z",
  "model_trained_through": "2026-11-17",
  "backtest": {
   "games": 11753,
@@ -8,13 +8,13 @@
   "first_season": "2017-18"
  },
  "track_record": {
-  "games": 64,
-  "correct": 39,
+  "games": 67,
+  "correct": 41,
   "since": "2026-11-15",
   "vs_market": {
-   "games": 64,
-   "model_correct": 39,
-   "market_correct": 40
+   "games": 67,
+   "model_correct": 41,
+   "market_correct": 41
   }
  },
  "market_backtest": {
@@ -27,302 +27,16 @@
  },
  "upcoming": [
   {
-   "date": "2026-11-24",
-   "time": "10:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": "NBA Cup",
-   "p_home": 0.7485,
-   "market": {
-    "p_home": 0.7263,
-    "spread": -8.5
-   },
-   "home": {
-    "name": "Denver Nuggets",
-    "abbr": "DEN",
-    "record": "10-5",
-    "last_n": 10,
-    "last_record": "7-3",
-    "last_margin": 3.3,
-    "avg_margin": 1.8,
-    "rest": 1,
-    "elo": 1586,
-    "b2b": false,
-    "lineup_change": -1.3,
-    "missing": []
-   },
-   "away": {
-    "name": "Dallas Mavericks",
-    "abbr": "DAL",
-    "record": "10-7",
-    "last_n": 10,
-    "last_record": "6-4",
-    "last_margin": -0.1,
-    "avg_margin": -0.1,
-    "rest": 1,
-    "elo": 1455,
-    "b2b": false,
-    "lineup_change": -4.8,
-    "missing": [
-     {
-      "new": false,
-      "player": "Dereck Lively II",
-      "status": "Out",
-      "injury": "Foot",
-      "value": 7.6
-     }
-    ]
-   },
-   "explain": {
-    "base": 0.5689,
-    "steps": [
-     {
-      "key": "strength",
-      "label": "Team strength",
-      "delta": 0.1547
-     },
-     {
-      "key": "lineup",
-      "label": "Injuries & lineups",
-      "delta": 0.0142
-     },
-     {
-      "key": "season",
-      "label": "Season record",
-      "delta": 0.0062
-     },
-     {
-      "key": "recent",
-      "label": "Recent form (last 10)",
-      "delta": -0.0022
-     },
-     {
-      "key": "rest",
-      "label": "Rest & schedule",
-      "delta": 0.0067
-     }
-    ],
-    "final": 0.7485,
-    "summary": [
-     "The Nuggets are rated much stronger than the Mavericks (Elo 1586 vs 1455).",
-     "Home court is worth about 7 points of win probability to the Nuggets on its own."
-    ]
-   }
-  },
-  {
-   "date": "2026-11-24",
-   "time": "7:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": "NBA Cup",
-   "p_home": 0.3877,
-   "market": {
-    "p_home": 0.4573,
-    "spread": 2.5
-   },
-   "home": {
-    "name": "Orlando Magic",
-    "abbr": "ORL",
-    "record": "7-9",
-    "last_n": 10,
-    "last_record": "5-5",
-    "last_margin": -1.2,
-    "avg_margin": -4.1,
-    "rest": 1,
-    "elo": 1502,
-    "b2b": false,
-    "lineup_change": 8.6,
-    "missing": [
-     {
-      "new": false,
-      "player": "Paolo Banchero",
-      "status": "Out",
-      "injury": "Ankle",
-      "value": 14.6
-     }
-    ]
-   },
-   "away": {
-    "name": "Detroit Pistons",
-    "abbr": "DET",
-    "record": "10-6",
-    "last_n": 10,
-    "last_record": "5-5",
-    "last_margin": 2.9,
-    "avg_margin": 4.8,
-    "rest": 1,
-    "elo": 1637,
-    "b2b": false,
-    "lineup_change": 2.2,
-    "missing": [
-     {
-      "new": false,
-      "player": "Jalen Duren",
-      "status": "Out",
-      "injury": "Hamstring",
-      "value": 11.7
-     },
-     {
-      "new": false,
-      "player": "Duncan Robinson",
-      "status": "Out",
-      "injury": "Quadriceps",
-      "value": 10.5
-     },
-     {
-      "new": false,
-      "player": "Taurean Prince",
-      "status": "Out",
-      "injury": "Knee",
-      "value": 6.4
-     }
-    ]
-   },
-   "explain": {
-    "base": 0.5688,
-    "steps": [
-     {
-      "key": "strength",
-      "label": "Team strength",
-      "delta": -0.1757
-     },
-     {
-      "key": "lineup",
-      "label": "Injuries & lineups",
-      "delta": 0.0321
-     },
-     {
-      "key": "season",
-      "label": "Season record",
-      "delta": -0.0211
-     },
-     {
-      "key": "recent",
-      "label": "Recent form (last 10)",
-      "delta": -0.0164
-     },
-     {
-      "key": "rest",
-      "label": "Rest & schedule",
-      "delta": 0.0
-     }
-    ],
-    "final": 0.3877,
-    "summary": [
-     "The Pistons are rated much stronger than the Magic (Elo 1637 vs 1502).",
-     "The Pistons have had the better season: Pistons 10\u20116 (+4.8 pts/game), Magic 7\u20119 (-4.1).",
-     "The Pistons have been better lately: Pistons 5\u20115, Magic 5\u20115 in their last 10.",
-     "Home court is worth about 7 points of win probability to the Magic on its own."
-    ]
-   }
-  },
-  {
-   "date": "2026-11-24",
-   "time": "8:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": "NBA Cup",
-   "p_home": 0.2422,
-   "market": {
-    "p_home": 0.2131,
-    "spread": 10.5
-   },
-   "home": {
-    "name": "Washington Wizards",
-    "abbr": "WAS",
-    "record": "7-11",
-    "last_n": 10,
-    "last_record": "3-7",
-    "last_margin": -9.0,
-    "avg_margin": -5.1,
-    "rest": 1,
-    "elo": 1344,
-    "b2b": false,
-    "lineup_change": 3.0,
-    "missing": [
-     {
-      "new": false,
-      "player": "Justin Champagnie",
-      "status": "Out",
-      "injury": "Foot",
-      "value": 9.2
-     },
-     {
-      "new": false,
-      "player": "Tristan Vukcevic",
-      "status": "Out",
-      "injury": "Hip",
-      "value": 8.1
-     },
-     {
-      "new": false,
-      "player": "Jamir Watkins",
-      "status": "Out",
-      "injury": "Knee",
-      "value": 7.8
-     }
-    ]
-   },
-   "away": {
-    "name": "Boston Celtics",
-    "abbr": "BOS",
-    "record": "11-6",
-    "last_n": 10,
-    "last_record": "6-4",
-    "last_margin": 11.4,
-    "avg_margin": 9.1,
-    "rest": 1,
-    "elo": 1640,
-    "b2b": false,
-    "lineup_change": 5.1,
-    "missing": []
-   },
-   "explain": {
-    "base": 0.5686,
-    "steps": [
-     {
-      "key": "strength",
-      "label": "Team strength",
-      "delta": -0.2627
-     },
-     {
-      "key": "lineup",
-      "label": "Injuries & lineups",
-      "delta": -0.0091
-     },
-     {
-      "key": "season",
-      "label": "Season record",
-      "delta": -0.0252
-     },
-     {
-      "key": "recent",
-      "label": "Recent form (last 10)",
-      "delta": -0.026
-     },
-     {
-      "key": "rest",
-      "label": "Rest & schedule",
-      "delta": -0.0033
-     }
-    ],
-    "final": 0.2422,
-    "summary": [
-     "The Celtics are rated much stronger than the Wizards (Elo 1640 vs 1344).",
-     "The Celtics have been better lately: Celtics 6\u20114, Wizards 3\u20117 in their last 10.",
-     "The Celtics have had the better season: Celtics 11\u20116 (+9.1 pts/game), Wizards 7\u201111 (-5.1).",
-     "Home court is worth about 7 points of win probability to the Wizards on its own."
-    ]
-   }
-  },
-  {
    "date": "2026-11-25",
    "time": "10:00p",
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.6442,
-   "market": null,
+   "p_home": 0.7194,
+   "market": {
+    "p_home": 0.7339,
+    "spread": -7.5
+   },
    "home": {
     "name": "Golden State Warriors",
     "abbr": "GSW",
@@ -377,8 +91,23 @@
     "rest": 1,
     "elo": 1306,
     "b2b": false,
-    "lineup_change": 10.8,
-    "missing": []
+    "lineup_change": -5.9,
+    "missing": [
+     {
+      "new": false,
+      "player": "Maxime Raynaud",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 13.6
+     },
+     {
+      "new": true,
+      "player": "Zach LaVine",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 12.6
+     }
+    ]
    },
    "explain": {
     "base": 0.5687,
@@ -391,28 +120,29 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0865
+      "delta": -0.0102
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": 0.0392
+      "delta": 0.0343
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": -0.0316
+      "delta": -0.0275
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0012
+      "delta": 0.001
      }
     ],
-    "final": 0.6442,
+    "final": 0.7194,
     "summary": [
      "The Warriors are rated much stronger than the Kings (Elo 1476 vs 1306).",
      "The Warriors have had the better season: Warriors 9\u20118 (-0.8 pts/game), Kings 2\u201115 (-12.5).",
+     "The Kings are without Zach LaVine.",
      "Home court is worth about 7 points of win probability to the Warriors on its own."
     ]
    }
@@ -424,7 +154,10 @@
    "playoffs": false,
    "notes": "NBA Cup",
    "p_home": 0.4391,
-   "market": null,
+   "market": {
+    "p_home": 0.4066,
+    "spread": 3.5
+   },
    "home": {
     "name": "Portland Trail Blazers",
     "abbr": "POR",
@@ -522,96 +255,15 @@
   },
   {
    "date": "2026-11-25",
-   "time": "5:00p",
-   "neutral": false,
-   "playoffs": false,
-   "notes": "NBA Cup",
-   "p_home": 0.5412,
-   "market": {
-    "p_home": 0.5154,
-    "spread": -1.5
-   },
-   "home": {
-    "name": "Philadelphia 76ers",
-    "abbr": "PHI",
-    "record": "14-4",
-    "last_n": 10,
-    "last_record": "7-3",
-    "last_margin": -1.3,
-    "avg_margin": 1.8,
-    "rest": 1,
-    "elo": 1565,
-    "b2b": false,
-    "lineup_change": 2.0,
-    "missing": [
-     {
-      "new": true,
-      "player": "Joel Embiid",
-      "status": "Questionable",
-      "injury": "Illness",
-      "value": 15.0
-     }
-    ]
-   },
-   "away": {
-    "name": "Miami Heat",
-    "abbr": "MIA",
-    "record": "10-6",
-    "last_n": 10,
-    "last_record": "8-2",
-    "last_margin": 3.9,
-    "avg_margin": 1.2,
-    "rest": 2,
-    "elo": 1556,
-    "b2b": false,
-    "lineup_change": 6.6,
-    "missing": []
-   },
-   "explain": {
-    "base": 0.5686,
-    "steps": [
-     {
-      "key": "strength",
-      "label": "Team strength",
-      "delta": -0.0042
-     },
-     {
-      "key": "lineup",
-      "label": "Injuries & lineups",
-      "delta": -0.0237
-     },
-     {
-      "key": "season",
-      "label": "Season record",
-      "delta": 0.0139
-     },
-     {
-      "key": "recent",
-      "label": "Recent form (last 10)",
-      "delta": -0.0046
-     },
-     {
-      "key": "rest",
-      "label": "Rest & schedule",
-      "delta": -0.0089
-     }
-    ],
-    "final": 0.5412,
-    "summary": [
-     "For the 76ers, Joel Embiid is questionable.",
-     "The 76ers have had the better season: 76ers 14\u20114 (+1.8 pts/game), Heat 10\u20116 (+1.2).",
-     "Home court is worth about 7 points of win probability to the 76ers on its own."
-    ]
-   }
-  },
-  {
-   "date": "2026-11-25",
    "time": "7:00p",
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.5544,
-   "market": null,
+   "p_home": 0.5453,
+   "market": {
+    "p_home": 0.6174,
+    "spread": -3.5
+   },
    "home": {
     "name": "Charlotte Hornets",
     "abbr": "CHA",
@@ -623,7 +275,7 @@
     "rest": 1,
     "elo": 1449,
     "b2b": false,
-    "lineup_change": 1.9,
+    "lineup_change": -4.6,
     "missing": [
      {
       "new": false,
@@ -631,6 +283,20 @@
       "status": "Out",
       "injury": "Hamstring",
       "value": 9.1
+     },
+     {
+      "new": false,
+      "player": "Grayson Allen",
+      "status": "Out",
+      "injury": "Concussion",
+      "value": 8.3
+     },
+     {
+      "new": true,
+      "player": "Ryan Kalkbrenner",
+      "status": "Out",
+      "injury": "Hip",
+      "value": 5.9
      }
     ]
    },
@@ -645,7 +311,7 @@
     "rest": 1,
     "elo": 1413,
     "b2b": false,
-    "lineup_change": -0.6,
+    "lineup_change": -5.4,
     "missing": [
      {
       "new": true,
@@ -653,6 +319,13 @@
       "status": "Out",
       "injury": "Hamstring",
       "value": 11.1
+     },
+     {
+      "new": true,
+      "player": "Jalen Smith",
+      "status": "Out",
+      "injury": "Illness",
+      "value": 10.9
      },
      {
       "new": false,
@@ -674,7 +347,7 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0133
+      "delta": 0.0042
      },
      {
       "key": "season",
@@ -692,10 +365,11 @@
       "delta": 0.0044
      }
     ],
-    "final": 0.5544,
+    "final": 0.5453,
     "summary": [
      "The Hornets are rated slightly stronger than the Bulls (Elo 1449 vs 1413).",
-     "The Bulls are without Norman Powell.",
+     "The Bulls are without Norman Powell and Jalen Smith.",
+     "The Hornets are without Ryan Kalkbrenner.",
      "Home court is worth about 7 points of win probability to the Hornets on its own."
     ]
    }
@@ -708,8 +382,8 @@
    "notes": "NBA Cup",
    "p_home": 0.6694,
    "market": {
-    "p_home": 0.595,
-    "spread": -3.5
+    "p_home": 0.6174,
+    "spread": -4.5
    },
    "home": {
     "name": "New York Knicks",
@@ -801,7 +475,7 @@
    "notes": "NBA Cup",
    "p_home": 0.6047,
    "market": {
-    "p_home": 0.5325,
+    "p_home": 0.5514,
     "spread": -2.5
    },
    "home": {
@@ -921,7 +595,10 @@
    "playoffs": false,
    "notes": "NBA Cup",
    "p_home": 0.6864,
-   "market": null,
+   "market": {
+    "p_home": 0.7,
+    "spread": -7.5
+   },
    "home": {
     "name": "Memphis Grizzlies",
     "abbr": "MEM",
@@ -1025,7 +702,10 @@
    "playoffs": false,
    "notes": "NBA Cup",
    "p_home": 0.613,
-   "market": null,
+   "market": {
+    "p_home": 0.5176,
+    "spread": -1.5
+   },
    "home": {
     "name": "Milwaukee Bucks",
     "abbr": "MIL",
@@ -1107,8 +787,8 @@
    "notes": "NBA Cup",
    "p_home": 0.7647,
    "market": {
-    "p_home": 0.7707,
-    "spread": -8.5
+    "p_home": 0.7668,
+    "spread": -9.5
    },
    "home": {
     "name": "Houston Rockets",
@@ -1262,20 +942,20 @@
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.8601,
+   "p_home": 0.8646,
    "market": null,
    "home": {
     "name": "Detroit Pistons",
     "abbr": "DET",
-    "record": "10-6",
+    "record": "11-6",
     "last_n": 10,
     "last_record": "5-5",
-    "last_margin": 2.9,
-    "avg_margin": 4.8,
+    "last_margin": 1.4,
+    "avg_margin": 5.6,
     "rest": 2,
-    "elo": 1637,
+    "elo": 1650,
     "b2b": false,
-    "lineup_change": 7.3,
+    "lineup_change": 9.2,
     "missing": [
      {
       "new": false,
@@ -1308,38 +988,38 @@
     "missing": []
    },
    "explain": {
-    "base": 0.5688,
+    "base": 0.5687,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": 0.2478
+      "delta": 0.2527
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0156
+      "delta": 0.0206
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": 0.0285
+      "delta": 0.0282
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": -0.0057
+      "delta": -0.0083
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0049
+      "delta": 0.0027
      }
     ],
-    "final": 0.8601,
+    "final": 0.8646,
     "summary": [
-     "The Pistons are rated much stronger than the Bucks (Elo 1637 vs 1317).",
-     "The Pistons have had the better season: Pistons 10\u20116 (+4.8 pts/game), Bucks 2\u201116 (-11.4).",
+     "The Pistons are rated much stronger than the Bucks (Elo 1650 vs 1317).",
+     "The Pistons have had the better season: Pistons 11\u20116 (+5.6 pts/game), Bucks 2\u201116 (-11.4).",
      "Home court is worth about 7 points of win probability to the Pistons on its own."
     ]
    }
@@ -1350,7 +1030,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.319,
+   "p_home": 0.3192,
    "market": null,
    "home": {
     "name": "Indiana Pacers",
@@ -1399,12 +1079,12 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0421
+      "delta": -0.0419
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0356
+      "delta": -0.0357
      },
      {
       "key": "recent",
@@ -1417,7 +1097,7 @@
       "delta": 0.0022
      }
     ],
-    "final": 0.319,
+    "final": 0.3192,
     "summary": [
      "The 76ers are rated much stronger than the Pacers (Elo 1565 vs 1369).",
      "The 76ers have had the better season: 76ers 14\u20114 (+1.8 pts/game), Pacers 6\u201112 (-3.3).",
@@ -1529,20 +1209,20 @@
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.7196,
+   "p_home": 0.7301,
    "market": null,
    "home": {
     "name": "Boston Celtics",
     "abbr": "BOS",
-    "record": "11-6",
+    "record": "12-6",
     "last_n": 10,
     "last_record": "6-4",
-    "last_margin": 11.4,
-    "avg_margin": 9.1,
+    "last_margin": 12.2,
+    "avg_margin": 9.4,
     "rest": 2,
-    "elo": 1640,
+    "elo": 1646,
     "b2b": false,
-    "lineup_change": 5.1,
+    "lineup_change": 5.6,
     "missing": []
    },
    "away": {
@@ -1568,37 +1248,37 @@
     ]
    },
    "explain": {
-    "base": 0.5687,
+    "base": 0.5686,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": 0.0881
+      "delta": 0.0969
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.006
+      "delta": 0.0083
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": 0.003
+      "delta": 0.0046
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.053
+      "delta": 0.0545
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0007
+      "delta": -0.0028
      }
     ],
-    "final": 0.7196,
+    "final": 0.7301,
     "summary": [
-     "The Celtics are rated stronger than the Hawks (Elo 1640 vs 1564).",
+     "The Celtics are rated stronger than the Hawks (Elo 1646 vs 1564).",
      "The Hawks are better rested (4 days off vs 2).",
      "Home court is worth about 7 points of win probability to the Celtics on its own."
     ]
@@ -1713,7 +1393,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.6001,
+   "p_home": 0.5855,
    "market": null,
    "home": {
     "name": "Phoenix Suns",
@@ -1740,15 +1420,15 @@
    "away": {
     "name": "Dallas Mavericks",
     "abbr": "DAL",
-    "record": "10-7",
+    "record": "11-7",
     "last_n": 10,
-    "last_record": "6-4",
-    "last_margin": -0.1,
-    "avg_margin": -0.1,
+    "last_record": "7-3",
+    "last_margin": 1.9,
+    "avg_margin": 1.0,
     "rest": 2,
-    "elo": 1455,
+    "elo": 1485,
     "b2b": false,
-    "lineup_change": -3.7,
+    "lineup_change": -4.3,
     "missing": []
    },
    "explain": {
@@ -1757,32 +1437,32 @@
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": 0.0267
+      "delta": -0.0016
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0125
+      "delta": 0.0161
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0025
+      "delta": -0.0051
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": -0.0096
+      "delta": -0.0012
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0041
+      "delta": 0.0085
      }
     ],
-    "final": 0.6001,
+    "final": 0.5855,
     "summary": [
-     "The Suns are rated stronger than the Mavericks (Elo 1538 vs 1455).",
+     "The Suns are rated stronger than the Mavericks (Elo 1538 vs 1485).",
      "Home court is worth about 7 points of win probability to the Suns on its own."
     ]
    }
@@ -2088,7 +1768,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": "NBA Cup",
-   "p_home": 0.202,
+   "p_home": 0.2424,
    "market": null,
    "home": {
     "name": "Utah Jazz",
@@ -2129,15 +1809,15 @@
    "away": {
     "name": "Denver Nuggets",
     "abbr": "DEN",
-    "record": "10-5",
+    "record": "10-6",
     "last_n": 10,
     "last_record": "7-3",
-    "last_margin": 3.3,
-    "avg_margin": 1.8,
+    "last_margin": 2.2,
+    "avg_margin": 0.5,
     "rest": 2,
-    "elo": 1586,
+    "elo": 1555,
     "b2b": false,
-    "lineup_change": -1.3,
+    "lineup_change": -3.2,
     "missing": []
    },
    "explain": {
@@ -2146,33 +1826,33 @@
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.3691
+      "delta": -0.3454
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.01
+      "delta": 0.0177
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0317
+      "delta": -0.0322
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0343
+      "delta": 0.0419
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": -0.01
+      "delta": -0.008
      }
     ],
-    "final": 0.202,
+    "final": 0.2424,
     "summary": [
-     "The Nuggets are rated much stronger than the Jazz (Elo 1586 vs 1335).",
-     "The Nuggets have had the better season: Nuggets 10\u20115 (+1.8 pts/game), Jazz 3\u201116 (-7.5).",
+     "The Nuggets are rated much stronger than the Jazz (Elo 1555 vs 1335).",
+     "The Nuggets have had the better season: Nuggets 10\u20116 (+0.5 pts/game), Jazz 3\u201116 (-7.5).",
      "Home court is worth about 7 points of win probability to the Jazz on its own."
     ]
    }
@@ -2183,20 +1863,20 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.4553,
+   "p_home": 0.4795,
    "market": null,
    "home": {
     "name": "Washington Wizards",
     "abbr": "WAS",
-    "record": "7-11",
+    "record": "7-12",
     "last_n": 10,
     "last_record": "3-7",
-    "last_margin": -9.0,
-    "avg_margin": -5.1,
+    "last_margin": -9.8,
+    "avg_margin": -5.6,
     "rest": 3,
-    "elo": 1344,
+    "elo": 1338,
     "b2b": false,
-    "lineup_change": 3.0,
+    "lineup_change": 4.7,
     "missing": [
      {
       "new": false,
@@ -2224,15 +1904,15 @@
    "away": {
     "name": "Orlando Magic",
     "abbr": "ORL",
-    "record": "7-9",
+    "record": "7-10",
     "last_n": 10,
     "last_record": "5-5",
-    "last_margin": -1.2,
-    "avg_margin": -4.1,
+    "last_margin": -2.1,
+    "avg_margin": -4.9,
     "rest": 3,
-    "elo": 1502,
+    "elo": 1489,
     "b2b": false,
-    "lineup_change": 8.6,
+    "lineup_change": 5.7,
     "missing": [
      {
       "new": false,
@@ -2244,27 +1924,27 @@
     ]
    },
    "explain": {
-    "base": 0.5686,
+    "base": 0.5685,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.0748
+      "delta": -0.075
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0289
+      "delta": -0.0054
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0048
+      "delta": -0.0042
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0016
+      "delta": 0.0021
      },
      {
       "key": "rest",
@@ -2272,9 +1952,9 @@
       "delta": -0.0065
      }
     ],
-    "final": 0.4553,
+    "final": 0.4795,
     "summary": [
-     "The Magic are rated much stronger than the Wizards (Elo 1502 vs 1344).",
+     "The Magic are rated much stronger than the Wizards (Elo 1489 vs 1338).",
      "Home court is worth about 7 points of win probability to the Wizards on its own."
     ]
    }
@@ -2375,7 +2055,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.6538,
+   "p_home": 0.6536,
    "market": null,
    "home": {
     "name": "Chicago Bulls",
@@ -2432,7 +2112,7 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0161
+      "delta": 0.0158
      },
      {
       "key": "season",
@@ -2450,7 +2130,7 @@
       "delta": 0.0663
      }
     ],
-    "final": 0.6538,
+    "final": 0.6536,
     "summary": [
      "The Pacers are on the second night of a back-to-back.",
      "The Bulls have been better lately: Bulls 4\u20116, Pacers 4\u20116 in their last 10.",
@@ -2795,7 +2475,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.6336,
+   "p_home": 0.6211,
    "market": null,
    "home": {
     "name": "San Antonio Spurs",
@@ -2829,15 +2509,15 @@
    "away": {
     "name": "Boston Celtics",
     "abbr": "BOS",
-    "record": "11-6",
+    "record": "12-6",
     "last_n": 10,
     "last_record": "6-4",
-    "last_margin": 11.4,
-    "avg_margin": 9.1,
+    "last_margin": 12.2,
+    "avg_margin": 9.4,
     "rest": 1,
-    "elo": 1640,
+    "elo": 1646,
     "b2b": false,
-    "lineup_change": 5.1,
+    "lineup_change": 5.6,
     "missing": []
    },
    "explain": {
@@ -2846,33 +2526,33 @@
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": 0.0903
+      "delta": 0.0815
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0059
+      "delta": -0.0084
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": 0.0165
+      "delta": 0.015
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": -0.0318
+      "delta": -0.0355
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": -0.0041
+      "delta": 0.0
      }
     ],
-    "final": 0.6336,
+    "final": 0.6211,
     "summary": [
-     "The Spurs are rated stronger than the Celtics (Elo 1722 vs 1640).",
-     "The Spurs have had the better season: Spurs 15\u20113 (+12.2 pts/game), Celtics 11\u20116 (+9.1).",
+     "The Spurs are rated stronger than the Celtics (Elo 1722 vs 1646).",
+     "The Spurs have had the better season: Spurs 15\u20113 (+12.2 pts/game), Celtics 12\u20116 (+9.4).",
      "Home court is worth about 7 points of win probability to the Spurs on its own."
     ]
    }
@@ -2979,20 +2659,20 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.7594,
+   "p_home": 0.7858,
    "market": null,
    "home": {
     "name": "Detroit Pistons",
     "abbr": "DET",
-    "record": "10-6",
+    "record": "11-6",
     "last_n": 10,
     "last_record": "5-5",
-    "last_margin": 2.9,
-    "avg_margin": 4.8,
+    "last_margin": 1.4,
+    "avg_margin": 5.6,
     "rest": 1,
-    "elo": 1637,
+    "elo": 1650,
     "b2b": false,
-    "lineup_change": 7.3,
+    "lineup_change": 9.2,
     "missing": [
      {
       "new": false,
@@ -3013,51 +2693,51 @@
    "away": {
     "name": "Orlando Magic",
     "abbr": "ORL",
-    "record": "7-9",
+    "record": "7-10",
     "last_n": 10,
     "last_record": "5-5",
-    "last_margin": -1.2,
-    "avg_margin": -4.1,
+    "last_margin": -2.1,
+    "avg_margin": -4.9,
     "rest": 0,
-    "elo": 1502,
+    "elo": 1489,
     "b2b": true,
-    "lineup_change": 18.9,
+    "lineup_change": 16.3,
     "missing": []
    },
    "explain": {
-    "base": 0.5688,
+    "base": 0.5687,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": 0.1574
+      "delta": 0.1664
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0504
+      "delta": -0.0296
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": 0.0188
+      "delta": 0.0219
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0144
+      "delta": 0.0115
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0505
+      "delta": 0.0468
      }
     ],
-    "final": 0.7594,
+    "final": 0.7858,
     "summary": [
-     "The Pistons are rated much stronger than the Magic (Elo 1637 vs 1502).",
+     "The Pistons are rated much stronger than the Magic (Elo 1650 vs 1489).",
      "The Magic are on the second night of a back-to-back.",
-     "The Pistons have had the better season: Pistons 10\u20116 (+4.8 pts/game), Magic 7\u20119 (-4.1).",
+     "The Pistons have had the better season: Pistons 11\u20116 (+5.6 pts/game), Magic 7\u201110 (-4.9).",
      "Home court is worth about 7 points of win probability to the Pistons on its own."
     ]
    }
@@ -3237,7 +2917,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.3696,
+   "p_home": 0.4262,
    "market": null,
    "home": {
     "name": "Toronto Raptors",
@@ -3271,15 +2951,15 @@
    "away": {
     "name": "Denver Nuggets",
     "abbr": "DEN",
-    "record": "10-5",
+    "record": "10-6",
     "last_n": 10,
     "last_record": "7-3",
-    "last_margin": 3.3,
-    "avg_margin": 1.8,
+    "last_margin": 2.2,
+    "avg_margin": 0.5,
     "rest": 1,
-    "elo": 1586,
+    "elo": 1555,
     "b2b": false,
-    "lineup_change": -1.3,
+    "lineup_change": -3.2,
     "missing": []
    },
    "explain": {
@@ -3288,33 +2968,33 @@
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.2427
+      "delta": -0.2102
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0339
+      "delta": 0.0444
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0264
+      "delta": -0.0235
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0444
+      "delta": 0.0511
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": -0.0083
+      "delta": -0.0043
      }
     ],
-    "final": 0.3696,
+    "final": 0.4262,
     "summary": [
-     "The Nuggets are rated much stronger than the Raptors (Elo 1586 vs 1483).",
-     "The Nuggets have had the better season: Nuggets 10\u20115 (+1.8 pts/game), Raptors 6\u201111 (-0.1).",
+     "The Nuggets are rated stronger than the Raptors (Elo 1555 vs 1483).",
+     "The Nuggets have had the better season: Nuggets 10\u20116 (+0.5 pts/game), Raptors 6\u201111 (-0.1).",
      "Home court is worth about 7 points of win probability to the Raptors on its own."
     ]
    }
@@ -3435,7 +3115,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.2927,
+   "p_home": 0.2581,
    "market": null,
    "home": {
     "name": "Sacramento Kings",
@@ -3448,8 +3128,16 @@
     "rest": 3,
     "elo": 1306,
     "b2b": false,
-    "lineup_change": 10.8,
-    "missing": []
+    "lineup_change": 2.4,
+    "missing": [
+     {
+      "new": false,
+      "player": "Maxime Raynaud",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 13.6
+     }
+    ]
    },
    "away": {
     "name": "Minnesota Timberwolves",
@@ -3491,25 +3179,25 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0401
+      "delta": 0.0038
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0551
+      "delta": -0.051
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0243
+      "delta": 0.0223
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0058
+      "delta": 0.0053
      }
     ],
-    "final": 0.2927,
+    "final": 0.2581,
     "summary": [
      "The Timberwolves are rated much stronger than the Kings (Elo 1611 vs 1306).",
      "The Timberwolves have had the better season: Timberwolves 13\u20115 (+10.6 pts/game), Kings 2\u201115 (-12.5).",
@@ -3524,7 +3212,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.5435,
+   "p_home": 0.5003,
    "market": null,
    "home": {
     "name": "Sacramento Kings",
@@ -3537,8 +3225,16 @@
     "rest": 0,
     "elo": 1306,
     "b2b": true,
-    "lineup_change": 10.8,
-    "missing": []
+    "lineup_change": 2.4,
+    "missing": [
+     {
+      "new": false,
+      "player": "Maxime Raynaud",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 13.6
+     }
+    ]
    },
    "away": {
     "name": "New Orleans Pelicans",
@@ -3565,25 +3261,25 @@
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0095
+      "delta": -0.0337
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0156
+      "delta": -0.0155
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0214
+      "delta": 0.0212
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0254
+      "delta": 0.0255
      }
     ],
-    "final": 0.5435,
+    "final": 0.5003,
     "summary": [
      "The Pelicans are rated slightly stronger than the Kings (Elo 1344 vs 1306).",
      "Both teams are on the second night of a back-to-back.",
@@ -3598,7 +3294,7 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.5628,
+   "p_home": 0.5664,
    "market": null,
    "home": {
     "name": "Charlotte Hornets",
@@ -3625,15 +3321,15 @@
    "away": {
     "name": "Washington Wizards",
     "abbr": "WAS",
-    "record": "7-11",
+    "record": "7-12",
     "last_n": 10,
     "last_record": "3-7",
-    "last_margin": -9.0,
-    "avg_margin": -5.1,
+    "last_margin": -9.8,
+    "avg_margin": -5.6,
     "rest": 1,
-    "elo": 1344,
+    "elo": 1338,
     "b2b": false,
-    "lineup_change": 6.3,
+    "lineup_change": 8.2,
     "missing": [
      {
       "new": false,
@@ -3657,33 +3353,33 @@
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.0017
+      "delta": 0.0016
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0227
+      "delta": -0.0322
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.0153
+      "delta": -0.0132
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0249
+      "delta": 0.0283
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0087
+      "delta": 0.0131
      }
     ],
-    "final": 0.5628,
+    "final": 0.5664,
     "summary": [
-     "The Wizards have had the better season: Wizards 7\u201111 (-5.1 pts/game), Hornets 4\u201112 (-10.2).",
-     "The Hornets are rated much stronger than the Wizards (Elo 1449 vs 1344).",
+     "The Wizards have had the better season: Wizards 7\u201112 (-5.6 pts/game), Hornets 4\u201112 (-10.2).",
+     "The Hornets are rated much stronger than the Wizards (Elo 1449 vs 1338).",
      "Home court is worth about 7 points of win probability to the Hornets on its own."
     ]
    }
@@ -3694,20 +3390,20 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.6045,
+   "p_home": 0.6664,
    "market": null,
    "home": {
     "name": "Detroit Pistons",
     "abbr": "DET",
-    "record": "10-6",
+    "record": "11-6",
     "last_n": 10,
     "last_record": "5-5",
-    "last_margin": 2.9,
-    "avg_margin": 4.8,
+    "last_margin": 1.4,
+    "avg_margin": 5.6,
     "rest": 0,
-    "elo": 1637,
+    "elo": 1650,
     "b2b": true,
-    "lineup_change": 13.4,
+    "lineup_change": 15.0,
     "missing": [
      {
       "new": false,
@@ -3721,49 +3417,49 @@
    "away": {
     "name": "Denver Nuggets",
     "abbr": "DEN",
-    "record": "10-5",
+    "record": "10-6",
     "last_n": 10,
     "last_record": "7-3",
-    "last_margin": 3.3,
-    "avg_margin": 1.8,
+    "last_margin": 2.2,
+    "avg_margin": 0.5,
     "rest": 0,
-    "elo": 1586,
+    "elo": 1555,
     "b2b": true,
-    "lineup_change": -1.3,
+    "lineup_change": -3.2,
     "missing": []
    },
    "explain": {
-    "base": 0.5688,
+    "base": 0.5687,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.0825
+      "delta": -0.0384
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": 0.0765
+      "delta": 0.0921
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.002
+      "delta": 0.0045
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": 0.0319
+      "delta": 0.0285
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0118
+      "delta": 0.011
      }
     ],
-    "final": 0.6045,
+    "final": 0.6664,
     "summary": [
-     "The Pistons are rated stronger than the Nuggets (Elo 1637 vs 1586).",
+     "The Pistons are rated stronger than the Nuggets (Elo 1650 vs 1555).",
      "Both teams are on the second night of a back-to-back.",
      "Home court is worth about 7 points of win probability to the Pistons on its own."
     ]
@@ -3951,70 +3647,69 @@
    "neutral": false,
    "playoffs": false,
    "notes": null,
-   "p_home": 0.4169,
+   "p_home": 0.419,
    "market": null,
    "home": {
     "name": "Dallas Mavericks",
     "abbr": "DAL",
-    "record": "10-7",
+    "record": "11-7",
     "last_n": 10,
-    "last_record": "6-4",
-    "last_margin": -0.1,
-    "avg_margin": -0.1,
+    "last_record": "7-3",
+    "last_margin": 1.9,
+    "avg_margin": 1.0,
     "rest": 2,
-    "elo": 1455,
+    "elo": 1485,
     "b2b": false,
-    "lineup_change": -3.7,
+    "lineup_change": -4.3,
     "missing": []
    },
    "away": {
     "name": "Boston Celtics",
     "abbr": "BOS",
-    "record": "11-6",
+    "record": "12-6",
     "last_n": 10,
     "last_record": "6-4",
-    "last_margin": 11.4,
-    "avg_margin": 9.1,
+    "last_margin": 12.2,
+    "avg_margin": 9.4,
     "rest": 0,
-    "elo": 1640,
+    "elo": 1646,
     "b2b": true,
-    "lineup_change": 5.1,
+    "lineup_change": 5.6,
     "missing": []
    },
    "explain": {
-    "base": 0.5687,
+    "base": 0.5686,
     "steps": [
      {
       "key": "strength",
       "label": "Team strength",
-      "delta": -0.1141
+      "delta": -0.0944
      },
      {
       "key": "lineup",
       "label": "Injuries & lineups",
-      "delta": -0.0449
+      "delta": -0.0514
      },
      {
       "key": "season",
       "label": "Season record",
-      "delta": -0.01
+      "delta": -0.0094
      },
      {
       "key": "recent",
       "label": "Recent form (last 10)",
-      "delta": -0.0452
+      "delta": -0.057
      },
      {
       "key": "rest",
       "label": "Rest & schedule",
-      "delta": 0.0625
+      "delta": 0.0626
      }
     ],
-    "final": 0.4169,
+    "final": 0.419,
     "summary": [
-     "The Celtics are rated much stronger than the Mavericks (Elo 1640 vs 1455).",
+     "The Celtics are rated much stronger than the Mavericks (Elo 1646 vs 1485).",
      "The Celtics are on the second night of a back-to-back.",
-     "The Celtics have been better lately: Celtics 6\u20114, Mavericks 6\u20114 in their last 10.",
      "Home court is worth about 7 points of win probability to the Mavericks on its own."
     ]
    }
@@ -4107,56 +3802,756 @@
      "Home court is worth about 7 points of win probability to the Bucks on its own."
     ]
    }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "10:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.6884,
+   "market": null,
+   "home": {
+    "name": "Golden State Warriors",
+    "abbr": "GSW",
+    "record": "9-8",
+    "last_n": 10,
+    "last_record": "5-5",
+    "last_margin": -3.4,
+    "avg_margin": -0.8,
+    "rest": 1,
+    "elo": 1476,
+    "b2b": false,
+    "lineup_change": -2.3,
+    "missing": [
+     {
+      "new": false,
+      "player": "Stephen Curry",
+      "status": "Out",
+      "injury": "Abdomen",
+      "value": 18.0
+     },
+     {
+      "new": false,
+      "player": "Jimmy Butler III",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 16.8
+     },
+     {
+      "new": false,
+      "player": "Kristaps Porzingis",
+      "status": "Out",
+      "injury": "Illness",
+      "value": 9.9
+     }
+    ]
+   },
+   "away": {
+    "name": "Utah Jazz",
+    "abbr": "UTA",
+    "record": "3-16",
+    "last_n": 10,
+    "last_record": "2-8",
+    "last_margin": -4.1,
+    "avg_margin": -7.5,
+    "rest": 1,
+    "elo": 1335,
+    "b2b": false,
+    "lineup_change": 9.2,
+    "missing": [
+     {
+      "new": false,
+      "player": "Lauri Markkanen",
+      "status": "Out",
+      "injury": "Hand",
+      "value": 14.7
+     },
+     {
+      "new": false,
+      "player": "Jaren Jackson Jr.",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 12.4
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5687,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.1708
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": -0.0489
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": 0.0307
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0406
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.0076
+     }
+    ],
+    "final": 0.6884,
+    "summary": [
+     "The Warriors are rated much stronger than the Jazz (Elo 1476 vs 1335).",
+     "The Warriors have had the better season: Warriors 9\u20118 (-0.8 pts/game), Jazz 3\u201116 (-7.5).",
+     "Home court is worth about 7 points of win probability to the Warriors on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "11:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.6232,
+   "market": null,
+   "home": {
+    "name": "Portland Trail Blazers",
+    "abbr": "POR",
+    "record": "11-6",
+    "last_n": 10,
+    "last_record": "5-5",
+    "last_margin": 3.2,
+    "avg_margin": 6.5,
+    "rest": 1,
+    "elo": 1597,
+    "b2b": false,
+    "lineup_change": 9.8,
+    "missing": [
+     {
+      "new": false,
+      "player": "Shaedon Sharpe",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 8.9
+     }
+    ]
+   },
+   "away": {
+    "name": "Minnesota Timberwolves",
+    "abbr": "MIN",
+    "record": "13-5",
+    "last_n": 10,
+    "last_record": "8-2",
+    "last_margin": 10.0,
+    "avg_margin": 10.6,
+    "rest": 1,
+    "elo": 1611,
+    "b2b": false,
+    "lineup_change": 1.5,
+    "missing": [
+     {
+      "new": false,
+      "player": "Anthony Edwards",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 13.3
+     },
+     {
+      "new": false,
+      "player": "Donte DiVincenzo",
+      "status": "Out",
+      "injury": "Achilles",
+      "value": 6.7
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5687,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": -0.0045
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": 0.0416
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": -0.0087
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": 0.0219
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.0042
+     }
+    ],
+    "final": 0.6232,
+    "summary": [
+     "Home court is worth about 7 points of win probability to the Trail Blazers on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "7:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.7583,
+   "market": null,
+   "home": {
+    "name": "Cleveland Cavaliers",
+    "abbr": "CLE",
+    "record": "9-9",
+    "last_n": 10,
+    "last_record": "5-5",
+    "last_margin": 0.9,
+    "avg_margin": 1.4,
+    "rest": 1,
+    "elo": 1555,
+    "b2b": false,
+    "lineup_change": 12.7,
+    "missing": []
+   },
+   "away": {
+    "name": "Indiana Pacers",
+    "abbr": "IND",
+    "record": "6-12",
+    "last_n": 10,
+    "last_record": "4-6",
+    "last_margin": -2.9,
+    "avg_margin": -3.3,
+    "rest": 2,
+    "elo": 1369,
+    "b2b": false,
+    "lineup_change": 0.5,
+    "missing": [
+     {
+      "new": false,
+      "player": "Tyrese Haliburton",
+      "status": "Out",
+      "injury": "Hamstring",
+      "value": 15.1
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5686,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.1266
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": 0.051
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": 0.0131
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0009
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": -0.0001
+     }
+    ],
+    "final": 0.7583,
+    "summary": [
+     "The Cavaliers are rated much stronger than the Pacers (Elo 1555 vs 1369).",
+     "The Cavaliers have had the better season: Cavaliers 9\u20119 (+1.4 pts/game), Pacers 6\u201112 (-3.3).",
+     "Home court is worth about 7 points of win probability to the Cavaliers on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "7:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.6637,
+   "market": null,
+   "home": {
+    "name": "Philadelphia 76ers",
+    "abbr": "PHI",
+    "record": "14-4",
+    "last_n": 10,
+    "last_record": "7-3",
+    "last_margin": -1.3,
+    "avg_margin": 1.8,
+    "rest": 2,
+    "elo": 1565,
+    "b2b": false,
+    "lineup_change": 9.5,
+    "missing": []
+   },
+   "away": {
+    "name": "Memphis Grizzlies",
+    "abbr": "MEM",
+    "record": "13-5",
+    "last_n": 10,
+    "last_record": "7-3",
+    "last_margin": 7.4,
+    "avg_margin": 8.9,
+    "rest": 1,
+    "elo": 1497,
+    "b2b": false,
+    "lineup_change": 0.1,
+    "missing": [
+     {
+      "new": true,
+      "player": "Cameron Boozer",
+      "status": "Out",
+      "injury": "Ankle",
+      "value": 12.5
+     },
+     {
+      "new": false,
+      "player": "Scotty Pippen Jr.",
+      "status": "Out",
+      "injury": "Back",
+      "value": 7.4
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5686,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.0816
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": 0.0432
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": 0.0009
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0318
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.0012
+     }
+    ],
+    "final": 0.6637,
+    "summary": [
+     "The 76ers are rated stronger than the Grizzlies (Elo 1565 vs 1497).",
+     "The Grizzlies are without Cameron Boozer.",
+     "The Grizzlies have been better lately: Grizzlies 7\u20113, 76ers 7\u20113 in their last 10.",
+     "Home court is worth about 7 points of win probability to the 76ers on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "7:30p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.6501,
+   "market": null,
+   "home": {
+    "name": "Miami Heat",
+    "abbr": "MIA",
+    "record": "10-6",
+    "last_n": 10,
+    "last_record": "8-2",
+    "last_margin": 3.9,
+    "avg_margin": 1.2,
+    "rest": 1,
+    "elo": 1556,
+    "b2b": false,
+    "lineup_change": 6.6,
+    "missing": []
+   },
+   "away": {
+    "name": "Atlanta Hawks",
+    "abbr": "ATL",
+    "record": "11-6",
+    "last_n": 10,
+    "last_record": "8-2",
+    "last_margin": 4.7,
+    "avg_margin": 3.1,
+    "rest": 1,
+    "elo": 1564,
+    "b2b": false,
+    "lineup_change": 3.8,
+    "missing": [
+     {
+      "new": false,
+      "player": "CJ McCollum",
+      "status": "Out",
+      "injury": "Calf",
+      "value": 10.3
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5688,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.0699
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": 0.0132
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": -0.0027
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0031
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.004
+     }
+    ],
+    "final": 0.6501,
+    "summary": [
+     "Home court is worth about 7 points of win probability to the Heat on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "8:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.2827,
+   "market": null,
+   "home": {
+    "name": "Chicago Bulls",
+    "abbr": "CHI",
+    "record": "5-12",
+    "last_n": 10,
+    "last_record": "4-6",
+    "last_margin": 0.1,
+    "avg_margin": -6.6,
+    "rest": 2,
+    "elo": 1413,
+    "b2b": false,
+    "lineup_change": 3.6,
+    "missing": [
+     {
+      "new": false,
+      "player": "Caleb Wilson",
+      "status": "Out",
+      "injury": "Hand",
+      "value": 10.4
+     }
+    ]
+   },
+   "away": {
+    "name": "New York Knicks",
+    "abbr": "NYK",
+    "record": "11-6",
+    "last_n": 10,
+    "last_record": "8-2",
+    "last_margin": 8.8,
+    "avg_margin": 5.7,
+    "rest": 1,
+    "elo": 1702,
+    "b2b": false,
+    "lineup_change": 2.9,
+    "missing": []
+   },
+   "explain": {
+    "base": 0.5687,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": -0.285
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": 0.0031
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": -0.0304
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": 0.0253
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.001
+     }
+    ],
+    "final": 0.2827,
+    "summary": [
+     "The Knicks are rated much stronger than the Bulls (Elo 1702 vs 1413).",
+     "The Knicks have had the better season: Knicks 11\u20116 (+5.7 pts/game), Bulls 5\u201112 (-6.6).",
+     "Home court is worth about 7 points of win probability to the Bulls on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "8:30p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.7545,
+   "market": null,
+   "home": {
+    "name": "Houston Rockets",
+    "abbr": "HOU",
+    "record": "13-5",
+    "last_n": 10,
+    "last_record": "6-4",
+    "last_margin": 3.9,
+    "avg_margin": 7.9,
+    "rest": 0,
+    "elo": 1618,
+    "b2b": true,
+    "lineup_change": -1.6,
+    "missing": []
+   },
+   "away": {
+    "name": "Toronto Raptors",
+    "abbr": "TOR",
+    "record": "6-11",
+    "last_n": 10,
+    "last_record": "2-8",
+    "last_margin": -5.6,
+    "avg_margin": -0.1,
+    "rest": 1,
+    "elo": 1483,
+    "b2b": false,
+    "lineup_change": 5.9,
+    "missing": [
+     {
+      "new": false,
+      "player": "Kawhi Leonard",
+      "status": "Out",
+      "injury": "Knee",
+      "value": 19.2
+     },
+     {
+      "new": false,
+      "player": "RJ Barrett",
+      "status": "Out",
+      "injury": "Hamstring",
+      "value": 14.2
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5686,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.242
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": -0.0251
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": 0.0242
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0184
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": -0.0368
+     }
+    ],
+    "final": 0.7545,
+    "summary": [
+     "The Rockets are rated much stronger than the Raptors (Elo 1618 vs 1483).",
+     "The Rockets are on the second night of a back-to-back.",
+     "The Rockets have had the better season: Rockets 13\u20115 (+7.9 pts/game), Raptors 6\u201111 (-0.1).",
+     "Home court is worth about 7 points of win probability to the Rockets on its own."
+    ]
+   }
+  },
+  {
+   "date": "2026-12-01",
+   "time": "9:00p",
+   "neutral": false,
+   "playoffs": false,
+   "notes": null,
+   "p_home": 0.6653,
+   "market": null,
+   "home": {
+    "name": "Phoenix Suns",
+    "abbr": "PHX",
+    "record": "9-7",
+    "last_n": 10,
+    "last_record": "8-2",
+    "last_margin": 5.7,
+    "avg_margin": -0.6,
+    "rest": 1,
+    "elo": 1538,
+    "b2b": false,
+    "lineup_change": -1.2,
+    "missing": [
+     {
+      "new": false,
+      "player": "Mark Williams",
+      "status": "Out",
+      "injury": "Shoulder",
+      "value": 9.5
+     }
+    ]
+   },
+   "away": {
+    "name": "Los Angeles Clippers",
+    "abbr": "LAC",
+    "record": "4-12",
+    "last_n": 10,
+    "last_record": "3-7",
+    "last_margin": -6.5,
+    "avg_margin": -6.8,
+    "rest": 1,
+    "elo": 1426,
+    "b2b": false,
+    "lineup_change": 7.9,
+    "missing": [
+     {
+      "new": false,
+      "player": "Jordan Miller",
+      "status": "Out",
+      "injury": "Shoulder",
+      "value": 8.8
+     }
+    ]
+   },
+   "explain": {
+    "base": 0.5688,
+    "steps": [
+     {
+      "key": "strength",
+      "label": "Team strength",
+      "delta": 0.1399
+     },
+     {
+      "key": "lineup",
+      "label": "Injuries & lineups",
+      "delta": -0.0406
+     },
+     {
+      "key": "season",
+      "label": "Season record",
+      "delta": 0.0273
+     },
+     {
+      "key": "recent",
+      "label": "Recent form (last 10)",
+      "delta": -0.0302
+     },
+     {
+      "key": "rest",
+      "label": "Rest & schedule",
+      "delta": 0.0
+     }
+    ],
+    "final": 0.6653,
+    "summary": [
+     "The Suns are rated much stronger than the Clippers (Elo 1538 vs 1426).",
+     "The Suns have had the better season: Suns 9\u20117 (-0.6 pts/game), Clippers 4\u201112 (-6.8).",
+     "Home court is worth about 7 points of win probability to the Suns on its own."
+    ]
+   }
   }
  ],
  "recent_results": [
   {
-   "date": "2026-11-23",
-   "away": "Utah Jazz",
-   "home": "Los Angeles Lakers",
-   "away_abbr": "UTA",
-   "home_abbr": "LAL",
-   "away_pts": 94,
-   "home_pts": 109,
-   "p_home": 0.8712,
+   "date": "2026-11-24",
+   "away": "Detroit Pistons",
+   "home": "Orlando Magic",
+   "away_abbr": "DET",
+   "home_abbr": "ORL",
+   "away_pts": 104,
+   "home_pts": 86,
+   "p_home": 0.3877,
    "correct": true,
-   "p_market": 0.8475
+   "p_market": 0.5756
   },
   {
-   "date": "2026-11-23",
-   "away": "San Antonio Spurs",
-   "home": "Sacramento Kings",
-   "away_abbr": "SAS",
-   "home_abbr": "SAC",
-   "away_pts": 123,
-   "home_pts": 107,
-   "p_home": 0.2761,
-   "correct": true,
-   "p_market": 0.2751
-  },
-  {
-   "date": "2026-11-23",
-   "away": "Portland Trail Blazers",
-   "home": "Philadelphia 76ers",
-   "away_abbr": "POR",
-   "home_abbr": "PHI",
-   "away_pts": 128,
-   "home_pts": 111,
-   "p_home": 0.6038,
+   "date": "2026-11-24",
+   "away": "Dallas Mavericks",
+   "home": "Denver Nuggets",
+   "away_abbr": "DAL",
+   "home_abbr": "DEN",
+   "away_pts": 120,
+   "home_pts": 101,
+   "p_home": 0.7485,
    "correct": false,
-   "p_market": 0.4978
+   "p_market": 0.7061
   },
   {
-   "date": "2026-11-23",
-   "away": "Phoenix Suns",
-   "home": "New Orleans Pelicans",
-   "away_abbr": "PHX",
-   "home_abbr": "NOP",
-   "away_pts": 123,
-   "home_pts": 119,
-   "p_home": 0.4106,
+   "date": "2026-11-24",
+   "away": "Boston Celtics",
+   "home": "Washington Wizards",
+   "away_abbr": "BOS",
+   "home_abbr": "WAS",
+   "away_pts": 131,
+   "home_pts": 116,
+   "p_home": 0.2422,
    "correct": true,
-   "p_market": 0.416
+   "p_market": 0.2131
   },
   {
    "date": "2026-11-23",
@@ -4172,27 +4567,15 @@
   },
   {
    "date": "2026-11-23",
-   "away": "Milwaukee Bucks",
-   "home": "Toronto Raptors",
-   "away_abbr": "MIL",
-   "home_abbr": "TOR",
+   "away": "Brooklyn Nets",
+   "home": "Minnesota Timberwolves",
+   "away_abbr": "BKN",
+   "home_abbr": "MIN",
    "away_pts": 116,
-   "home_pts": 111,
-   "p_home": 0.7516,
-   "correct": false,
-   "p_market": 0.7765
-  },
-  {
-   "date": "2026-11-23",
-   "away": "Memphis Grizzlies",
-   "home": "Charlotte Hornets",
-   "away_abbr": "MEM",
-   "home_abbr": "CHA",
-   "away_pts": 117,
-   "home_pts": 111,
-   "p_home": 0.3806,
+   "home_pts": 142,
+   "p_home": 0.8468,
    "correct": true,
-   "p_market": 0.4269
+   "p_market": 0.8062
   },
   {
    "date": "2026-11-23",
@@ -4208,6 +4591,30 @@
   },
   {
    "date": "2026-11-23",
+   "away": "Memphis Grizzlies",
+   "home": "Charlotte Hornets",
+   "away_abbr": "MEM",
+   "home_abbr": "CHA",
+   "away_pts": 117,
+   "home_pts": 111,
+   "p_home": 0.3806,
+   "correct": true,
+   "p_market": 0.4269
+  },
+  {
+   "date": "2026-11-23",
+   "away": "Milwaukee Bucks",
+   "home": "Toronto Raptors",
+   "away_abbr": "MIL",
+   "home_abbr": "TOR",
+   "away_pts": 116,
+   "home_pts": 111,
+   "p_home": 0.7516,
+   "correct": false,
+   "p_market": 0.7765
+  },
+  {
+   "date": "2026-11-23",
    "away": "Cleveland Cavaliers",
    "home": "Chicago Bulls",
    "away_abbr": "CLE",
@@ -4220,15 +4627,87 @@
   },
   {
    "date": "2026-11-23",
-   "away": "Brooklyn Nets",
-   "home": "Minnesota Timberwolves",
-   "away_abbr": "BKN",
-   "home_abbr": "MIN",
-   "away_pts": 116,
-   "home_pts": 142,
-   "p_home": 0.8468,
+   "away": "Phoenix Suns",
+   "home": "New Orleans Pelicans",
+   "away_abbr": "PHX",
+   "home_abbr": "NOP",
+   "away_pts": 123,
+   "home_pts": 119,
+   "p_home": 0.4106,
    "correct": true,
-   "p_market": 0.8062
+   "p_market": 0.416
+  },
+  {
+   "date": "2026-11-23",
+   "away": "Portland Trail Blazers",
+   "home": "Philadelphia 76ers",
+   "away_abbr": "POR",
+   "home_abbr": "PHI",
+   "away_pts": 128,
+   "home_pts": 111,
+   "p_home": 0.6038,
+   "correct": false,
+   "p_market": 0.4978
+  },
+  {
+   "date": "2026-11-23",
+   "away": "San Antonio Spurs",
+   "home": "Sacramento Kings",
+   "away_abbr": "SAS",
+   "home_abbr": "SAC",
+   "away_pts": 123,
+   "home_pts": 107,
+   "p_home": 0.2761,
+   "correct": true,
+   "p_market": 0.2751
+  },
+  {
+   "date": "2026-11-23",
+   "away": "Utah Jazz",
+   "home": "Los Angeles Lakers",
+   "away_abbr": "UTA",
+   "home_abbr": "LAL",
+   "away_pts": 94,
+   "home_pts": 109,
+   "p_home": 0.8712,
+   "correct": true,
+   "p_market": 0.8475
+  },
+  {
+   "date": "2026-11-22",
+   "away": "Orlando Magic",
+   "home": "Washington Wizards",
+   "away_abbr": "ORL",
+   "home_abbr": "WAS",
+   "away_pts": 96,
+   "home_pts": 116,
+   "p_home": 0.3866,
+   "correct": false,
+   "p_market": 0.3639
+  },
+  {
+   "date": "2026-11-22",
+   "away": "Oklahoma City Thunder",
+   "home": "Miami Heat",
+   "away_abbr": "OKC",
+   "home_abbr": "MIA",
+   "away_pts": 113,
+   "home_pts": 123,
+   "p_home": 0.5089,
+   "correct": true,
+   "p_market": 0.622
+  },
+  {
+   "date": "2026-11-22",
+   "away": "Indiana Pacers",
+   "home": "New York Knicks",
+   "away_abbr": "IND",
+   "home_abbr": "NYK",
+   "away_pts": 106,
+   "home_pts": 113,
+   "p_home": 0.7694,
+   "correct": true,
+   "p_market": 0.6755
   },
   {
    "date": "2026-11-22",
@@ -4240,30 +4719,6 @@
    "home_pts": 107,
    "p_home": 0.4045,
    "correct": false,
-   "p_market": 0.4486
-  },
-  {
-   "date": "2026-11-22",
-   "away": "Boston Celtics",
-   "home": "Golden State Warriors",
-   "away_abbr": "BOS",
-   "home_abbr": "GSW",
-   "away_pts": 87,
-   "home_pts": 88,
-   "p_home": 0.3203,
-   "correct": false,
-   "p_market": 0.2596
-  },
-  {
-   "date": "2026-11-22",
-   "away": "Dallas Mavericks",
-   "home": "Utah Jazz",
-   "away_abbr": "DAL",
-   "home_abbr": "UTA",
-   "away_pts": 116,
-   "home_pts": 114,
-   "p_home": 0.4396,
-   "correct": true,
    "p_market": 0.4486
   },
   {
@@ -4280,39 +4735,39 @@
   },
   {
    "date": "2026-11-22",
-   "away": "Indiana Pacers",
-   "home": "New York Knicks",
-   "away_abbr": "IND",
-   "home_abbr": "NYK",
-   "away_pts": 106,
-   "home_pts": 113,
-   "p_home": 0.7694,
+   "away": "Dallas Mavericks",
+   "home": "Utah Jazz",
+   "away_abbr": "DAL",
+   "home_abbr": "UTA",
+   "away_pts": 116,
+   "home_pts": 114,
+   "p_home": 0.4396,
    "correct": true,
-   "p_market": 0.6755
+   "p_market": 0.4486
   },
   {
    "date": "2026-11-22",
-   "away": "Oklahoma City Thunder",
-   "home": "Miami Heat",
-   "away_abbr": "OKC",
-   "home_abbr": "MIA",
-   "away_pts": 113,
-   "home_pts": 123,
-   "p_home": 0.5089,
-   "correct": true,
-   "p_market": 0.622
-  },
-  {
-   "date": "2026-11-22",
-   "away": "Orlando Magic",
-   "home": "Washington Wizards",
-   "away_abbr": "ORL",
-   "home_abbr": "WAS",
-   "away_pts": 96,
-   "home_pts": 116,
-   "p_home": 0.3866,
+   "away": "Boston Celtics",
+   "home": "Golden State Warriors",
+   "away_abbr": "BOS",
+   "home_abbr": "GSW",
+   "away_pts": 87,
+   "home_pts": 88,
+   "p_home": 0.3203,
    "correct": false,
-   "p_market": 0.3639
+   "p_market": 0.2596
+  },
+  {
+   "date": "2026-11-21",
+   "away": "Los Angeles Clippers",
+   "home": "Dallas Mavericks",
+   "away_abbr": "LAC",
+   "home_abbr": "DAL",
+   "away_pts": 100,
+   "home_pts": 110,
+   "p_home": 0.6741,
+   "correct": true,
+   "p_market": 0.6305
   },
   {
    "date": "2026-11-21",
@@ -4364,18 +4819,6 @@
   },
   {
    "date": "2026-11-21",
-   "away": "Los Angeles Clippers",
-   "home": "Dallas Mavericks",
-   "away_abbr": "LAC",
-   "home_abbr": "DAL",
-   "away_pts": 100,
-   "home_pts": 110,
-   "p_home": 0.6741,
-   "correct": true,
-   "p_market": 0.6305
-  },
-  {
-   "date": "2026-11-21",
    "away": "Boston Celtics",
    "home": "Sacramento Kings",
    "away_abbr": "BOS",
@@ -4388,27 +4831,15 @@
   },
   {
    "date": "2026-11-20",
-   "away": "Sacramento Kings",
-   "home": "Los Angeles Lakers",
-   "away_abbr": "SAC",
-   "home_abbr": "LAL",
-   "away_pts": 104,
-   "home_pts": 106,
-   "p_home": 0.8449,
+   "away": "Charlotte Hornets",
+   "home": "Atlanta Hawks",
+   "away_abbr": "CHA",
+   "home_abbr": "ATL",
+   "away_pts": 97,
+   "home_pts": 111,
+   "p_home": 0.6982,
    "correct": true,
-   "p_market": 0.8587
-  },
-  {
-   "date": "2026-11-20",
-   "away": "Washington Wizards",
-   "home": "Chicago Bulls",
-   "away_abbr": "WAS",
-   "home_abbr": "CHI",
-   "away_pts": 98,
-   "home_pts": 94,
-   "p_home": 0.6681,
-   "correct": false,
-   "p_market": 0.5514
+   "p_market": 0.6969
   },
   {
    "date": "2026-11-20",
@@ -4424,6 +4855,18 @@
   },
   {
    "date": "2026-11-20",
+   "away": "Sacramento Kings",
+   "home": "Los Angeles Lakers",
+   "away_abbr": "SAC",
+   "home_abbr": "LAL",
+   "away_pts": 104,
+   "home_pts": 106,
+   "p_home": 0.8449,
+   "correct": true,
+   "p_market": 0.8587
+  },
+  {
+   "date": "2026-11-20",
    "away": "Phoenix Suns",
    "home": "Utah Jazz",
    "away_abbr": "PHX",
@@ -4433,6 +4876,18 @@
    "p_home": 0.3581,
    "correct": true,
    "p_market": 0.3691
+  },
+  {
+   "date": "2026-11-20",
+   "away": "Orlando Magic",
+   "home": "Brooklyn Nets",
+   "away_abbr": "ORL",
+   "home_abbr": "BKN",
+   "away_pts": 113,
+   "home_pts": 111,
+   "p_home": 0.3274,
+   "correct": true,
+   "p_market": 0.3141
   },
   {
    "date": "2026-11-20",
@@ -4472,39 +4927,15 @@
   },
   {
    "date": "2026-11-20",
-   "away": "Charlotte Hornets",
-   "home": "Atlanta Hawks",
-   "away_abbr": "CHA",
-   "home_abbr": "ATL",
-   "away_pts": 97,
-   "home_pts": 111,
-   "p_home": 0.6982,
-   "correct": true,
-   "p_market": 0.6969
-  },
-  {
-   "date": "2026-11-20",
-   "away": "Orlando Magic",
-   "home": "Brooklyn Nets",
-   "away_abbr": "ORL",
-   "home_abbr": "BKN",
-   "away_pts": 113,
-   "home_pts": 111,
-   "p_home": 0.3274,
-   "correct": true,
-   "p_market": 0.3141
-  },
-  {
-   "date": "2026-11-19",
-   "away": "Portland Trail Blazers",
-   "home": "Milwaukee Bucks",
-   "away_abbr": "POR",
-   "home_abbr": "MIL",
-   "away_pts": 124,
-   "home_pts": 114,
-   "p_home": 0.2258,
-   "correct": true,
-   "p_market": 0.2395
+   "away": "Washington Wizards",
+   "home": "Chicago Bulls",
+   "away_abbr": "WAS",
+   "home_abbr": "CHI",
+   "away_pts": 98,
+   "home_pts": 94,
+   "p_home": 0.6681,
+   "correct": false,
+   "p_market": 0.5514
   },
   {
    "date": "2026-11-19",
@@ -4520,6 +4951,18 @@
   },
   {
    "date": "2026-11-19",
+   "away": "Golden State Warriors",
+   "home": "Memphis Grizzlies",
+   "away_abbr": "GSW",
+   "home_abbr": "MEM",
+   "away_pts": 98,
+   "home_pts": 126,
+   "p_home": 0.6818,
+   "correct": true,
+   "p_market": 0.6456
+  },
+  {
+   "date": "2026-11-19",
    "away": "Los Angeles Clippers",
    "home": "San Antonio Spurs",
    "away_abbr": "LAC",
@@ -4532,63 +4975,27 @@
   },
   {
    "date": "2026-11-19",
-   "away": "Golden State Warriors",
-   "home": "Memphis Grizzlies",
-   "away_abbr": "GSW",
-   "home_abbr": "MEM",
-   "away_pts": 98,
-   "home_pts": 126,
-   "p_home": 0.6818,
+   "away": "Portland Trail Blazers",
+   "home": "Milwaukee Bucks",
+   "away_abbr": "POR",
+   "home_abbr": "MIL",
+   "away_pts": 124,
+   "home_pts": 114,
+   "p_home": 0.2258,
    "correct": true,
-   "p_market": 0.6456
+   "p_market": 0.2395
   },
   {
    "date": "2026-11-18",
-   "away": "Philadelphia 76ers",
-   "home": "Orlando Magic",
-   "away_abbr": "PHI",
-   "home_abbr": "ORL",
-   "away_pts": 121,
-   "home_pts": 116,
-   "p_home": 0.515,
+   "away": "Memphis Grizzlies",
+   "home": "Cleveland Cavaliers",
+   "away_abbr": "MEM",
+   "home_abbr": "CLE",
+   "away_pts": 124,
+   "home_pts": 121,
+   "p_home": 0.653,
    "correct": false,
-   "p_market": 0.6097
-  },
-  {
-   "date": "2026-11-18",
-   "away": "Houston Rockets",
-   "home": "Indiana Pacers",
-   "away_abbr": "HOU",
-   "home_abbr": "IND",
-   "away_pts": 119,
-   "home_pts": 104,
-   "p_home": 0.2656,
-   "correct": true,
-   "p_market": 0.2652
-  },
-  {
-   "date": "2026-11-18",
-   "away": "Atlanta Hawks",
-   "home": "Oklahoma City Thunder",
-   "away_abbr": "ATL",
-   "home_abbr": "OKC",
-   "away_pts": 117,
-   "home_pts": 112,
-   "p_home": 0.7437,
-   "correct": false,
-   "p_market": 0.6969
-  },
-  {
-   "date": "2026-11-18",
-   "away": "Boston Celtics",
-   "home": "Denver Nuggets",
-   "away_abbr": "BOS",
-   "home_abbr": "DEN",
-   "away_pts": 101,
-   "home_pts": 105,
-   "p_home": 0.4187,
-   "correct": false,
-   "p_market": 0.4466
+   "p_market": 0.6234
   },
   {
    "date": "2026-11-18",
@@ -4628,27 +5035,27 @@
   },
   {
    "date": "2026-11-18",
-   "away": "Utah Jazz",
-   "home": "Los Angeles Lakers",
-   "away_abbr": "UTA",
-   "home_abbr": "LAL",
-   "away_pts": 109,
-   "home_pts": 97,
-   "p_home": 0.8735,
-   "correct": false,
-   "p_market": 0.812
+   "away": "Houston Rockets",
+   "home": "Indiana Pacers",
+   "away_abbr": "HOU",
+   "home_abbr": "IND",
+   "away_pts": 119,
+   "home_pts": 104,
+   "p_home": 0.2656,
+   "correct": true,
+   "p_market": 0.2652
   },
   {
    "date": "2026-11-18",
-   "away": "Memphis Grizzlies",
-   "home": "Cleveland Cavaliers",
-   "away_abbr": "MEM",
-   "home_abbr": "CLE",
-   "away_pts": 124,
-   "home_pts": 121,
-   "p_home": 0.653,
+   "away": "Boston Celtics",
+   "home": "Denver Nuggets",
+   "away_abbr": "BOS",
+   "home_abbr": "DEN",
+   "away_pts": 101,
+   "home_pts": 105,
+   "p_home": 0.4187,
    "correct": false,
-   "p_market": 0.6234
+   "p_market": 0.4466
   },
   {
    "date": "2026-11-18",
@@ -4664,6 +5071,18 @@
   },
   {
    "date": "2026-11-18",
+   "away": "Philadelphia 76ers",
+   "home": "Orlando Magic",
+   "away_abbr": "PHI",
+   "home_abbr": "ORL",
+   "away_pts": 121,
+   "home_pts": 116,
+   "p_home": 0.515,
+   "correct": false,
+   "p_market": 0.6097
+  },
+  {
+   "date": "2026-11-18",
    "away": "Phoenix Suns",
    "home": "Sacramento Kings",
    "away_abbr": "PHX",
@@ -4673,6 +5092,18 @@
    "p_home": 0.3026,
    "correct": true,
    "p_market": 0.2902
+  },
+  {
+   "date": "2026-11-18",
+   "away": "Utah Jazz",
+   "home": "Los Angeles Lakers",
+   "away_abbr": "UTA",
+   "home_abbr": "LAL",
+   "away_pts": 109,
+   "home_pts": 97,
+   "p_home": 0.8735,
+   "correct": false,
+   "p_market": 0.812
   },
   {
    "date": "2026-11-18",
@@ -4687,64 +5118,16 @@
    "p_market": 0.6117
   },
   {
-   "date": "2026-11-17",
-   "away": "Portland Trail Blazers",
-   "home": "Minnesota Timberwolves",
-   "away_abbr": "POR",
-   "home_abbr": "MIN",
-   "away_pts": 105,
-   "home_pts": 106,
-   "p_home": 0.6422,
-   "correct": true,
-   "p_market": 0.616
-  },
-  {
-   "date": "2026-11-17",
-   "away": "New York Knicks",
-   "home": "Toronto Raptors",
-   "away_abbr": "NYK",
-   "home_abbr": "TOR",
-   "away_pts": 111,
-   "home_pts": 102,
-   "p_home": 0.3537,
-   "correct": true,
-   "p_market": 0.4486
-  },
-  {
-   "date": "2026-11-17",
-   "away": "Detroit Pistons",
-   "home": "San Antonio Spurs",
-   "away_abbr": "DET",
-   "home_abbr": "SAS",
-   "away_pts": 105,
-   "home_pts": 93,
-   "p_home": 0.6878,
+   "date": "2026-11-18",
+   "away": "Atlanta Hawks",
+   "home": "Oklahoma City Thunder",
+   "away_abbr": "ATL",
+   "home_abbr": "OKC",
+   "away_pts": 117,
+   "home_pts": 112,
+   "p_home": 0.7437,
    "correct": false,
-   "p_market": 0.7817
-  },
-  {
-   "date": "2026-11-17",
-   "away": "Utah Jazz",
-   "home": "Los Angeles Clippers",
-   "away_abbr": "UTA",
-   "home_abbr": "LAC",
-   "away_pts": 132,
-   "home_pts": 107,
-   "p_home": 0.7845,
-   "correct": false,
-   "p_market": 0.6687
-  },
-  {
-   "date": "2026-11-17",
-   "away": "Charlotte Hornets",
-   "home": "Los Angeles Lakers",
-   "away_abbr": "CHA",
-   "home_abbr": "LAL",
-   "away_pts": 114,
-   "home_pts": 118,
-   "p_home": 0.7712,
-   "correct": true,
-   "p_market": 0.714
+   "p_market": 0.6969
   }
  ],
  "rankings": [
@@ -4764,17 +5147,17 @@
   },
   {
    "rank": 3,
-   "name": "Boston Celtics",
-   "abbr": "BOS",
-   "elo": 1640,
+   "name": "Detroit Pistons",
+   "abbr": "DET",
+   "elo": 1650,
    "record": "11-6"
   },
   {
    "rank": 4,
-   "name": "Detroit Pistons",
-   "abbr": "DET",
-   "elo": 1637,
-   "record": "10-6"
+   "name": "Boston Celtics",
+   "abbr": "BOS",
+   "elo": 1646,
+   "record": "12-6"
   },
   {
    "rank": 5,
@@ -4813,30 +5196,30 @@
   },
   {
    "rank": 10,
-   "name": "Denver Nuggets",
-   "abbr": "DEN",
-   "elo": 1586,
-   "record": "10-5"
-  },
-  {
-   "rank": 11,
    "name": "Philadelphia 76ers",
    "abbr": "PHI",
    "elo": 1565,
    "record": "14-4"
   },
   {
-   "rank": 12,
+   "rank": 11,
    "name": "Atlanta Hawks",
    "abbr": "ATL",
    "elo": 1564,
    "record": "11-6"
   },
   {
-   "rank": 13,
+   "rank": 12,
    "name": "Miami Heat",
    "abbr": "MIA",
    "elo": 1556,
+   "record": "10-6"
+  },
+  {
+   "rank": 13,
+   "name": "Denver Nuggets",
+   "abbr": "DEN",
+   "elo": 1555,
    "record": "10-6"
   },
   {
@@ -4855,38 +5238,38 @@
   },
   {
    "rank": 16,
-   "name": "Orlando Magic",
-   "abbr": "ORL",
-   "elo": 1502,
-   "record": "7-9"
-  },
-  {
-   "rank": 17,
    "name": "Memphis Grizzlies",
    "abbr": "MEM",
    "elo": 1497,
    "record": "13-5"
   },
   {
+   "rank": 17,
+   "name": "Orlando Magic",
+   "abbr": "ORL",
+   "elo": 1489,
+   "record": "7-10"
+  },
+  {
    "rank": 18,
+   "name": "Dallas Mavericks",
+   "abbr": "DAL",
+   "elo": 1485,
+   "record": "11-7"
+  },
+  {
+   "rank": 19,
    "name": "Toronto Raptors",
    "abbr": "TOR",
    "elo": 1483,
    "record": "6-11"
   },
   {
-   "rank": 19,
+   "rank": 20,
    "name": "Golden State Warriors",
    "abbr": "GSW",
    "elo": 1476,
    "record": "9-8"
-  },
-  {
-   "rank": 20,
-   "name": "Dallas Mavericks",
-   "abbr": "DAL",
-   "elo": 1455,
-   "record": "10-7"
   },
   {
    "rank": 21,
@@ -4927,8 +5310,8 @@
    "rank": 26,
    "name": "Washington Wizards",
    "abbr": "WAS",
-   "elo": 1344,
-   "record": "7-11"
+   "elo": 1338,
+   "record": "7-12"
   },
   {
    "rank": 27,
