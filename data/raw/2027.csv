@@ -260,15 +260,15 @@ season,date,start_et,away,away_pts,home,home_pts,ot,notes,playoffs
 2027,2026-11-24,7:00p,Detroit Pistons,104.0,Orlando Magic,86.0,,NBA Cup,False
 2027,2026-11-24,8:00p,Boston Celtics,131.0,Washington Wizards,116.0,,NBA Cup,False
 2027,2026-11-24,10:00p,Dallas Mavericks,120.0,Denver Nuggets,101.0,,NBA Cup,False
-2027,2026-11-25,5:00p,Miami Heat,,Philadelphia 76ers,,,NBA Cup,False
-2027,2026-11-25,7:00p,Chicago Bulls,,Charlotte Hornets,,,NBA Cup,False
-2027,2026-11-25,7:30p,Cleveland Cavaliers,,New York Knicks,,,NBA Cup,False
-2027,2026-11-25,7:30p,Minnesota Timberwolves,,Oklahoma City Thunder,,,NBA Cup,False
-2027,2026-11-25,8:00p,Los Angeles Clippers,,Memphis Grizzlies,,,NBA Cup,False
-2027,2026-11-25,8:00p,Brooklyn Nets,,Milwaukee Bucks,,,NBA Cup,False
-2027,2026-11-25,8:30p,Phoenix Suns,,Houston Rockets,,,NBA Cup,False
-2027,2026-11-25,10:00p,Sacramento Kings,,Golden State Warriors,,,NBA Cup,False
-2027,2026-11-25,10:00p,San Antonio Spurs,,Portland Trail Blazers,,,NBA Cup,False
+2027,2026-11-25,5:00p,Miami Heat,104.0,Philadelphia 76ers,111.0,,NBA Cup,False
+2027,2026-11-25,7:00p,Chicago Bulls,107.0,Charlotte Hornets,105.0,,NBA Cup,False
+2027,2026-11-25,7:30p,Cleveland Cavaliers,102.0,New York Knicks,121.0,,NBA Cup,False
+2027,2026-11-25,7:30p,Minnesota Timberwolves,113.0,Oklahoma City Thunder,106.0,,NBA Cup,False
+2027,2026-11-25,8:00p,Los Angeles Clippers,97.0,Memphis Grizzlies,115.0,,NBA Cup,False
+2027,2026-11-25,8:00p,Brooklyn Nets,104.0,Milwaukee Bucks,97.0,,NBA Cup,False
+2027,2026-11-25,8:30p,Phoenix Suns,104.0,Houston Rockets,116.0,,NBA Cup,False
+2027,2026-11-25,10:00p,Sacramento Kings,110.0,Golden State Warriors,129.0,,NBA Cup,False
+2027,2026-11-25,10:00p,San Antonio Spurs,111.0,Portland Trail Blazers,116.0,,NBA Cup,False
 2027,2026-11-27,7:00p,Miami Heat,,New York Knicks,,,NBA Cup,False
 2027,2026-11-27,7:30p,Milwaukee Bucks,,Detroit Pistons,,,NBA Cup,False
 2027,2026-11-27,7:30p,Philadelphia 76ers,,Indiana Pacers,,,NBA Cup,False
